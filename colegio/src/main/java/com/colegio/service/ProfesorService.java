@@ -24,22 +24,23 @@ public class ProfesorService{
     }
 
     public Profesor guardarProfesor(Profesor profesor){
-         Profesor guardado = ProfesorRepository.save(profesor);
+         Profesor guardado = profesorRepository.save(profesor);
     guardado.setCodigo(Constantes.PREFIJO_PROFESOR + guardado.getId());
-    return ProfesorRepository.save(guardado);
+    return profesorRepository.save(guardado);
     }
 
     public Profesor actualizarProfesor(Long id, Profesor profesor){
-        Profesor existente = buscarPorid(id); 
-    existente.setNombre(Profesor.getNombre());
-    existente.setApellido(Profesor.getApellido());
-    existente.setEmail(Profesor.getEmail());
-    existente.setFechaNac(Profesor.getFechaNac());
-    existente.setCurso(Profesor.getCurso());
-    return ProfesorRepository.save(existente);
+    Profesor existente = buscarProfesorPorId(id); 
+    existente.setNombre(profesor.getNombre());
+    existente.setApellido(profesor.getApellido());
+    existente.setEmail(profesor.getEmail());
+    existente.setFechaNac(profesor.getFechaNac());
+    existente.setCurso(profesor.getCurso());
+    return profesorRepository.save(existente);
     }
 
     public void borrarProfesor(Long id) {
-    ProfesorRepository.deleteById(id);
+    profesorRepository.deleteById(id);
 }
+
 }
