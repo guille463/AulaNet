@@ -20,19 +20,21 @@ public class Profesor{
     private LocalDate fechaNac; 
     private String curso; 
     private String especialidad;
+    private boolean esTutor; 
     private String tutorDeCurso;
 
     public Profesor(){
 
     }
 
-    public Profesor(String nombre, String apellido,String email, LocalDate fechaNac, String curso, String especialidad,  String tutorDeCurso ) {
+    public Profesor(String nombre, String apellido,String email, LocalDate fechaNac, String curso, String especialidad, boolean esTutor,  String tutorDeCurso ) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.fechaNac = fechaNac;
         this.curso = curso;
         this.especialidad = especialidad; 
+        this.esTutor = esTutor; 
         this.tutorDeCurso = tutorDeCurso; 
     }
 
