@@ -37,6 +37,10 @@ public class AlumnoService{
     return alumnoRepository.save(existente);
     }
 
+    public void borrarAlumno(Long id) {
+    alumnoRepository.deleteById(id);
+}
+
   
 }
 
