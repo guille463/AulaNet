@@ -14,7 +14,7 @@ public class AsignaturaService{
     @Autowired
     AsignaturaRepository asignaturaRepository; 
 
-    public List<Asignatura>listarAsignaturaes(){
+    public List<Asignatura>listarAsignaturas(){
         return asignaturaRepository.findAll(); 
     }
 
