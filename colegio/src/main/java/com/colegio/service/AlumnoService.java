@@ -27,6 +27,16 @@ public class AlumnoService{
         return alumnoRepository.save(alumno); 
     }
 
+    public Alumno actualizarAlumno(Long id, Alumno alumno){
+        Alumno existente = buscarPorid(id); 
+    existente.setNombre(alumno.getNombre());
+    existente.setApellido(alumno.getApellido());
+    existente.setEmail(alumno.getEmail());
+    existente.setFechaNac(alumno.getFechaNac());
+    existente.setCurso(alumno.getCurso());
+    return alumnoRepository.save(existente);
+    }
+
   
 }
 

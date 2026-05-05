@@ -32,7 +32,15 @@ public Alumno obtenerPorid(@PathVariable Long id){
 
 @PostMapping
 public Alumno guardar(@RequestBody Alumno alumno){
-    return  alumnoService.guardarAlumno(alumno); 
+    return  alumnoService.guardarAlumno(alumno);
+    
+@PostMapping
+public Alumno actualizarAlumno(@RequestBody Alumno alumno, @PathVariable Long id){
+   return alumnoService.actualizarAlumno(id, alumno); 
+
+}
+
+
 
 }
 
