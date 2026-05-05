@@ -1,5 +1,4 @@
 package com.colegio.controller;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,43 +11,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.colegio.entity.Alumno;
-import com.colegio.service.AlumnoService;
+import com.colegio.entity.Profesor;
+import com.colegio.service.ProfesorService;
 
 @RestController
-@RequestMapping("/api/v1/alumnos")
-public class AlumnoController{
+@RequestMapping("/api/v1/profesores")
+public class ProfesorController{
     
 @Autowired
-private AlumnoService alumnoService;
+private ProfesorService profesorService;
 
 @GetMapping
-public List<Alumno> listar(){
-return alumnoService.ListarAlumnos(); 
+public List<Profesor> listar(){
+return profesorService.listarProfesores(); 
 }
 
 @GetMapping("/{id}")
-public Alumno obtenerPorid(@PathVariable Long id){
-    return alumnoService.buscarPorid(id); 
+public Profesor obtenerPorid(@PathVariable Long id){
+    return profesorService.buscarProfesorPorId(id); 
 }
 
 @PostMapping
-public Alumno guardar(@RequestBody Alumno alumno){
-    return  alumnoService.guardarAlumno(alumno);
+public Profesor guardar(@RequestBody Profesor profesor){
+    return  profesorService.guardarProfesor(profesor);
 }
     
 @PutMapping("/{id}")
-public Alumno actualizarAlumno(@RequestBody Alumno alumno, @PathVariable Long id){
-   return alumnoService.actualizarAlumno(id, alumno); 
+public Profesor actualizarProfesor(@RequestBody Profesor profesor, @PathVariable Long id){
+   return profesorService.actualizarProfesor(id, profesor);  
 
 }
 
 @DeleteMapping("/{id}")
 public void borrar(@PathVariable Long id) {
-    alumnoService.borrarAlumno(id);
+    profesorService.borrarProfesor(id);
 }
-
 }
-
-
-
