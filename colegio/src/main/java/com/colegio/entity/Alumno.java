@@ -31,6 +31,9 @@ public class Alumno{
         this.curso = curso; 
     }
 
+    public Long getId() {
+    return id;
+}
 
     public String getNombre() {
         return nombre;
