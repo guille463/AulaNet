@@ -16,16 +16,18 @@ public class Asignatura {
     private int creditos; 
     private String curso; 
     private int horasSemana;  
+    private String descripcion; 
 
     public Asignatura() {
     }
     
-    public Asignatura(String codigo, int creditos, String curso, int horasSemana, String nombre) {
+    public Asignatura(String codigo, int creditos, String curso, int horasSemana, String nombre, String descripcion) {
         this.codigo = codigo;
         this.creditos = creditos;
         this.curso = curso;
         this.horasSemana = horasSemana;
         this.nombre = nombre;
+        this.descripcion = descripcion; 
     }
 
     public Long getId() {
@@ -80,9 +82,19 @@ public class Asignatura {
      @Override
   
       public String toString() {
-    return "Alumno {id = " + id + ", nombre = " + nombre + ", curso = " + curso + ", Creditos: " + creditos + ", Curso: " + curso + ",HorasSemana: " + horasSemana  + "}";
+    return "Alumno {id = " + id + ", nombre = " + nombre + ", Descripcion: " + descripcion +  ", curso = " + curso + ", Creditos: " + creditos + ", Curso: " + curso + ",HorasSemana: " + horasSemana  + "}";
       
 }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+   
 
 
     
