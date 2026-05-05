@@ -1,12 +1,13 @@
 package com.colegio.service; 
 
 import java.util.List;
-
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colegio.entity.Alumno;
 import com.colegio.repository.AlumnoRepository;
+import com.colegio.util.Constantes;
 
 
 @Service
@@ -24,7 +25,9 @@ public class AlumnoService{
     }
 
     public Alumno guardarAlumno(Alumno alumno){
-        return alumnoRepository.save(alumno); 
+         Alumno guardado = alumnoRepository.save(alumno);
+    guardado.setCodigo(Constantes.PREFIJO_ALUMNO + guardado.getId());
+    return alumnoRepository.save(guardado);
     }
 
     public Alumno actualizarAlumno(Long id, Alumno alumno){

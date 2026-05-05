@@ -13,6 +13,7 @@ public class Alumno{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Long id; 
+   private String codigo;
    private String nombre;
    private String apellido; 
    private String email; 
@@ -75,6 +76,14 @@ public class Alumno{
         this.curso = curso;
     }
 
+    
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
 
     @Override
@@ -82,6 +91,7 @@ public class Alumno{
       public String toString() {
     return "Alumno {id = " + id + ", nombre = " + nombre + ", apellido = " + apellido + ", email = " + email + ", fechaNacimiento = " + fechaNac + ", curso = " + curso + "}";
 }
+
 
   
    
