@@ -14,6 +14,7 @@ public class Matricula{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id; 
+    private String codigo; 
     private double nota; 
     private LocalDate fechaMatr;
     private Alumno alumno; 
@@ -24,6 +25,8 @@ public class Matricula{
     }
 
     public Matricula(Alumno alumno, Asignatura asignatura, LocalDate fechaMatr, double nota, String curso) {
+        this.id = id; 
+        this.codigo = codigo; 
         this.alumno = alumno;
         this.asignatura = asignatura;
         this.fechaMatr = fechaMatr;
@@ -79,13 +82,20 @@ public class Matricula{
         this.curso = curso;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
       @Override
   
       public String toString() {
     return "Alumno {id = " + id + ", Nota: " + nota +  ", curso = " + curso + ", Fecha de Matricula: " + fechaMatr + ", Asignatura: " + asignatura + "}";
       
 }
-
   
 }
 
