@@ -13,8 +13,6 @@ public class ProfesorAsignatura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String codigo;
     private String curso;
     private int horasSemanales;
     private Profesor profesor;
@@ -33,14 +31,6 @@ public class ProfesorAsignatura {
 
     public Long getId() {
         return id;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
     }
 
     public String getCurso() {
