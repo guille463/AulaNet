@@ -12,8 +12,7 @@ import jakarta.persistence.Table;
  * Entidad que representa a un alumno del colegio.
  *
  * <p>
- * Contiene la informacion personal y academica del alumno. Se mapea a la tabla
- * {@code alumnos} en la base de datos.
+ * Contiene la informacion personal y academica del alumno.
  * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz

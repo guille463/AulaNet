@@ -8,11 +8,6 @@ import com.colegio.entity.Asignatura;
 /**
  * Repositorio para la entidad {@link Asignatura}.
  *
- * <p>
- * Proporciona operaciones CRUD sobre la tabla {@code asignaturas}. La
- * implementacion es generada automaticamente por Spring Data JPA.
- * </p>
- *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
  */
