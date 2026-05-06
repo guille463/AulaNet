@@ -2,6 +2,7 @@ package com.colegio.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -34,25 +37,26 @@ class AlumnoServiceTest {
         alumno.setCodigo("ALUM-1");
     }
 
-    //===================================
+    // ============================================================
     // TESTS
-//=====================================
+    // ============================================================
     @Test
     void listarAlumnos_devuelveListaCorrecta() {
-        //Arrange
+        // Arrange
         when(alumnoRepository.findAll()).thenReturn(Arrays.asList(alumno));
 
-        //Act
-        List<Alumno> resultadoBusqueda = alumnoService.ListarAlumnos();
+        // Act
+        List<Alumno> resultado = alumnoService.ListarAlumnos();
 
-        //Assert
-        assertNotNull(resultadoBusqueda);
+        // Assert
+        assertEquals(1, resultado.size());
+        assertEquals("Juan", resultado.get(0).getNombre());
     }
 
     @Test
     void buscarPorid_devuelveAlumnoCorrecto() {
         // Arrange
-        when(alumnoRepository.findById(1L));
+        when(alumnoRepository.findById(1L)).thenReturn(Optional.of(alumno));
 
         // Act
         Alumno resultado = alumnoService.buscarPorid(1L);
@@ -62,27 +66,23 @@ class AlumnoServiceTest {
         assertEquals("Juan", resultado.getNombre());
     }
 
-    /**
-     * Verifica que buscarPorid lanza excepcion si el alumno no existe.
-     */
     @Test
     void buscarPorid_lanzaExcepcionSiNoExiste() {
         // Arrange
-        when(alumnoRepository.findById(99L));
+        when(alumnoRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act y Assert
+        // Act Y Assert
         assertThrows(RuntimeException.class, () -> {
             alumnoService.buscarPorid(99L);
         });
     }
 
-    /**
-     * Verifica que borrarAlumno llama al metodo deleteById del repositorio.
-     */
     @Test
     void borrarAlumno_llamaDeleteById() {
         // Act
         alumnoService.borrarAlumno(1L);
 
+        // Assert
+        verify(alumnoRepository, times(1)).deleteById(1L);
     }
 }
