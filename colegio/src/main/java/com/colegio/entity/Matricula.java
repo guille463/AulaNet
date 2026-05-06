@@ -1,37 +1,46 @@
 package com.colegio.entity;
+
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="matriculas")
+@Table(name = "matriculas")
 
-public class Matricula{
+public class Matricula {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id; 
-    private String codigo; 
-    private double nota; 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String codigo;
+    private double nota;
     private LocalDate fechaMatr;
-    private Alumno alumno; 
-    private Asignatura asignatura;  
-    private String curso; 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "alumno_id")
+    private Alumno alumno;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "asignatura_id")
+    private Asignatura asignatura;
+    private String curso;
 
     public Matricula() {
     }
 
     public Matricula(Alumno alumno, Asignatura asignatura, LocalDate fechaMatr, double nota, String curso) {
-        this.id = id; 
-        this.codigo = codigo; 
+        this.id = id;
+        this.codigo = codigo;
         this.alumno = alumno;
         this.asignatura = asignatura;
         this.fechaMatr = fechaMatr;
         this.nota = nota;
-        this.curso = curso; 
+        this.curso = curso;
     }
 
     public Long getId() {
@@ -74,7 +83,7 @@ public class Matricula{
         this.asignatura = asignatura;
     }
 
-      public String getCurso() {
+    public String getCurso() {
         return curso;
     }
 
@@ -90,14 +99,11 @@ public class Matricula{
         this.codigo = codigo;
     }
 
-      @Override
-  
-      public String toString() {
-    return "Alumno {id = " + id + ", Nota: " + nota +  ", curso = " + curso + ", Fecha de Matricula: " + fechaMatr + ", Asignatura: " + asignatura + "}";
-      
+    @Override
+
+    public String toString() {
+        return "Alumno {id = " + id + ", Nota: " + nota + ", curso = " + curso + ", Fecha de Matricula: " + fechaMatr + ", Asignatura: " + asignatura + "}";
+
+    }
+
 }
-  
-}
-
-
-

@@ -1,4 +1,5 @@
 package com.colegio.entity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -6,28 +7,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="asignaturas")
+@Table(name = "asignaturas")
 public class Asignatura {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id; 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String codigo;
-    private String nombre; 
-    private int creditos; 
-    private String curso; 
-    private int horasSemana;  
-    private String descripcion; 
+    private String nombre;
+    private int creditos;
+    private String curso;
+    private int horasSemana;
+    private String descripcion;
 
     public Asignatura() {
     }
-    
+
     public Asignatura(String codigo, int creditos, String curso, int horasSemana, String nombre, String descripcion) {
         this.codigo = codigo;
         this.creditos = creditos;
         this.curso = curso;
         this.horasSemana = horasSemana;
         this.nombre = nombre;
-        this.descripcion = descripcion; 
+        this.descripcion = descripcion;
     }
 
     public Long getId() {
@@ -78,7 +80,7 @@ public class Asignatura {
         this.horasSemana = horasSemana;
     }
 
-      public String getDescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
@@ -86,15 +88,11 @@ public class Asignatura {
         this.descripcion = descripcion;
     }
 
-   
-    
-     @Override
-  
-      public String toString() {
-    return "Alumno {id = " + id + ", nombre = " + nombre + ", Descripcion: " + descripcion + ", Creditos: " + creditos + ", Curso: " + curso + ",HorasSemana: " + horasSemana  + "}";
-      
-}
-  
-}
+    @Override
 
+    public String toString() {
+        return "Asignatura {id = " + id + ", nombre = " + nombre + ", Descripcion: " + descripcion + ", Creditos: " + creditos + ", Curso: " + curso + ", Horas Semanales: " + horasSemana + "}";
 
+    }
+
+}
