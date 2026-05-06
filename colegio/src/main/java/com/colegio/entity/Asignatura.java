@@ -78,15 +78,7 @@ public class Asignatura {
         this.horasSemana = horasSemana;
     }
 
-    
-     @Override
-  
-      public String toString() {
-    return "Alumno {id = " + id + ", nombre = " + nombre + ", Descripcion: " + descripcion +  ", curso = " + curso + ", Creditos: " + creditos + ", Curso: " + curso + ",HorasSemana: " + horasSemana  + "}";
-      
-}
-
-    public String getDescripcion() {
+      public String getDescripcion() {
         return descripcion;
     }
 
@@ -95,9 +87,14 @@ public class Asignatura {
     }
 
    
-
-
     
+     @Override
+  
+      public String toString() {
+    return "Alumno {id = " + id + ", nombre = " + nombre + ", Descripcion: " + descripcion + ", Creditos: " + creditos + ", Curso: " + curso + ",HorasSemana: " + horasSemana  + "}";
+      
+}
+  
 }
 
 
