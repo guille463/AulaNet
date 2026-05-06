@@ -15,40 +15,81 @@ import org.springframework.web.bind.annotation.RestController;
 import com.colegio.entity.Alumno;
 import com.colegio.service.AlumnoService;
 
+/**
+ * Controlador REST para la gestion de alumnos.
+ *
+ * <p>
+ * Expone los endpoints de la API bajo {@code /api/v1/alumnos}. Delega la logica
+ * de negocio en {@link AlumnoService}.
+ * </p>
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/api/v1/alumnos")
-public class AlumnoController{
-    
-@Autowired
-private AlumnoService alumnoService;
+public class AlumnoController {
 
-@GetMapping
-public List<Alumno> listar(){
-return alumnoService.ListarAlumnos(); 
+    /**
+     * Servicio que gestiona la logica de negocio de {@link Alumno}
+     */
+    @Autowired
+    private AlumnoService alumnoService;
+
+    // ============================================================
+    // ENDPOINTS
+    // ============================================================
+    /**
+     * Devuelve la lista completa de alumnos.
+     *
+     * @return lista de {@link Alumno} en formato JSON
+     */
+    @GetMapping
+    public List<Alumno> listar() {
+        return alumnoService.ListarAlumnos();
+    }
+
+    /**
+     * Devuelve un alumno por su identificador.
+     *
+     * @param id identificador del alumno
+     * @return {@link Alumno} encontrado en formato JSON
+     */
+    @GetMapping("/{id}")
+    public Alumno obtenerPorid(@PathVariable Long id) {
+        return alumnoService.buscarPorid(id);
+    }
+
+    /**
+     * Crea un nuevo alumno.
+     *
+     * @param alumno datos del {@link Alumno} a crear
+     * @return alumno creado en formato JSON
+     */
+    @PostMapping
+    public Alumno guardar(@RequestBody Alumno alumno) {
+        return alumnoService.guardarAlumno(alumno);
+    }
+
+    /**
+     * Actualiza los datos de un alumno existente.
+     *
+     * @param id identificador del alumno a actualizar
+     * @param alumno datos nuevos del {@link Alumno}
+     * @return alumno actualizado en formato JSON
+     */
+    @PutMapping("/{id}")
+    public Alumno actualizarAlumno(@PathVariable Long id, @RequestBody Alumno alumno) {
+        return alumnoService.actualizarAlumno(id, alumno);
+    }
+
+    /**
+     * Elimina un alumno por su identificador.
+     *
+     * @param id identificador del alumno a eliminar
+     */
+    @DeleteMapping("/{id}")
+    public void borrar(@PathVariable Long id) {
+        alumnoService.borrarAlumno(id);
+    }
 }
-
-@GetMapping("/{id}")
-public Alumno obtenerPorid(@PathVariable Long id){
-    return alumnoService.buscarPorid(id); 
-}
-
-@PostMapping
-public Alumno guardar(@RequestBody Alumno alumno){
-    return  alumnoService.guardarAlumno(alumno);
-}
-    
-@PutMapping("/{id}")
-public Alumno actualizarAlumno(@RequestBody Alumno alumno, @PathVariable Long id){
-   return alumnoService.actualizarAlumno(id, alumno); 
-
-}
-
-@DeleteMapping("/{id}")
-public void borrar(@PathVariable Long id) {
-    alumnoService.borrarAlumno(id);
-}
-
-}
-
-
-
