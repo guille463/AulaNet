@@ -65,6 +65,26 @@ public class AlumnoController {
         return alumnoService.buscarAlumnoPorEmail(email);
     }
 
+    @GetMapping("/nombre/{nombre}")
+    public Alumno obtenerAlumnoPorNombre(@PathVariable String nombre) {
+        return alumnoService.buscarAlumnoPorNombre(nombre);
+    }
+
+    @GetMapping("/curso/{curso}")
+    public List<Alumno> obtenerAlumnosPorCurso(@PathVariable String curso) {
+        return alumnoService.buscarAlumnosPorCurso(curso);
+    }
+
+    @GetMapping("/buscar/{nombre}")
+    public List<Alumno> obtenerAlumnosPorNombreContaining(@PathVariable String nombre) {
+        return alumnoService.buscarAlumnosPorNombreContaining(nombre);
+    }
+
+    @GetMapping("/buscar/{nombre}/{apellido}")
+    public List<Alumno> obtenerAlumnosPorNombreYApellido(@PathVariable String nombre, @PathVariable String apellido) {
+        return alumnoService.buscarAlumnosPorNombreYApellido(nombre, apellido);
+    }
+
     /**
      * Crea un nuevo alumno.
      *

@@ -58,6 +58,23 @@ public class AlumnoService {
         return alumnoRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Alumno con id: " + email + " no encontrado"));
     }
 
+    public Alumno buscarAlumnoPorNombre(String nombre) {
+        return alumnoRepository.findByNombre(nombre)
+                .orElseThrow(() -> new RuntimeException("Alumno con nombre: " + nombre + " no encontrado"));
+    }
+
+    public List<Alumno> buscarAlumnosPorCurso(String curso) {
+        return alumnoRepository.findByCurso(curso);
+    }
+
+    public List<Alumno> buscarAlumnosPorNombreContaining(String nombre) {
+        return alumnoRepository.findByNombreContaining(nombre);
+    }
+
+    public List<Alumno> buscarAlumnosPorNombreYApellido(String nombre, String apellido) {
+        return alumnoRepository.findByNombreAndApellido(nombre, apellido);
+    }
+
     /**
      * Guarda un nuevo alumno y le asigna su codigo identificativo.
      *
