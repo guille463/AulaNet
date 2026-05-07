@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,17 +21,35 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.colegio.entity.Alumno;
 import com.colegio.repository.AlumnoRepository;
 
+/**
+ * Pruebas unitarias del servicio {@link AlumnoService}.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 1.0
+ */
 @ExtendWith(MockitoExtension.class)
 class AlumnoServiceTest {
 
+    /**
+     * Mock del repositorio de alumnos
+     */
     @Mock
     private AlumnoRepository alumnoRepository;
 
+    /**
+     * Instancia del servicio con el mock
+     */
     @InjectMocks
     private AlumnoService alumnoService;
 
+    /**
+     * Alumno de prueba reutilizado en los tests
+     */
     private Alumno alumno;
 
+    /**
+     * Inicializa el alumno de prueba antes de cada test.
+     */
     @BeforeEach
     void setUp() {
         alumno = new Alumno("juan@colegio.com", "Juan", "Garcia", null, "1ºA");
@@ -40,7 +59,11 @@ class AlumnoServiceTest {
     // ============================================================
     // TESTS
     // ============================================================
+    /**
+     * Verifica que listarAlumnos devuelve la lista correcta.
+     */
     @Test
+    @DisplayName("listarAlumnos devuelve lista correcta")
     void listarAlumnos_devuelveListaCorrecta() {
         // Arrange
         when(alumnoRepository.findAll()).thenReturn(Arrays.asList(alumno));
@@ -53,7 +76,11 @@ class AlumnoServiceTest {
         assertEquals("Juan", resultado.get(0).getNombre());
     }
 
+    /**
+     * Verifica que buscarPorid devuelve el alumno correcto cuando existe.
+     */
     @Test
+    @DisplayName("buscarPorid devuelve el alumno correcto")
     void buscarPorid_devuelveAlumnoCorrecto() {
         // Arrange
         when(alumnoRepository.findById(1L)).thenReturn(Optional.of(alumno));
@@ -66,18 +93,26 @@ class AlumnoServiceTest {
         assertEquals("Juan", resultado.getNombre());
     }
 
+    /**
+     * Verifica que buscarPorid lanza excepcion si el alumno no existe.
+     */
     @Test
+    @DisplayName("buscarPorid lanza excepcion si el alumno no existe")
     void buscarPorid_lanzaExcepcionSiNoExiste() {
         // Arrange
         when(alumnoRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act Y Assert
+        // Act y Assert
         assertThrows(RuntimeException.class, () -> {
             alumnoService.buscarPorid(99L);
         });
     }
 
+    /**
+     * Verifica que borrarAlumno llama al metodo deleteById del repositorio.
+     */
     @Test
+    @DisplayName("borrarAlumno llama a deleteById una vez")
     void borrarAlumno_llamaDeleteById() {
         // Act
         alumnoService.borrarAlumno(1L);
