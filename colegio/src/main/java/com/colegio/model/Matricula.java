@@ -1,4 +1,4 @@
-package com.colegio.entity;
+package com.colegio.model;
 
 import java.time.LocalDate;
 

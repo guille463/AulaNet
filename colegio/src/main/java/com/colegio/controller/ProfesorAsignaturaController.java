@@ -12,16 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.colegio.entity.ProfesorAsignatura;
+import com.colegio.model.ProfesorAsignatura;
 import com.colegio.service.ProfesorAsignaturaService;
 
 /**
  * Controlador REST para la gestion de relaciones profesor-asignatura.
- *
- * <p>
- * Expone los endpoints de la API bajo {@code /api/v1/profesor-asignatura}.
- * Delega la logica de negocio en {@link ProfesorAsignaturaService}.
- * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0

@@ -1,4 +1,5 @@
 package com.colegio.controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,39 +12,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.colegio.entity.Profesor;
+import com.colegio.model.Profesor;
 import com.colegio.service.ProfesorService;
 
 @RestController
 @RequestMapping("/api/v1/profesores")
-public class ProfesorController{
-    
-@Autowired
-private ProfesorService profesorService;
+public class ProfesorController {
 
-@GetMapping
-public List<Profesor> listar(){
-return profesorService.listarProfesores(); 
-}
+    @Autowired
+    private ProfesorService profesorService;
 
-@GetMapping("/{id}")
-public Profesor obtenerPorid(@PathVariable Long id){
-    return profesorService.buscarProfesorPorId(id); 
-}
+    @GetMapping
+    public List<Profesor> listar() {
+        return profesorService.listarProfesores();
+    }
 
-@PostMapping
-public Profesor guardar(@RequestBody Profesor profesor){
-    return  profesorService.guardarProfesor(profesor);
-}
-    
-@PutMapping("/{id}")
-public Profesor actualizarProfesor(@RequestBody Profesor profesor, @PathVariable Long id){
-   return profesorService.actualizarProfesor(id, profesor);  
+    @GetMapping("/{id}")
+    public Profesor obtenerPorid(@PathVariable Long id) {
+        return profesorService.buscarProfesorPorId(id);
+    }
 
-}
+    @PostMapping
+    public Profesor guardar(@RequestBody Profesor profesor) {
+        return profesorService.guardarProfesor(profesor);
+    }
 
-@DeleteMapping("/{id}")
-public void borrar(@PathVariable Long id) {
-    profesorService.borrarProfesor(id);
-}
+    @PutMapping("/{id}")
+    public Profesor actualizarProfesor(@RequestBody Profesor profesor, @PathVariable Long id) {
+        return profesorService.actualizarProfesor(id, profesor);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public void borrar(@PathVariable Long id) {
+        profesorService.borrarProfesor(id);
+    }
 }

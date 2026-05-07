@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.colegio.entity.Asignatura;
-import com.colegio.entity.Profesor;
-import com.colegio.entity.ProfesorAsignatura;
+import com.colegio.model.Asignatura;
+import com.colegio.model.Profesor;
+import com.colegio.model.ProfesorAsignatura;
 import com.colegio.repository.AsignaturaRepository;
 import com.colegio.repository.ProfesorAsignaturaRepository;
 import com.colegio.repository.ProfesorRepository;

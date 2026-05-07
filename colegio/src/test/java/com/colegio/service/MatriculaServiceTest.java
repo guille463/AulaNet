@@ -18,9 +18,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.colegio.entity.Alumno;
-import com.colegio.entity.Asignatura;
-import com.colegio.entity.Matricula;
+import com.colegio.model.Alumno;
+import com.colegio.model.Asignatura;
+import com.colegio.model.Matricula;
 import com.colegio.repository.AlumnoRepository;
 import com.colegio.repository.AsignaturaRepository;
 import com.colegio.repository.MatriculaRepository;

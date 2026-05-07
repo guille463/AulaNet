@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.colegio.entity.Alumno;
+import com.colegio.model.Alumno;
 import com.colegio.service.AlumnoService;
 
 /**
