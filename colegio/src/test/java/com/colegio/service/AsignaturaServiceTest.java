@@ -21,6 +21,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.colegio.entity.Asignatura;
 import com.colegio.repository.AsignaturaRepository;
 
+/**
+ * Pruebas unitarias del servicio {@link AsignaturaService}.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 1.0
+ */
 @ExtendWith(MockitoExtension.class)
 class AsignaturaServiceTest {
 
@@ -32,8 +38,10 @@ class AsignaturaServiceTest {
 
     private Asignatura asignatura;
 
+    /**
+     * Inicializa la asignatura de prueba antes de cada test.
+     */
     @BeforeEach
-
     void setUp() {
         asignatura = new Asignatura("ASG-1", 6, "1ºA", 5, "Matematicas", "Calculo basico");
     }
@@ -41,37 +49,45 @@ class AsignaturaServiceTest {
     // ============================================================
     // TESTS
     // ============================================================
+    /**
+     * Verifica que listarAsignaturas devuelve la lista correcta.
+     */
     @Test
-    @DisplayName("ListarAsignaturas devuelve la lista correctad de asignaturas")
+    @DisplayName("ListarAsignaturas devuelve la lista correcta de asignaturas")
     void listarAsignaturas_devuelveListaCorrecta() {
-        //Arrange
+        // Arrange
         when(asignaturaRepository.findAll()).thenReturn(Arrays.asList(asignatura));
 
-        //Act
+        // Act
         List<Asignatura> resultado = asignaturaService.listarAsignaturas();
 
-        //Assert
+        // Assert
         assertEquals(1, resultado.size());
         assertEquals("Matematicas", resultado.get(0).getNombre());
-
     }
 
+    /**
+     * Verifica que buscarAsignaturaPorId devuelve la asignatura correcta cuando
+     * existe.
+     */
     @Test
     @DisplayName("buscarAsignaturaPorid devuelve la asignatura correcta")
-
     void buscarAsignaturaPorid_devuelveAsignaturaCorrecta() {
-        //Arrange
+        // Arrange
         when(asignaturaRepository.findById(1L)).thenReturn(Optional.of(asignatura));
 
-        //Act
-        Asignatura asignatura = asignaturaService.buscarAsignaturaPorId(1L);
+        // Act
+        Asignatura resultado = asignaturaService.buscarAsignaturaPorId(1L);
 
-        //Assert
-        assertNotNull(asignatura);
-        assertEquals("Matematicas", asignatura.getNombre());
-
+        // Assert
+        assertNotNull(resultado);
+        assertEquals("Matematicas", resultado.getNombre());
     }
 
+    /**
+     * Verifica que buscarAsignaturaPorId lanza excepcion si la asignatura no
+     * existe.
+     */
     @Test
     @DisplayName("buscarAsignaturaPorId lanza excepcion si no existe")
     void buscarAsignaturaPorId_lanzaExcepcionSiNoExiste() {
@@ -84,6 +100,9 @@ class AsignaturaServiceTest {
         });
     }
 
+    /**
+     * Verifica que borrarAsignatura llama al metodo deleteById del repositorio.
+     */
     @Test
     @DisplayName("borrarAsignatura llama a deleteById")
     void borrarAsignatura_llamaDeleteById() {
@@ -93,5 +112,4 @@ class AsignaturaServiceTest {
         // Assert
         verify(asignaturaRepository, times(1)).deleteById(1L);
     }
-
 }
