@@ -60,6 +60,11 @@ public class AlumnoController {
         return alumnoService.buscarPorid(id);
     }
 
+    @GetMapping("/email/{email}")
+    public Alumno obtenerAlumnoPorEmail(@PathVariable String email) {
+        return alumnoService.buscarAlumnoPorEmail(email);
+    }
+
     /**
      * Crea un nuevo alumno.
      *
@@ -92,4 +97,5 @@ public class AlumnoController {
     public void borrar(@PathVariable Long id) {
         alumnoService.borrarAlumno(id);
     }
+
 }

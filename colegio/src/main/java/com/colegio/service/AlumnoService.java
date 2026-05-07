@@ -54,6 +54,10 @@ public class AlumnoService {
                 .orElseThrow(() -> new RuntimeException("Alumno con id: " + id + " no encontrado"));
     }
 
+    public Alumno buscarAlumnoPorEmail(String email) {
+        return alumnoRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Alumno con id: " + email + " no encontrado"));
+    }
+
     /**
      * Guarda un nuevo alumno y le asigna su codigo identificativo.
      *
@@ -66,9 +70,9 @@ public class AlumnoService {
      * @return alumno guardado con codigo asignado
      */
     public Alumno guardarAlumno(Alumno alumno) {
-        Alumno guardado = alumnoRepository.save(alumno);
-        guardado.setCodigo(Constantes.PREFIJO_ALUMNO + guardado.getId());
-        return alumnoRepository.save(guardado);
+
+        alumno.setCodigo(Constantes.PREFIJO_ALUMNO + alumno.getId());
+        return alumnoRepository.save(alumno);
     }
 
     /**
