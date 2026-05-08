@@ -1,4 +1,4 @@
-import { getAlumnoPorId, getAlumnoPorNombre, getAlumnoPorEmail } from "../api/alumnoApi.js";
+import { getAlumnoPorId, getAlumnoPorNombre, getAlumnoPorEmail, getAlumnoPorCurso } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 
@@ -30,6 +30,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         <button class="btn btn-BuscarPorEmail" id="btnBuscarPorEmail">Buscar</button>
     </div>
 </div>
+ <div class="card-body">
+        <h2 class="card-title">Buscar por Curso</h2>
+        <input type="text" id="inputCurso" class="form-control" placeholder="Introduce el curso">
+        <button class="btn btn-BuscarPorCurso" id="btnBuscarPorCurso">Buscar</button>
+    </div>
+</div>
 
             <div id="resultado"></div>
         </div>
@@ -52,7 +58,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("click", function () {
       buscarPorEmail(document.getElementById("inputEmail").value.trim());
     });
+
+    document.getElementById("btnBuscarPorCurso").addEventListener("click", function(){
+        
+    })
 });
+
+
 
 async function buscarPorId(id) {
   const resultado = document.getElementById("resultado");
@@ -105,3 +117,24 @@ async function buscarPorEmail(email) {
     resultado.innerHTML = `<p class="error">Introduce un email</p>`;
   }
 }
+
+async function  buscarAlumnosPorCurso(curso) {
+    const resultado = document.getElementById("resultado")
+    resultado.innerHTML=""; 
+    if (curso) {
+        const alumnos = await getAlumnosPorCurso(curso);
+        if (alumnos && alumnos.length > 0) {
+            let html = "";
+            alumnos.forEach(function(alumno) {
+                html += crearTarjetaAlumno(alumno);
+            });
+            resultado.innerHTML = html;
+        } else {
+            resultado.innerHTML = `<p class="error">No se encontraron alumnos en ese curso</p>`;
+        }
+    } else {
+        resultado.innerHTML = `<p class="error">Introduce un curso</p>`;
+    }
+    }
+    
+
