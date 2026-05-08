@@ -47,3 +47,18 @@ export async function getAlumnoPorNombre(nombre) {
     return datos;
 }
 
+export async function getAlumnoPorEmail(email) {
+    let datos = null;
+    try {
+        const respuesta = await fetch(`${URL_ALUMNOS}/email/${email}`);
+        if (respuesta.ok) {
+            datos = await respuesta.json();
+        } else {
+            throw new Error("Alumno no encontrado");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+    return datos;
+}
+
