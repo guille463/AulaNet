@@ -8,6 +8,5 @@ document.addEventListener("DOMContentLoaded", () => {
             <h1 class="MenuAlumnos">Gestion de Alumnos</h1>
                 <a href="alumnoLista.html" class="btn btn-Lista">Ver todos los alumnos</a>
             </div>
-        </div>
     `;
 });

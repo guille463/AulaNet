@@ -7,3 +7,4 @@ export async function getAlumnos() {
     return await respuesta.json(); 
     
 }
+
