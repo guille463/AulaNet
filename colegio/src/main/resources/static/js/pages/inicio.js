@@ -5,8 +5,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
     const root = document.getElementById("root"); 
     root.innerHTML = `
         <div class="containerAlumnos">
-            <h1>Sistema de Gestion del Colegio</h1>
-            <p class="lead">Bienvenido al sistema de gestion.</p>
+            <h1>Gestion colegio</h1>
             <a href="alumnoMenu.html" class="btn btn-Lista">Gestionar Alumnos</a>
         </div>
     `;
