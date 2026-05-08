@@ -1,7 +1,6 @@
 package com.colegio.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +19,7 @@ public class AulaService {
     }
 
     public List<Aula> findByCurso(String curso) {
-        return aulaRepository.findByCurso(curso);
-    }
-
-    public Optional<Aula> findByCodigo(String codigo) {
-        return aulaRepository.findByCodigo(codigo);
+        return aulaRepository.findByCursoStartingWith(curso);
     }
 
     public List<Aula> findAulasConPlazasLibres() {

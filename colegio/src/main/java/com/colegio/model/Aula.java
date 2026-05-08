@@ -14,7 +14,6 @@ public class Aula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String codigo;
     private String curso;
     private int capacidad;
 
@@ -24,7 +23,6 @@ public class Aula {
 
     public Aula(int capacidad, String codigo, String curso) {
         this.capacidad = capacidad;
-        this.codigo = codigo;
         this.curso = curso;
     }
 
@@ -34,14 +32,6 @@ public class Aula {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
     }
 
     public String getCurso() {
@@ -62,8 +52,12 @@ public class Aula {
 
     @Override
     public String toString() {
-        return "Aula{id:" + id + ", codigo:" + codigo + ", curso:" + curso + ", capacidad:" + capacidad
+        return "Aula{id:" + id + ", curso:" + curso + ", capacidad:" + capacidad
                 + "}";
+    }
+
+    public void setCapacidad(int i) {
+        throw new UnsupportedOperationException("NO");
     }
 
 }

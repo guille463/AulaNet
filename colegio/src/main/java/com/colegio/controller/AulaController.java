@@ -3,7 +3,6 @@ package com.colegio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,13 +26,6 @@ public class AulaController {
     @GetMapping("/curso/{curso}")
     public List<Aula> findByCurso(@PathVariable String curso) {
         return aulaService.findByCurso(curso);
-    }
-
-    @GetMapping("/codigo/{codigo}")
-    public ResponseEntity<Aula> findByCodigo(@PathVariable String codigo) {
-        return aulaService.findByCodigo(codigo)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/disponibles")

@@ -12,11 +12,11 @@ import com.colegio.model.Aula;
 @Repository
 public interface AulaRepository extends JpaRepository<Aula, Long> {
 
-    Optional<Aula> findByCodigo(String codigo);
+    Optional<Aula> findByCurso(String curso);
 
-    boolean existsByCodigo(String codigo);
+    boolean existsByCurso(String curso);
 
-    List<Aula> findByCurso(String curso);
+    List<Aula> findByCursoStartingWith(String curso);
 
     List<Aula> findByProfesorIsNull();
 
