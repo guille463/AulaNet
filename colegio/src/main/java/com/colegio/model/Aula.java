@@ -1,37 +1,87 @@
 package com.colegio.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entidad que representa un grupo-clase del colegio.
+ *
+ * <p>
+ * La tutoria se gestiona mediante FK opcional a {@link Profesor}.
+ * </p>
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 2.0
+ */
 @Entity
-
 @Table(name = "aulas")
 public class Aula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Codigo del grupo-clase {@code 3ºA}
+     */
+    @Column(unique = true, nullable = false)
+    private String codigo;
+
+    /**
+     * Curso academico {@code 3º}
+     */
     private String curso;
+
+    /**
+     * Grupo dentro del curso {@code A}
+     */
+    private String grupo;
+
+    /**
+     * Numero maximo de alumnos
+     */
     private int capacidad;
 
+    /**
+     * Profesor tutor del aula
+     */
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tutor_id")
+    private Profesor tutor;
+
+    // ============================================================
+    // CONSTRUCTORES
+    // ============================================================
     public Aula() {
-
     }
 
-    public Aula(int capacidad, String codigo, String curso) {
-        this.capacidad = capacidad;
+    public Aula(String curso, String grupo, int capacidad) {
         this.curso = curso;
+        this.grupo = grupo;
+        this.codigo = curso + grupo;
+        this.capacidad = capacidad;
     }
 
+    // ============================================================
+    // GETTERS Y SETTERS
+    // ============================================================
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getCurso() {
@@ -42,22 +92,37 @@ public class Aula {
         this.curso = curso;
     }
 
-    public int getcapacidad() {
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public int getCapacidad() {
         return capacidad;
     }
 
-    public void setcapacidad(int capacidad) {
+    public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }
 
+    public Profesor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Profesor tutor) {
+        this.tutor = tutor;
+    }
+
+    // ============================================================
+    // TO STRING
+    // ============================================================
     @Override
     public String toString() {
-        return "Aula{id:" + id + ", curso:" + curso + ", capacidad:" + capacidad
-                + "}";
+        return "Aula{id=" + id + ", codigo=" + codigo + ", curso=" + curso
+                + ", grupo=" + grupo + ", capacidad=" + capacidad
+                + ", tutor=" + (tutor != null ? tutor.getCodigo() : "sin tutor") + "}";
     }
-
-    public void setCapacidad(int i) {
-        throw new UnsupportedOperationException("NO");
-    }
-
 }

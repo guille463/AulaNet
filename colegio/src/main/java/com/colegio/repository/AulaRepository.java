@@ -8,22 +8,41 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Aula;
+import com.colegio.model.Profesor;
 
+/**
+ * Repositorio para la entidad {@link Aula}.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 2.0
+ */
 @Repository
 public interface AulaRepository extends JpaRepository<Aula, Long> {
 
-    Optional<Aula> findByCurso(String curso);
+    Optional<Aula> findByCodigo(String codigo);
 
-    boolean existsByCurso(String curso);
+    boolean existsByCodigo(String codigo);
+
+    List<Aula> findByCurso(String curso);
 
     List<Aula> findByCursoStartingWith(String curso);
 
-    List<Aula> findByProfesorIsNull();
+    List<Aula> findByTutorIsNull();
 
-    @Query("SELECT aula FROM Aula aula WHERE aula.capacidad > "
-            + "(SELECT COUNT(alumno) FROM Alumno alumno WHERE alumno.aula = aula)")
+    Optional<Aula> findByTutor(Profesor tutor);
+
+    boolean existsByTutor(Profesor tutor);
+
+    /**
+     * Aulas donde el numero de alumnos es menor que la capacidad
+     */
+    @Query("SELECT a FROM Aula a WHERE a.capacidad > "
+            + "(SELECT COUNT(al) FROM Alumno al WHERE al.aula = a)")
     List<Aula> findAulasConPlazasLibres();
 
-    @Query("SELECT COUNT(alumno) FROM Alumno alumno WHERE alumno.aula.id = ?1")
+    /**
+     * Cuenta los alumnos deaula concreta
+     */
+    @Query("SELECT COUNT(al) FROM Alumno al WHERE al.aula.id = :aulaId")
     int countAlumnosByAulaId(Long aulaId);
 }
