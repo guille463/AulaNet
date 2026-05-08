@@ -3,9 +3,12 @@ package com.colegio.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -59,6 +62,10 @@ public class Alumno {
      */
     private String curso;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "AulaAlumno")
+    private Aula aula;
+
     // ============================================================
     // CONSTRUCTORES
     // ============================================================
@@ -76,13 +83,15 @@ public class Alumno {
      * @param apellido apellido del alumno
      * @param fechaNac fecha de nacimiento del alumno
      * @param curso curso en el que esta matriculado
+     * @param aula aula a la que pertenece el alumno
      */
-    public Alumno(String email, String nombre, String apellido, LocalDate fechaNac, String curso) {
+    public Alumno(String email, String nombre, String apellido, LocalDate fechaNac, String curso, Aula aula) {
         this.email = email;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNac = fechaNac;
         this.curso = curso;
+        this.aula = aula;
     }
 
     // ============================================================
@@ -216,6 +225,14 @@ public class Alumno {
     @Override
     public String toString() {
         return "Alumno{id=" + id + ", nombre=" + nombre + ", apellido=" + apellido
-                + ", email=" + email + ", fechaNac=" + fechaNac + ", curso=" + curso + "}";
+                + ", email=" + email + ", fechaNac=" + fechaNac + ", curso=" + curso + " ,Aula:" + aula.getCodigo() + "}";
+    }
+
+    public Aula getAula() {
+        return aula;
+    }
+
+    public void setAula(Aula aula) {
+        this.aula = aula;
     }
 }
