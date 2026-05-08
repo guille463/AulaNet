@@ -8,3 +8,8 @@ export async function getAlumnos() {
     
 }
 
+export async function getAlumnosPorId(params) {
+    const respuesta = await fetch(`${URL_ALUMNOS}/${id}`)
+    return await respuesta.json(); 
+    
+}
