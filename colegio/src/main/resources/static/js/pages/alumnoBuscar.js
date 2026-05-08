@@ -1,13 +1,14 @@
 import { getAlumnoPorId } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
+import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  document.getElementById("navbar").innerHTML = crearBarraNavegacion();
-  const root = document.getElementById("root");
+    document.getElementById("navbar").innerHTML = crearBarraNavegacion();
+    const root = document.getElementById("root");
 
-  root.innerHTML = `
+    root.innerHTML = `
         <div class="containerBuscarAlumno">
-            <h1 class=>Buscar Alumno</h1>
+            <h1>Buscar Alumno</h1>
 
             <div class="card">
                 <div class="card-body">
@@ -21,23 +22,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
     `;
 
-  function mostrarAlumno(alumno) {
-    document.getElementById("resultado").innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <h2>${alumno.codigo} - ${alumno.nombre} ${alumno.apellido}</h2>
-                <p>Email: ${alumno.email}</p>
-                <p>Curso: ${alumno.curso}</p>
-                <p>Fecha de nacimiento: ${alumno.fechaNac}</p>
-            </div>
-        </div>
-    `;
-  }
-
-  document.getElementById("btnBuscarId").addEventListener("click", async () => {
-    const id = document.getElementById("inputId").value;
-    if (!id) return;
-    const alumno = await getAlumnoPorId(id);
-    mostrarAlumno(alumno);
-  });
+    document.getElementById("btnBuscarId").addEventListener("click", function() {
+        buscarPorId(document.getElementById("inputId").value.trim());
+    });
 });
+
+async function buscarPorId(id) {
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = "";
+
+    if (id) {
+        const alumno = await getAlumnoPorId(id);
+        if (alumno) {
+            resultado.innerHTML = crearTarjetaAlumno(alumno);
+        } else {
+            resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
+        }
+    } else {
+        resultado.innerHTML = `<p class="error">Introduce un ID</p>`;
+    }
+}
