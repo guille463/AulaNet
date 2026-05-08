@@ -118,4 +118,8 @@ public class AlumnoService {
     public void borrarAlumno(Long id) {
         alumnoRepository.deleteById(id);
     }
+
+    public long count() {
+        return alumnoRepository.count();
+    }
 }

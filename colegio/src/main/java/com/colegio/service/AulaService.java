@@ -29,4 +29,5 @@ public class AulaService {
     public int countAlumnos(Long aulaId) {
         return aulaRepository.countAlumnosByAulaId(aulaId);
     }
+
 }
