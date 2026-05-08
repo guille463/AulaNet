@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         buscarPorId(document.getElementById("inputId").value.trim());
     });
 
-     document.getElementById("btnBuscarPorNombre").addEventListener("click", function() {
-        buscarPorId(document.getElementById("inputId").value.trim());
-    });
+   document.getElementById("btnBuscarPorNombre").addEventListener("click", function() {
+    buscarAlumnoPorNombre(document.getElementById("inputNombre").value.trim());
+});
 
 
 });
@@ -55,22 +55,21 @@ async function buscarPorId(id) {
 }
 
 async function buscarAlumnoPorNombre(nombre) {
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = "";
 
-    const resultado = document.getElementById("resultado")
-
-    resultado.innerHTML=""; 
-
-    if(nombre){
-
-        const alumno = await getAlumnoPorNombre(nombre)
-        if(alumno){
-            resultado.innerHTML= crearTarjetaAlumno(alumno); 
-        } else{
+    if (nombre) {
+        const alumnos = await getAlumnoPorNombre(nombre);
+        if (alumnos && alumnos.length > 0) {
+            let html = "";
+            alumnos.forEach(function(alumno) {
+                html += crearTarjetaAlumno(alumno);
+            });
+            resultado.innerHTML = html;
+        } else {
             resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
         }
-    } else{
-          resultado.innerHTML = `<p class="error">Introduce el nombre del alumno</p>`;
+    } else {
+        resultado.innerHTML = `<p class="error">Introduce el nombre del alumno</p>`;
     }
-   
-    
 }

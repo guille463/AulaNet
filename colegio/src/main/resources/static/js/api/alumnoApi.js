@@ -33,19 +33,17 @@ export async function getAlumnoPorId(id) {
 }
 
 export async function getAlumnoPorNombre(nombre) {
-
-    let datos = null; 
+    let datos = null;
     try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/${nombre}`)
-        if(respuesta.ok){
-            datos = await respuesta.json; 
-        } else{
-            throw new Error ("Alumno no encontrado")
+        const respuesta = await fetch(`${URL_ALUMNOS}/buscar/${nombre}`);
+        if (respuesta.ok) {
+            datos = await respuesta.json();
+        } else {
+            throw new Error("Alumno no encontrado");
         }
     } catch (error) {
-        console.error(error)
-        
+        console.error(error);
     }
-    return datos; 
-    
+    return datos;
 }
+
