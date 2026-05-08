@@ -1,4 +1,4 @@
-import { getAlumnoPorId } from "../api/alumnoApi.js";
+import { getAlumnoPorId, getAlumnoPorNombre } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 
@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <input type="number" id="inputId" class="form-control" placeholder="Introduce el ID">
                     <button class="btn btn-BuscarPorId" id="btnBuscarId">Buscar</button>
                 </div>
+                <div class="card">
+                <h2 class="card-title">Buscar por Nombre</h2>
+                <input type="text" id="inputNombre" class="form-control" placeholder="Introduce el nombre del alumno">
+                <button class="btn btn-BuscarPorNombre" id="btnBuscarPorNombre">Buscar Por Nombre</button>
+                </div>
             </div>
 
             <div id="resultado"></div>
@@ -25,6 +30,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("btnBuscarId").addEventListener("click", function() {
         buscarPorId(document.getElementById("inputId").value.trim());
     });
+
+     document.getElementById("btnBuscarPorNombre").addEventListener("click", function() {
+        buscarPorId(document.getElementById("inputId").value.trim());
+    });
+
+
 });
 
 async function buscarPorId(id) {
@@ -41,4 +52,25 @@ async function buscarPorId(id) {
     } else {
         resultado.innerHTML = `<p class="error">Introduce un ID</p>`;
     }
+}
+
+async function buscarAlumnoPorNombre(nombre) {
+
+    const resultado = document.getElementById("resultado")
+
+    resultado.innerHTML=""; 
+
+    if(nombre){
+
+        const alumno = await getAlumnoPorNombre(nombre)
+        if(alumno){
+            resultado.innerHTML= crearTarjetaAlumno(alumno); 
+        } else{
+            resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
+        }
+    } else{
+          resultado.innerHTML = `<p class="error">Introduce el nombre del alumno</p>`;
+    }
+   
+    
 }
