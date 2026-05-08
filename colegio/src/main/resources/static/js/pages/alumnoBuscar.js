@@ -1,4 +1,4 @@
-import { getAlumnoPorId, getAlumnoPorNombre, getAlumnoPorEmail, getAlumnoPorCurso } from "../api/alumnoApi.js";
+import { getAlumnoPorId, getAlumnoPorNombre, getAlumnoPorEmail, getAlumnosPorCurso } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 
@@ -59,9 +59,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       buscarPorEmail(document.getElementById("inputEmail").value.trim());
     });
 
-    document.getElementById("btnBuscarPorCurso").addEventListener("click", function(){
-        
-    })
+   document.getElementById("btnBuscarPorCurso").addEventListener("click", function(){
+    buscarAlumnosPorCurso(document.getElementById("inputCurso").value.trim());
+});
 });
 
 

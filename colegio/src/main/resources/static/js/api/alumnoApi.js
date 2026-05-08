@@ -62,10 +62,11 @@ export async function getAlumnoPorEmail(email) {
     return datos;
 }
 
-export async function getAlumnoPorCurso(curso){
+export async function getAlumnosPorCurso(curso){
+     console.log("Buscando por curso:", curso);
     let datos = null
     try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/curso/${curso}`)
+        const respuesta = await fetch(`${URL_ALUMNOS}/curso/${encodeURIComponent(curso)}`)
         if(respuesta.ok){
             datos = await respuesta.json(); 
         } else{
