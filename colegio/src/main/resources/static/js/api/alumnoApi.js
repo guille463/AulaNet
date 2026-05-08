@@ -8,7 +8,7 @@ export async function getAlumnos() {
     
 }
 
-export async function getAlumnosPorId(params) {
+export async function getAlumnoPorId(params) {
     const respuesta = await fetch(`${URL_ALUMNOS}/${id}`)
     return await respuesta.json(); 
     
