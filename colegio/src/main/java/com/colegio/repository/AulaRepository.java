@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Aula;
+import com.colegio.model.Curso;
+import com.colegio.model.Grupo;
 import com.colegio.model.Profesor;
 
 /**
@@ -23,9 +25,11 @@ public interface AulaRepository extends JpaRepository<Aula, Long> {
 
     boolean existsByCodigo(String codigo);
 
-    List<Aula> findByCurso(String curso);
+    List<Aula> findByCurso(Curso curso);
 
-    List<Aula> findByCursoStartingWith(String curso);
+    List<Aula> findByGrupo(Grupo grupo);
+
+    List<Aula> findByCursoAndGrupo(Curso curso, Grupo grupo);
 
     List<Aula> findByTutorIsNull();
 
@@ -41,7 +45,7 @@ public interface AulaRepository extends JpaRepository<Aula, Long> {
     List<Aula> findAulasConPlazasLibres();
 
     /**
-     * Cuenta los alumnos deaula concreta
+     * Cuenta los alumnos de un aula concreta
      */
     @Query("SELECT COUNT(al) FROM Alumno al WHERE al.aula.id = :aulaId")
     int countAlumnosByAulaId(Long aulaId);

@@ -2,6 +2,8 @@ package com.colegio.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,10 +14,6 @@ import jakarta.persistence.Table;
 
 /**
  * Entidad que representa un grupo-clase del colegio.
- *
- * <p>
- * La tutoria se gestiona mediante FK opcional a {@link Profesor}.
- * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -29,24 +27,29 @@ public class Aula {
     private Long id;
 
     /**
-     * Codigo del grupo-clase {@code 3ºA}
+     * Codigo del grupo-clase, generado como curso+grupo {@code 1ºA}
      */
     @Column(unique = true, nullable = false)
     private String codigo;
 
     /**
-     * Curso academico {@code 3º}
+     * Curso academico
      */
-    private String curso;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Curso curso;
 
     /**
-     * Grupo dentro del curso {@code A}
+     * Grupo dentro del curso
      */
-    private String grupo;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Grupo grupo;
 
     /**
-     * Numero maximo de alumnos
+     * Numero maximo de alumnos, entre 15 y 30
      */
+    @Column(nullable = false)
     private int capacidad;
 
     /**
@@ -62,10 +65,10 @@ public class Aula {
     public Aula() {
     }
 
-    public Aula(String curso, String grupo, int capacidad) {
+    public Aula(Curso curso, Grupo grupo, int capacidad) {
         this.curso = curso;
         this.grupo = grupo;
-        this.codigo = curso + grupo;
+        this.codigo = curso.getEtiqueta() + grupo.getEtiqueta();
         this.capacidad = capacidad;
     }
 
@@ -84,19 +87,19 @@ public class Aula {
         this.codigo = codigo;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
-    public String getGrupo() {
+    public Grupo getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(String grupo) {
+    public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
 

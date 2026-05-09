@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colegio.model.Aula;
+import com.colegio.model.Curso;
 import com.colegio.model.Profesor;
 import com.colegio.repository.AulaRepository;
 import com.colegio.repository.ProfesorRepository;
@@ -14,7 +15,7 @@ import com.colegio.repository.ProfesorRepository;
  * Servicio que gestiona la logica de negocio de las aulas.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 2.0
+ * @version 3.0
  */
 @Service
 public class AulaService {
@@ -42,7 +43,7 @@ public class AulaService {
                 .orElseThrow(() -> new RuntimeException("Aula " + codigo + " no encontrada"));
     }
 
-    public List<Aula> buscarAulasPorCurso(String curso) {
+    public List<Aula> buscarAulasPorCurso(Curso curso) {
         return aulaRepository.findByCurso(curso);
     }
 
@@ -51,15 +52,17 @@ public class AulaService {
     }
 
     public int contarAlumnos(Long aulaId) {
-        buscarAulaPorId(aulaId); // verifica existencia
+        buscarAulaPorId(aulaId);
         return aulaRepository.countAlumnosByAulaId(aulaId);
     }
 
     /**
-     * Crea un aula nueva. El codigo se genera como curso+grupo.
+     * Crea un aula nueva. El codigo se genera como etiqueta curso + etiqueta
+     * grupo. Valida que la capacidad este entre 15 y 30.
      */
     public Aula guardarAula(Aula aula) {
-        aula.setCodigo(aula.getCurso() + aula.getGrupo());
+        validarCapacidad(aula.getCapacidad());
+        aula.setCodigo(aula.getCurso().getEtiqueta() + aula.getGrupo().getEtiqueta());
         if (aulaRepository.existsByCodigo(aula.getCodigo())) {
             throw new RuntimeException("Ya existe el aula " + aula.getCodigo());
         }
@@ -68,9 +71,10 @@ public class AulaService {
 
     public Aula actualizarAula(Long id, Aula aula) {
         Aula existente = buscarAulaPorId(id);
+        validarCapacidad(aula.getCapacidad());
         existente.setCurso(aula.getCurso());
         existente.setGrupo(aula.getGrupo());
-        existente.setCodigo(aula.getCurso() + aula.getGrupo());
+        existente.setCodigo(aula.getCurso().getEtiqueta() + aula.getGrupo().getEtiqueta());
         existente.setCapacidad(aula.getCapacidad());
         return aulaRepository.save(existente);
     }
@@ -108,5 +112,14 @@ public class AulaService {
         Aula aula = buscarAulaPorId(aulaId);
         aula.setTutor(null);
         return aulaRepository.save(aula);
+    }
+
+    // ============================================================
+    // METODOS PRIVADOS
+    // ============================================================
+    private void validarCapacidad(int capacidad) {
+        if (capacidad < 15 || capacidad > 30) {
+            throw new RuntimeException("La capacidad del aula debe estar entre 15 y 30");
+        }
     }
 }
