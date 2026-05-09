@@ -38,9 +38,6 @@ public class Profesor {
     @Column(unique = true, nullable = false)
     private String email;
 
-    /**
-     * Especialidad del profesor, determina si es generalista o especialista
-     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Especialidad especialidad;
