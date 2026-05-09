@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Asignatura;
+import com.colegio.model.Curso;
 
 /**
  * Repositorio para la entidad {@link Asignatura}.
@@ -17,9 +18,9 @@ import com.colegio.model.Asignatura;
 @Repository
 public interface AsignaturaRepository extends JpaRepository<Asignatura, Long> {
 
-    List<Asignatura> findByCurso(String curso);
+    List<Asignatura> findByCurso(Curso curso);
 
     Optional<Asignatura> findByCodigo(String codigo);
 
-    boolean existsByNombreAndCurso(String nombre, String curso);
+    boolean existsByNombreAndCurso(String nombre, Curso curso);
 }

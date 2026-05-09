@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colegio.model.Asignatura;
+import com.colegio.model.Curso;
 import com.colegio.repository.AsignaturaRepository;
 import com.colegio.util.Constantes;
 
@@ -33,12 +34,13 @@ public class AsignaturaService {
                 .orElseThrow(() -> new RuntimeException("Asignatura con id " + id + " no encontrada"));
     }
 
-    public List<Asignatura> buscarAsignaturasPorCurso(String curso) {
+    public List<Asignatura> buscarAsignaturasPorCurso(Curso curso) {
         return asignaturaRepository.findByCurso(curso);
     }
 
     /**
-     * Guarda una nueva asignatura y le asigna su codigo.
+     * Guarda una nueva asignatura y le asigna su codigo. Valida unicidad por
+     * nombre y curso, y rango de horas semanales.
      */
     public Asignatura guardarAsignatura(Asignatura asignatura) {
         if (asignaturaRepository.existsByNombreAndCurso(
@@ -46,6 +48,7 @@ public class AsignaturaService {
             throw new RuntimeException("Ya existe la asignatura '"
                     + asignatura.getNombre() + "' en el curso " + asignatura.getCurso());
         }
+        validarHorasSemana(asignatura.getHorasSemana());
         Asignatura guardada = asignaturaRepository.save(asignatura);
         guardada.setCodigo(Constantes.PREFIJO_ASIG + guardada.getId());
         return asignaturaRepository.save(guardada);
@@ -53,6 +56,7 @@ public class AsignaturaService {
 
     public Asignatura actualizarAsignatura(Long id, Asignatura asignatura) {
         Asignatura existente = buscarAsignaturaPorId(id);
+        validarHorasSemana(asignatura.getHorasSemana());
         existente.setNombre(asignatura.getNombre());
         existente.setDescripcion(asignatura.getDescripcion());
         existente.setCurso(asignatura.getCurso());
@@ -63,5 +67,14 @@ public class AsignaturaService {
     public void borrarAsignatura(Long id) {
         buscarAsignaturaPorId(id);
         asignaturaRepository.deleteById(id);
+    }
+
+    // ============================================================
+    // METODOS PRIVADOS
+    // ============================================================
+    private void validarHorasSemana(int horas) {
+        if (horas < 1 || horas > 6) {
+            throw new RuntimeException("Las horas semanales deben estar entre 1 y 6");
+        }
     }
 }

@@ -1,6 +1,9 @@
 package com.colegio.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,7 +18,7 @@ import jakarta.persistence.Table;
  * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 2.0
+ * @version 3.0
  */
 @Entity
 @Table(name = "asignaturas")
@@ -28,18 +31,23 @@ public class Asignatura {
     /**
      * Codigo identificador con prefijo {@code ASG-}
      */
+    @Column(unique = true, nullable = false)
     private String codigo;
 
+    @Column(nullable = false)
     private String nombre;
 
     /**
-     * Curso al que pertenece la asignatura, ej: {@code 3º}
+     * Curso al que pertenece la asignatura
      */
-    private String curso;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Curso curso;
 
     /**
-     * Horas semanales de la asignatura
+     * Horas semanales de la asignatura, entre 1 y 6
      */
+    @Column(nullable = false)
     private int horasSemana;
 
     private String descripcion;
@@ -50,7 +58,7 @@ public class Asignatura {
     public Asignatura() {
     }
 
-    public Asignatura(String nombre, String curso, int horasSemana, String descripcion) {
+    public Asignatura(String nombre, Curso curso, int horasSemana, String descripcion) {
         this.nombre = nombre;
         this.curso = curso;
         this.horasSemana = horasSemana;
@@ -80,11 +88,11 @@ public class Asignatura {
         this.nombre = nombre;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 

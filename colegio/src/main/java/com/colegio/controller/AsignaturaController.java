@@ -13,8 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.colegio.model.Asignatura;
+import com.colegio.model.Curso;
 import com.colegio.service.AsignaturaService;
 
+/**
+ * Controlador REST para la gestion de asignaturas.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 3.0
+ */
 @RestController
 @RequestMapping("/api/v1/asignaturas")
 public class AsignaturaController {
@@ -33,7 +40,7 @@ public class AsignaturaController {
     }
 
     @GetMapping("/curso/{curso}")
-    public List<Asignatura> obtenerPorCurso(@PathVariable String curso) {
+    public List<Asignatura> obtenerPorCurso(@PathVariable Curso curso) {
         return asignaturaService.buscarAsignaturasPorCurso(curso);
     }
 
