@@ -2,14 +2,19 @@ package com.colegio.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -40,7 +45,7 @@ class ProfesorServiceTest {
         profesor = new Profesor("Carlos", "Martinez", "carlos@colegio.com", Especialidad.GENERAL);
         profesor.setCodigo("PROF-1");
         profesor2 = new Profesor("Pepe", "Garcia", "pepe@colegio.com", Especialidad.EDUCACION_FISICA);
-        profesor2.setCodigo("PROF2");
+        profesor2.setCodigo("PROF-2");
     }
 
     @Test
@@ -50,7 +55,19 @@ class ProfesorServiceTest {
 
         List<Profesor> resultado = profesorService.listarProfesores();
 
+        assertEquals(2, resultado.size());
         assertEquals("Carlos", resultado.get(0).getNombre());
+    }
+
+    @Test
+    @DisplayName("buscarProfesorPorId devuelve el profesor correcto")
+    void buscarProfesorPorId_devuelveProfesorCorrecto() {
+        when(profesorRepository.findById(1L)).thenReturn(Optional.of(profesor));
+
+        Profesor resultado = profesorService.buscarProfesorPorId(1L);
+
+        assertNotNull(resultado);
+        assertEquals("Carlos", resultado.getNombre());
     }
 
 }
