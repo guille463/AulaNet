@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.colegio.model.Especialidad;
 import com.colegio.model.Profesor;
 import com.colegio.repository.ProfesorRepository;
 import com.colegio.util.Constantes;
@@ -38,6 +39,10 @@ public class ProfesorService {
                 .orElseThrow(() -> new RuntimeException("Profesor con email " + email + " no encontrado"));
     }
 
+    public List<Profesor> buscarPorEspecialidad(Especialidad especialidad) {
+        return profesorRepository.findByEspecialidad(especialidad);
+    }
+
     public Profesor guardarProfesor(Profesor profesor) {
         if (profesorRepository.existsByEmail(profesor.getEmail())) {
             throw new RuntimeException("Ya existe un profesor con el email: " + profesor.getEmail());
@@ -49,16 +54,21 @@ public class ProfesorService {
 
     public Profesor actualizarProfesor(Long id, Profesor profesor) {
         Profesor existente = buscarProfesorPorId(id);
+
+        if (!existente.getEmail().equals(profesor.getEmail())
+                && profesorRepository.existsByEmail(profesor.getEmail())) {
+            throw new RuntimeException("Ya existe un profesor con el email: " + profesor.getEmail());
+        }
+
         existente.setNombre(profesor.getNombre());
         existente.setApellido(profesor.getApellido());
         existente.setEmail(profesor.getEmail());
-        existente.setFechaNac(profesor.getFechaNac());
         existente.setEspecialidad(profesor.getEspecialidad());
         return profesorRepository.save(existente);
     }
 
     public void borrarProfesor(Long id) {
-        buscarProfesorPorId(id); // lanza excepcion si no existe
+        buscarProfesorPorId(id);
         profesorRepository.deleteById(id);
     }
 }

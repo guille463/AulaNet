@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.colegio.model.Especialidad;
 import com.colegio.model.Profesor;
 import com.colegio.service.ProfesorService;
 
@@ -50,5 +51,10 @@ public class ProfesorController {
     @DeleteMapping("/{id}")
     public void borrar(@PathVariable Long id) {
         profesorService.borrarProfesor(id);
+    }
+
+    @GetMapping("/especialidad/{especialidad}")
+    public List<Profesor> obtenerPorEspecialidad(@PathVariable Especialidad especialidad) {
+        return profesorService.buscarPorEspecialidad(especialidad);
     }
 }
