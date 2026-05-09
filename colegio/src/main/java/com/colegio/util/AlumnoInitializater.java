@@ -34,37 +34,31 @@ public class AlumnoInitializater {
     public void iniciarAlumnos() {
         if (alumnoService.count() == 0) {
             for (int i = 0; i < config.getNumeroAlumnos(); i++) {
-                guardarAlumno(crearAlumnoAleatorio());
+                alumnoService.guardarAlumno(crearAlumnoAleatorio());
             }
         }
     }
 
     private Alumno crearAlumnoAleatorio() {
         LocalDate fechaNac = LocalDate.of(
-                faker.number().numberBetween(2010, 2018),
+                faker.number().numberBetween(2015, 2020),
                 faker.number().numberBetween(1, 12),
-                faker.number().numberBetween(1, 28)
-        );
+                faker.number().numberBetween(1, 28));
 
         String curso = calcularCurso(fechaNac);
+
         Aula aula = aulaService.findAulasConPlazasLibres()
-                .stream().findFirst()
-                .orElseThrow(() -> new RuntimeException("No hay plazas disponibles"));
+                .stream()
+                .filter(a -> a.getCurso().equals(curso))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No hay plazas disponibles en el curso " + curso));
 
         return new Alumno(
                 faker.internet().emailAddress(),
                 faker.name().firstName(),
                 faker.name().lastName(),
                 fechaNac,
-                curso,
-                aula
-        );
-    }
-
-    private void guardarAlumno(Alumno alumno) {
-        Alumno guardado = alumnoService.guardarAlumno(alumno);
-        guardado.setCodigo(Constantes.PREFIJO_ALUMNO + guardado.getId());
-        alumnoService.guardarAlumno(guardado);
+                aula);
     }
 
     private String calcularCurso(LocalDate fechaNac) {
@@ -72,18 +66,18 @@ public class AlumnoInitializater {
         String curso;
         if (edad == 6) {
             curso = "1º";
-        } else if (edad <= 8) {
+        } else if (edad == 7) {
             curso = "2º";
-        } else if (edad <= 9) {
+        } else if (edad == 8) {
             curso = "3º";
-        } else if (edad <= 10) {
+        } else if (edad == 9) {
             curso = "4º";
-        } else if (edad <= 11) {
+        } else if (edad == 10) {
             curso = "5º";
-        } else if (edad <= 13) {
+        } else if (edad == 11) {
             curso = "6º";
         } else {
-            throw new IllegalArgumentException("Edad fuera de rango: " + edad);
+            throw new IllegalArgumentException("Edad fuera de rango para primaria: " + edad);
         }
         return curso;
     }

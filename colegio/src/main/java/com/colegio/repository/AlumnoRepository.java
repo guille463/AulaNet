@@ -7,20 +7,26 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Alumno;
+import com.colegio.model.Aula;
 
 /**
- * Repositorio para la entidad Alumno.
+ * Repositorio para la entidad {@link Alumno}.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 2.0
  */
 @Repository
 public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 
     Optional<Alumno> findByEmail(String email);
 
-    Optional<Alumno> findByNombre(String nombre);
+    boolean existsByEmail(String email);
 
-    List<Alumno> findByCurso(String curso);
+    List<Alumno> findByAula(Aula aula);
 
-    List<Alumno> findByNombreContaining(String nombre);
+    List<Alumno> findByAulaId(Long aulaId);
+
+    List<Alumno> findByNombreContainingIgnoreCase(String nombre);
 
     List<Alumno> findByNombreAndApellido(String nombre, String apellido);
 }

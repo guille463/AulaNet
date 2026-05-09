@@ -6,116 +6,94 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colegio.model.Alumno;
+import com.colegio.model.Aula;
 import com.colegio.repository.AlumnoRepository;
+import com.colegio.repository.AulaRepository;
 import com.colegio.util.Constantes;
 
 /**
  * Servicio que gestiona la logica de negocio de los alumnos.
  *
- * <p>
- * Actua como intermediario entre {@link AlumnoController} y
- * {@link AlumnoRepository}. Contiene las reglas de negocio y operaciones CRUD
- * sobre {@link Alumno}.
- * </p>
- *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 1.0
+ * @version 2.0
  */
 @Service
 public class AlumnoService {
 
-    /**
-     * Repositorio para acceder a los datos de {@link Alumno}
-     */
     @Autowired
     private AlumnoRepository alumnoRepository;
+
+    @Autowired
+    private AulaRepository aulaRepository;
 
     // ============================================================
     // METODOS CRUD
     // ============================================================
-    /**
-     * Devuelve la lista completa de alumnos.
-     *
-     * @return lista de {@link Alumno}
-     */
-    public List<Alumno> ListarAlumnos() {
+    public List<Alumno> listarAlumnos() {
         return alumnoRepository.findAll();
     }
 
-    /**
-     * Busca un alumno por su identificador.
-     *
-     * @param id identificador del alumno
-     * @return {@link Alumno} encontrado
-     * @throws RuntimeException si el alumno no existe
-     */
-    public Alumno buscarPorid(Long id) {
+    public Alumno buscarPorId(Long id) {
         return alumnoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alumno con id: " + id + " no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Alumno con id " + id + " no encontrado"));
     }
 
-    public Alumno buscarAlumnoPorEmail(String email) {
-        return alumnoRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Alumno con id: " + email + " no encontrado"));
+    public Alumno buscarPorEmail(String email) {
+        return alumnoRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Alumno con email " + email + " no encontrado"));
     }
 
-    public Alumno buscarAlumnoPorNombre(String nombre) {
-        return alumnoRepository.findByNombre(nombre)
-                .orElseThrow(() -> new RuntimeException("Alumno con nombre: " + nombre + " no encontrado"));
+    public List<Alumno> buscarPorAula(Long aulaId) {
+        return alumnoRepository.findByAulaId(aulaId);
     }
 
-    public List<Alumno> buscarAlumnosPorCurso(String curso) {
-        return alumnoRepository.findByCurso(curso);
+    public List<Alumno> buscarPorNombre(String nombre) {
+        return alumnoRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
-    public List<Alumno> buscarAlumnosPorNombreContaining(String nombre) {
-        return alumnoRepository.findByNombreContaining(nombre);
-    }
-
-    public List<Alumno> buscarAlumnosPorNombreYApellido(String nombre, String apellido) {
+    public List<Alumno> buscarPorNombreYApellido(String nombre, String apellido) {
         return alumnoRepository.findByNombreAndApellido(nombre, apellido);
     }
 
     /**
-     * Guarda un nuevo alumno y le asigna su codigo identificativo.
-     *
-     * <p>
-     * El codigo se genera automaticamente con el prefijo {@code ALUM-} seguido
-     * del ID generado por la base de datos.
-     * </p>
-     *
-     * @param alumno datos del {@link Alumno} a guardar
-     * @return alumno guardado con codigo asignado
+     * Guarda un nuevo alumno verificando que el aula exista y tenga plazas
+     * libres.
      */
     public Alumno guardarAlumno(Alumno alumno) {
+        if (alumnoRepository.existsByEmail(alumno.getEmail())) {
+            throw new RuntimeException("Ya existe un alumno con el email: " + alumno.getEmail());
+        }
 
-        alumno.setCodigo(Constantes.PREFIJO_ALUMNO + alumno.getId());
-        return alumnoRepository.save(alumno);
+        Aula aula = aulaRepository.findById(alumno.getAula().getId())
+                .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
+
+        int ocupacion = alumnoRepository.findByAula(aula).size();
+        if (ocupacion >= aula.getCapacidad()) {
+            throw new RuntimeException("El aula " + aula.getCodigo() + " está llena");
+        }
+
+        alumno.setAula(aula);
+        Alumno guardado = alumnoRepository.save(alumno);
+        guardado.setCodigo(Constantes.PREFIJO_ALUMNO + guardado.getId());
+        return alumnoRepository.save(guardado);
     }
 
-    /**
-     * Actualiza los datos de un alumno existente.
-     *
-     * @param id identificador del alumno a actualizar
-     * @param alumno datos nuevos del {@link Alumno}
-     * @return alumno actualizado
-     * @throws RuntimeException si el alumno no existe
-     */
     public Alumno actualizarAlumno(Long id, Alumno alumno) {
-        Alumno existente = buscarPorid(id);
+        Alumno existente = buscarPorId(id);
         existente.setNombre(alumno.getNombre());
         existente.setApellido(alumno.getApellido());
         existente.setEmail(alumno.getEmail());
         existente.setFechaNac(alumno.getFechaNac());
-        existente.setCurso(alumno.getCurso());
+        if (alumno.getAula() != null) {
+            Aula aula = aulaRepository.findById(alumno.getAula().getId())
+                    .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
+            existente.setAula(aula);
+        }
         return alumnoRepository.save(existente);
     }
 
-    /**
-     * Elimina un alumno por su identificador.
-     *
-     * @param id identificador del alumno a eliminar
-     */
     public void borrarAlumno(Long id) {
+        buscarPorId(id);
         alumnoRepository.deleteById(id);
     }
 
