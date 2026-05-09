@@ -13,8 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.colegio.model.Alumno;
+import com.colegio.model.Curso;
 import com.colegio.service.AlumnoService;
 
+/**
+ * Controlador REST para la gestion de alumnos.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 2.0
+ */
 @RestController
 @RequestMapping("/api/v1/alumnos")
 public class AlumnoController {
@@ -40,6 +47,11 @@ public class AlumnoController {
     @GetMapping("/aula/{aulaId}")
     public List<Alumno> obtenerPorAula(@PathVariable Long aulaId) {
         return alumnoService.buscarPorAula(aulaId);
+    }
+
+    @GetMapping("/curso/{curso}")
+    public List<Alumno> obtenerPorCurso(@PathVariable Curso curso) {
+        return alumnoService.buscarPorCurso(curso);
     }
 
     @GetMapping("/buscar/{nombre}")

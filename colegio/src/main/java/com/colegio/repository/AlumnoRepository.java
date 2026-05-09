@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Alumno;
 import com.colegio.model.Aula;
+import com.colegio.model.Curso;
 
 /**
  * Repositorio para la entidad {@link Alumno}.
@@ -25,6 +26,8 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
     List<Alumno> findByAula(Aula aula);
 
     List<Alumno> findByAulaId(Long aulaId);
+
+    List<Alumno> findByAulaCurso(Curso curso);
 
     List<Alumno> findByNombreContainingIgnoreCase(String nombre);
 
