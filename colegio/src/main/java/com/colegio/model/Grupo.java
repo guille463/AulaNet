@@ -1,16 +1,12 @@
 package com.colegio.model;
 
-public enum Curso {
-    PRIMERO("1º"),
-    SEGUNDO("2º"),
-    TERCERO("3º"),
-    CUARTO("4º"),
-    QUINTO("5º"),
-    SEXTO("6º");
+public enum Grupo {
+    A("A"),
+    B("B");
 
     private final String etiqueta;
 
-    Curso(String etiqueta) {
+    Grupo(String etiqueta) {
         this.etiqueta = etiqueta;
     }
 
