@@ -1,0 +1,56 @@
+package com.colegio.service;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.colegio.model.Especialidad;
+import com.colegio.model.Profesor;
+import com.colegio.repository.ProfesorRepository;
+
+/**
+ * Pruebas unitarias del servicio {@link ProfesorService}.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 2.0
+ */
+@ExtendWith(MockitoExtension.class)
+class ProfesorServiceTest {
+
+    @Mock
+    private ProfesorRepository profesorRepository;
+
+    @InjectMocks
+    private ProfesorService profesorService;
+
+    private Profesor profesor;
+    private Profesor profesor2;
+
+    @BeforeEach
+    void setUp() {
+        profesor = new Profesor("Carlos", "Martinez", "carlos@colegio.com", Especialidad.GENERAL);
+        profesor.setCodigo("PROF-1");
+        profesor2 = new Profesor("Pepe", "Garcia", "pepe@colegio.com", Especialidad.EDUCACION_FISICA);
+        profesor2.setCodigo("PROF2");
+    }
+
+    @Test
+    @DisplayName("listarProfesores devuelve lista correcta")
+    void listarProfesores_devuelveListaCorrecta() {
+        when(profesorRepository.findAll()).thenReturn(Arrays.asList(profesor, profesor2));
+
+        List<Profesor> resultado = profesorService.listarProfesores();
+
+        assertEquals("Carlos", resultado.get(0).getNombre());
+    }
+
+}
