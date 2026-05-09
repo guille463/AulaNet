@@ -7,7 +7,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ import com.colegio.repository.ProfesorRepository;
  * Pruebas unitarias del servicio {@link ProfesorService}.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 1.0
+ * @version 2.0
  */
 @ExtendWith(MockitoExtension.class)
 class ProfesorServiceTest {
@@ -38,27 +37,23 @@ class ProfesorServiceTest {
     private ProfesorService profesorService;
 
     private Profesor profesor;
-    private Profesor profesorTutor;
+    private Profesor profesor2;
 
     @BeforeEach
     void setUp() {
-        profesor = new Profesor("Carlos", "Martinez", "carlos@colegio.com", null, "Matematicas", false, null);
+        profesor = new Profesor("Carlos", "Martinez", "carlos@colegio.com", null, "Matematicas");
         profesor.setCodigo("PROF-1");
-        profesorTutor = new Profesor("Pepe", "Martinez", "carlos@colegio.com", null, "Matematicas", true, "1ºA");
-        profesorTutor.setCodigo("PROF-2");
-
+        profesor2 = new Profesor("Pepe", "Garcia", "pepe@colegio.com", null, "Lengua");
+        profesor2.setCodigo("PROF-2");
     }
 
     @Test
     @DisplayName("listarProfesores devuelve lista correcta")
     void listarProfesores_devuelveListaCorrecta() {
-        // Arrange
-        when(profesorRepository.findAll()).thenReturn(Arrays.asList(profesor, profesorTutor));
+        when(profesorRepository.findAll()).thenReturn(Arrays.asList(profesor, profesor2));
 
-        // Act
         List<Profesor> resultado = profesorService.listarProfesores();
 
-        // Assert
         assertEquals(2, resultado.size());
         assertEquals("Carlos", resultado.get(0).getNombre());
     }
@@ -66,13 +61,10 @@ class ProfesorServiceTest {
     @Test
     @DisplayName("buscarProfesorPorId devuelve el profesor correcto")
     void buscarProfesorPorId_devuelveProfesorCorrecto() {
-        // Arrange
         when(profesorRepository.findById(1L)).thenReturn(Optional.of(profesor));
 
-        // Act
         Profesor resultado = profesorService.buscarProfesorPorId(1L);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals("Carlos", resultado.getNombre());
     }
@@ -80,30 +72,20 @@ class ProfesorServiceTest {
     @Test
     @DisplayName("buscarProfesorPorId lanza excepcion si no existe")
     void buscarProfesorPorId_lanzaExcepcionSiNoExiste() {
-        // Arrange
         when(profesorRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act y Assert
         assertThrows(RuntimeException.class, () -> {
             profesorService.buscarProfesorPorId(99L);
         });
     }
 
     @Test
-    @DisplayName("profesorTutor tiene esTutor true")
-    void profesorTutor_tieneEsTutorTrue() {
-        // Assert
-        assertTrue(profesorTutor.isEsTutor());
-        assertEquals("1ºA", profesorTutor.getTutorDeCurso());
-    }
-
-    @Test
     @DisplayName("borrarProfesor llama a deleteById una vez")
     void borrarProfesor_llamaDeleteById() {
-        // Act
+        when(profesorRepository.findById(1L)).thenReturn(Optional.of(profesor));
+
         profesorService.borrarProfesor(1L);
 
-        // Assert
         verify(profesorRepository, times(1)).deleteById(1L);
     }
 }

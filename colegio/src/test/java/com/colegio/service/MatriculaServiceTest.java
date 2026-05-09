@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.colegio.model.Alumno;
 import com.colegio.model.Asignatura;
+import com.colegio.model.Aula;
 import com.colegio.model.Matricula;
 import com.colegio.repository.AlumnoRepository;
 import com.colegio.repository.AsignaturaRepository;
@@ -29,7 +30,7 @@ import com.colegio.repository.MatriculaRepository;
  * Pruebas unitarias del servicio {@link MatriculaService}.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 1.0
+ * @version 2.0
  */
 @ExtendWith(MockitoExtension.class)
 class MatriculaServiceTest {
@@ -47,32 +48,25 @@ class MatriculaServiceTest {
     private MatriculaService matriculaService;
 
     private Matricula matricula;
-
     private Alumno alumno;
-
     private Asignatura asignatura;
 
     @BeforeEach
     void setUp() {
-        alumno = new Alumno("juan@colegio.com", "Juan", "Garcia", null, "1ºA");
-        asignatura = new Asignatura("ASG-1", 6, "1ºA", 5, "Matematicas", "Calculo basico");
-        matricula = new Matricula(alumno, asignatura, null, 8.5, "1ºA");
+        Aula aula = new Aula("1º", "A", 30);
+        alumno = new Alumno("juan@colegio.com", "Juan", "Garcia", null, aula);
+        asignatura = new Asignatura("Matematicas", "1º", 5, "Calculo basico");
+        matricula = new Matricula(alumno, asignatura, null, 8.5, "1º");
         matricula.setCodigo("MTR-1");
     }
 
-    // ============================================================
-    // TESTS
-    // ============================================================
     @Test
     @DisplayName("listarMatriculas devuelve lista correcta")
     void listarMatriculas_devuelveListaCorrecta() {
-        // Arrange
         when(matriculaRepository.findAll()).thenReturn(Arrays.asList(matricula));
 
-        // Act
         List<Matricula> resultado = matriculaService.listarMatriculas();
 
-        // Assert
         assertEquals(1, resultado.size());
         assertEquals(8.5, resultado.get(0).getNota());
     }
@@ -80,13 +74,10 @@ class MatriculaServiceTest {
     @Test
     @DisplayName("buscarMatriculaPorId devuelve la matricula correcta")
     void buscarMatriculaPorId_devuelveMatriculaCorrecta() {
-        // Arrange
         when(matriculaRepository.findById(1L)).thenReturn(Optional.of(matricula));
 
-        // Act
         Matricula resultado = matriculaService.buscarMatriculaPorId(1L);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(8.5, resultado.getNota());
     }
@@ -94,10 +85,8 @@ class MatriculaServiceTest {
     @Test
     @DisplayName("buscarMatriculaPorId lanza excepcion si no existe")
     void buscarMatriculaPorId_lanzaExcepcionSiNoExiste() {
-        // Arrange
         when(matriculaRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act y Assert
         assertThrows(RuntimeException.class, () -> {
             matriculaService.buscarMatriculaPorId(99L);
         });
@@ -106,10 +95,10 @@ class MatriculaServiceTest {
     @Test
     @DisplayName("borrarmatricula llama a deleteById una vez")
     void borrarmatricula_llamaDeleteById() {
-        // Act
+        when(matriculaRepository.findById(1L)).thenReturn(Optional.of(matricula));
+
         matriculaService.borrarmatricula(1L);
 
-        // Assert
         verify(matriculaRepository, times(1)).deleteById(1L);
     }
 }

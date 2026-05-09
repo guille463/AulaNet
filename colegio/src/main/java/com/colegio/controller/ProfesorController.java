@@ -28,8 +28,13 @@ public class ProfesorController {
     }
 
     @GetMapping("/{id}")
-    public Profesor obtenerPorid(@PathVariable Long id) {
+    public Profesor obtenerPorId(@PathVariable Long id) {
         return profesorService.buscarProfesorPorId(id);
+    }
+
+    @GetMapping("/email/{email}")
+    public Profesor obtenerPorEmail(@PathVariable String email) {
+        return profesorService.buscarProfesorPorEmail(email);
     }
 
     @PostMapping
@@ -38,9 +43,8 @@ public class ProfesorController {
     }
 
     @PutMapping("/{id}")
-    public Profesor actualizarProfesor(@RequestBody Profesor profesor, @PathVariable Long id) {
+    public Profesor actualizar(@PathVariable Long id, @RequestBody Profesor profesor) {
         return profesorService.actualizarProfesor(id, profesor);
-
     }
 
     @DeleteMapping("/{id}")
