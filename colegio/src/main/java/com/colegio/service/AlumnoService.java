@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.colegio.model.Alumno;
 import com.colegio.model.Aula;
+import com.colegio.model.Curso;
 import com.colegio.repository.AlumnoRepository;
 import com.colegio.repository.AulaRepository;
 import com.colegio.util.Constantes;
@@ -47,6 +48,10 @@ public class AlumnoService {
         return alumnoRepository.findByAulaId(aulaId);
     }
 
+    public List<Alumno> buscarPorCurso(Curso curso) {
+        return alumnoRepository.findByAulaCurso(curso);
+    }
+
     public List<Alumno> buscarPorNombre(String nombre) {
         return alumnoRepository.findByNombreContainingIgnoreCase(nombre);
     }
@@ -80,10 +85,15 @@ public class AlumnoService {
 
     public Alumno actualizarAlumno(Long id, Alumno alumno) {
         Alumno existente = buscarPorId(id);
+
+        if (!existente.getEmail().equals(alumno.getEmail())
+                && alumnoRepository.existsByEmail(alumno.getEmail())) {
+            throw new RuntimeException("Ya existe un alumno con el email: " + alumno.getEmail());
+        }
+
         existente.setNombre(alumno.getNombre());
         existente.setApellido(alumno.getApellido());
         existente.setEmail(alumno.getEmail());
-        existente.setFechaNac(alumno.getFechaNac());
         if (alumno.getAula() != null) {
             Aula aula = aulaRepository.findById(alumno.getAula().getId())
                     .orElseThrow(() -> new RuntimeException("Aula no encontrada"));

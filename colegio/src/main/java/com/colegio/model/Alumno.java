@@ -1,7 +1,6 @@
 package com.colegio.model;
 
-import java.time.LocalDate;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +13,6 @@ import jakarta.persistence.Transient;
 
 /**
  * Entidad que representa a un alumno del colegio.
- *
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -30,15 +28,23 @@ public class Alumno {
     /**
      * Codigo identificador con prefijo {@code ALUM-}
      */
+    @Column(unique = true, nullable = false)
     private String codigo;
 
+    @Column(nullable = false)
     private String nombre;
-    private String apellido;
-    private String email;
-    private LocalDate fechaNac;
 
+    @Column(nullable = false)
+    private String apellido;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    /**
+     * Aula a la que pertenece el alumno
+     */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "aula_id")
+    @JoinColumn(name = "aula_id", nullable = false)
     private Aula aula;
 
     // ============================================================
@@ -47,12 +53,10 @@ public class Alumno {
     public Alumno() {
     }
 
-    public Alumno(String email, String nombre, String apellido,
-            LocalDate fechaNac, Aula aula) {
+    public Alumno(String email, String nombre, String apellido, Aula aula) {
         this.email = email;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.fechaNac = fechaNac;
         this.aula = aula;
     }
 
@@ -95,14 +99,6 @@ public class Alumno {
         this.email = email;
     }
 
-    public LocalDate getFechaNac() {
-        return fechaNac;
-    }
-
-    public void setFechaNac(LocalDate fechaNac) {
-        this.fechaNac = fechaNac;
-    }
-
     public Aula getAula() {
         return aula;
     }
@@ -112,10 +108,10 @@ public class Alumno {
     }
 
     /**
-     * Curso del aula asignada
+     * Curso derivado del aula asignada, no persistido
      */
     @Transient
-    public String getCurso() {
+    public Curso getCurso() {
         return aula != null ? aula.getCurso() : null;
     }
 
@@ -126,6 +122,6 @@ public class Alumno {
     public String toString() {
         return "Alumno{id=" + id + ", codigo=" + codigo + ", nombre=" + nombre
                 + ", apellido=" + apellido + ", email=" + email
-                + ", fechaNac=" + fechaNac + ", aula=" + (aula != null ? aula.getCodigo() : "sin aula") + "}";
+                + ", aula=" + (aula != null ? aula.getCodigo() : "sin aula") + "}";
     }
 }
