@@ -20,6 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.colegio.model.Alumno;
 import com.colegio.model.Aula;
+import com.colegio.model.Curso;
+import com.colegio.model.Grupo;
 import com.colegio.repository.AlumnoRepository;
 import com.colegio.repository.AulaRepository;
 
@@ -45,7 +47,7 @@ class AlumnoServiceTest {
 
     @BeforeEach
     void setUp() {
-        Aula aula = new Aula("1º", "A", 30);
+        Aula aula = new Aula(Curso.PRIMERO, Grupo.A, 25);
         alumno = new Alumno("juan@colegio.com", "Juan", "Garcia", null, aula);
         alumno.setCodigo("ALUM-1");
     }
