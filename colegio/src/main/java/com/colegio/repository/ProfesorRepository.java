@@ -1,10 +1,12 @@
 package com.colegio.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.colegio.model.Especialidad;
 import com.colegio.model.Profesor;
 
 /**
@@ -21,4 +23,6 @@ public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
     Optional<Profesor> findByCodigo(String codigo);
 
     boolean existsByEmail(String email);
+
+    List<Profesor> findByEspecialidad(Especialidad especialidad);
 }

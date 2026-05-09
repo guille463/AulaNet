@@ -1,8 +1,9 @@
 package com.colegio.model;
 
-import java.time.LocalDate;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,8 +11,6 @@ import jakarta.persistence.Table;
 
 /**
  * Entidad que representa a un profesor del colegio.
- *
- *
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -27,13 +26,24 @@ public class Profesor {
     /**
      * Codigo identificador con prefijo {@code PROF-}
      */
+    @Column(unique = true, nullable = false)
     private String codigo;
 
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
     private String apellido;
+
+    @Column(unique = true, nullable = false)
     private String email;
-    private LocalDate fechaNac;
-    private String especialidad;
+
+    /**
+     * Especialidad del profesor, determina si es generalista o especialista
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Especialidad especialidad;
 
     // ============================================================
     // CONSTRUCTORES
@@ -41,12 +51,10 @@ public class Profesor {
     public Profesor() {
     }
 
-    public Profesor(String nombre, String apellido, String email,
-            LocalDate fechaNac, String especialidad) {
+    public Profesor(String nombre, String apellido, String email, Especialidad especialidad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.fechaNac = fechaNac;
         this.especialidad = especialidad;
     }
 
@@ -89,19 +97,11 @@ public class Profesor {
         this.email = email;
     }
 
-    public LocalDate getFechaNac() {
-        return fechaNac;
-    }
-
-    public void setFechaNac(LocalDate fechaNac) {
-        this.fechaNac = fechaNac;
-    }
-
-    public String getEspecialidad() {
+    public Especialidad getEspecialidad() {
         return especialidad;
     }
 
-    public void setEspecialidad(String especialidad) {
+    public void setEspecialidad(Especialidad especialidad) {
         this.especialidad = especialidad;
     }
 
@@ -112,6 +112,6 @@ public class Profesor {
     public String toString() {
         return "Profesor{id=" + id + ", codigo=" + codigo + ", nombre=" + nombre
                 + ", apellido=" + apellido + ", email=" + email
-                + ", fechaNac=" + fechaNac + ", especialidad=" + especialidad + "}";
+                + ", especialidad=" + especialidad + "}";
     }
 }
