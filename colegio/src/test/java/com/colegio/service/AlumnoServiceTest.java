@@ -44,11 +44,12 @@ class AlumnoServiceTest {
     private AlumnoService alumnoService;
 
     private Alumno alumno;
+    private Aula aula;
 
     @BeforeEach
     void setUp() {
-        Aula aula = new Aula(Curso.PRIMERO, Grupo.A, 25);
-        alumno = new Alumno("juan@colegio.com", "Juan", "Garcia", null, aula);
+        aula = new Aula(Curso.PRIMERO, Grupo.A, 25);
+        alumno = new Alumno("juan@colegio.com", "Juan", "Garcia", aula);
         alumno.setCodigo("ALUM-1");
     }
 
@@ -92,5 +93,38 @@ class AlumnoServiceTest {
         alumnoService.borrarAlumno(1L);
 
         verify(alumnoRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    @DisplayName("guardarAlumno lanza excepcion si email duplicado")
+    void guardarAlumno_lanzaExcepcionSiEmailDuplicado() {
+        when(alumnoRepository.existsByEmail("juan@colegio.com")).thenReturn(true);
+
+        assertThrows(RuntimeException.class, () -> {
+            alumnoService.guardarAlumno(alumno);
+        });
+    }
+
+    @Test
+    @DisplayName("actualizarAlumno lanza excepcion si email duplicado")
+    void actualizarAlumno_lanzaExcepcionSiEmailDuplicado() {
+        Alumno datos = new Alumno("otro@colegio.com", "Juan", "Garcia", aula);
+        when(alumnoRepository.findById(1L)).thenReturn(Optional.of(alumno));
+        when(alumnoRepository.existsByEmail("otro@colegio.com")).thenReturn(true);
+
+        assertThrows(RuntimeException.class, () -> {
+            alumnoService.actualizarAlumno(1L, datos);
+        });
+    }
+
+    @Test
+    @DisplayName("buscarPorCurso devuelve lista correcta")
+    void buscarPorCurso_devuelveListaCorrecta() {
+        when(alumnoRepository.findByAulaCurso(Curso.PRIMERO)).thenReturn(Arrays.asList(alumno));
+
+        List<Alumno> resultado = alumnoService.buscarPorCurso(Curso.PRIMERO);
+
+        assertEquals(1, resultado.size());
+        assertEquals(Curso.PRIMERO, resultado.get(0).getCurso());
     }
 }

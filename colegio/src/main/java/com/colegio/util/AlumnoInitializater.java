@@ -10,12 +10,19 @@ import org.springframework.stereotype.Component;
 import com.colegio.config.InicializadorConfig;
 import com.colegio.model.Alumno;
 import com.colegio.model.Aula;
+import com.colegio.model.Curso;
 import com.colegio.service.AlumnoService;
 import com.colegio.service.AulaService;
 import com.github.javafaker.Faker;
 
 import jakarta.transaction.Transactional;
 
+/**
+ * Inicializador de alumnos del colegio.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 2.0
+ */
 @Component
 public class AlumnoInitializater {
 
@@ -45,7 +52,7 @@ public class AlumnoInitializater {
                 faker.number().numberBetween(1, 12),
                 faker.number().numberBetween(1, 28));
 
-        String curso = calcularCurso(fechaNac);
+        Curso curso = calcularCurso(fechaNac);
 
         Aula aula = aulaService.findAulasConPlazasLibres()
                 .stream()
@@ -57,28 +64,29 @@ public class AlumnoInitializater {
                 faker.internet().emailAddress(),
                 faker.name().firstName(),
                 faker.name().lastName(),
-                fechaNac,
                 aula);
     }
 
-    private String calcularCurso(LocalDate fechaNac) {
+    private Curso calcularCurso(LocalDate fechaNac) {
         int edad = Period.between(fechaNac, LocalDate.now()).getYears();
-        String curso;
         if (edad == 6) {
-            curso = "1º";
-        } else if (edad == 7) {
-            curso = "2º";
-        } else if (edad == 8) {
-            curso = "3º";
-        } else if (edad == 9) {
-            curso = "4º";
-        } else if (edad == 10) {
-            curso = "5º";
-        } else if (edad == 11) {
-            curso = "6º";
-        } else {
-            throw new IllegalArgumentException("Edad fuera de rango para primaria: " + edad);
+            return Curso.PRIMERO;
         }
-        return curso;
+        if (edad == 7) {
+            return Curso.SEGUNDO;
+        }
+        if (edad == 8) {
+            return Curso.TERCERO;
+        }
+        if (edad == 9) {
+            return Curso.CUARTO;
+        }
+        if (edad == 10) {
+            return Curso.QUINTO;
+        }
+        if (edad == 11) {
+            return Curso.SEXTO;
+        }
+        throw new IllegalArgumentException("Edad fuera de rango para primaria: " + edad);
     }
 }
