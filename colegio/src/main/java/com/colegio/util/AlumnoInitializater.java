@@ -69,24 +69,22 @@ public class AlumnoInitializater {
 
     private Curso calcularCurso(LocalDate fechaNac) {
         int edad = Period.between(fechaNac, LocalDate.now()).getYears();
+        Curso curso;
         if (edad == 6) {
-            return Curso.PRIMERO;
+            curso = Curso.PRIMERO;
+        } else if (edad == 7) {
+            curso = Curso.SEGUNDO;
+        } else if (edad == 8) {
+            curso = Curso.TERCERO;
+        } else if (edad == 9) {
+            curso = Curso.CUARTO;
+        } else if (edad == 10) {
+            curso = Curso.QUINTO;
+        } else if (edad == 11) {
+            curso = Curso.SEXTO;
+        } else {
+            throw new IllegalArgumentException("Edad fuera de rango para primaria: " + edad);
         }
-        if (edad == 7) {
-            return Curso.SEGUNDO;
-        }
-        if (edad == 8) {
-            return Curso.TERCERO;
-        }
-        if (edad == 9) {
-            return Curso.CUARTO;
-        }
-        if (edad == 10) {
-            return Curso.QUINTO;
-        }
-        if (edad == 11) {
-            return Curso.SEXTO;
-        }
-        throw new IllegalArgumentException("Edad fuera de rango para primaria: " + edad);
+        return curso;
     }
 }

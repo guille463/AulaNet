@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.times;
@@ -18,127 +19,129 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.colegio.model.Aula;
+import com.colegio.model.Asignatura;
 import com.colegio.model.Curso;
-import com.colegio.model.Especialidad;
-import com.colegio.model.Grupo;
-import com.colegio.model.Profesor;
-import com.colegio.repository.AulaRepository;
-import com.colegio.repository.ProfesorRepository;
+import com.colegio.repository.AsignaturaRepository;
 
 /**
- * Pruebas unitarias del servicio {@link AulaService}.
+ * Pruebas unitarias del servicio {@link AsignaturaService}.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 3.0
+ * @version 1.0
  */
 @ExtendWith(MockitoExtension.class)
-class AulaServiceTest {
+class AsignaturaServiceTest {
 
     @Mock
-    private AulaRepository aulaRepository;
-
-    @Mock
-    private ProfesorRepository profesorRepository;
+    private AsignaturaRepository asignaturaRepository;
 
     @InjectMocks
-    private AulaService aulaService;
+    private AsignaturaService asignaturaService;
 
-    private Aula aula;
-    private Profesor profesor;
+    private Asignatura asignatura;
 
     @BeforeEach
     void setUp() {
-        aula = new Aula(Curso.PRIMERO, Grupo.A, 25);
-        profesor = new Profesor("Carlos", "Martinez", "carlos@colegio.com", Especialidad.GENERAL);
-        profesor.setCodigo("PROF-1");
+        asignatura = new Asignatura("Matematicas", Curso.PRIMERO, 4, "Aritmetica basica");
+        asignatura.setCodigo("ASG-1");
     }
 
     @Test
-    @DisplayName("listarAulas devuelve lista correcta")
-    void listarAulas_devuelveListaCorrecta() {
-        when(aulaRepository.findAll()).thenReturn(Arrays.asList(aula));
+    @DisplayName("listarAsignaturas devuelve lista correcta")
+    void listarAsignaturas_devuelveListaCorrecta() {
+        when(asignaturaRepository.findAll()).thenReturn(Arrays.asList(asignatura));
 
-        List<Aula> resultado = aulaService.listarAulas();
+        List<Asignatura> resultado = asignaturaService.listarAsignaturas();
+
+        assertEquals(1, resultado.size());
+        assertEquals("Matematicas", resultado.get(0).getNombre());
+    }
+
+    @Test
+    @DisplayName("buscarAsignaturaPorId devuelve la asignatura correcta")
+    void buscarAsignaturaPorId_devuelveAsignaturaCorrecta() {
+        when(asignaturaRepository.findById(1L)).thenReturn(Optional.of(asignatura));
+
+        Asignatura resultado = asignaturaService.buscarAsignaturaPorId(1L);
+
+        assertNotNull(resultado);
+        assertEquals("Matematicas", resultado.getNombre());
+    }
+
+    @Test
+    @DisplayName("buscarAsignaturaPorId lanza excepcion si no existe")
+    void buscarAsignaturaPorId_lanzaExcepcionSiNoExiste() {
+        when(asignaturaRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {
+            asignaturaService.buscarAsignaturaPorId(99L);
+        });
+    }
+
+    @Test
+    @DisplayName("buscarAsignaturasPorCurso devuelve lista correcta")
+    void buscarAsignaturasPorCurso_devuelveListaCorrecta() {
+        when(asignaturaRepository.findByCurso(Curso.PRIMERO)).thenReturn(Arrays.asList(asignatura));
+
+        List<Asignatura> resultado = asignaturaService.buscarAsignaturasPorCurso(Curso.PRIMERO);
 
         assertEquals(1, resultado.size());
         assertEquals(Curso.PRIMERO, resultado.get(0).getCurso());
     }
 
     @Test
-    @DisplayName("buscarAulaPorId devuelve el aula correcta")
-    void buscarAulaPorId_devuelveAulaCorrecta() {
-        when(aulaRepository.findById(1L)).thenReturn(Optional.of(aula));
-
-        Aula resultado = aulaService.buscarAulaPorId(1L);
-
-        assertNotNull(resultado);
-        assertEquals(Curso.PRIMERO, resultado.getCurso());
-    }
-
-    @Test
-    @DisplayName("buscarAulaPorId lanza excepcion si no existe")
-    void buscarAulaPorId_lanzaExcepcionSiNoExiste() {
-        when(aulaRepository.findById(99L)).thenReturn(Optional.empty());
+    @DisplayName("guardarAsignatura lanza excepcion si nombre y curso duplicados")
+    void guardarAsignatura_lanzaExcepcionSiNombreYCursoDuplicados() {
+        when(asignaturaRepository.existsByNombreAndCurso("Matematicas", Curso.PRIMERO))
+                .thenReturn(true);
 
         assertThrows(RuntimeException.class, () -> {
-            aulaService.buscarAulaPorId(99L);
+            asignaturaService.guardarAsignatura(asignatura);
         });
     }
 
     @Test
-    @DisplayName("borrarAula llama a deleteById una vez")
-    void borrarAula_llamaDeleteById() {
-        when(aulaRepository.findById(1L)).thenReturn(Optional.of(aula));
-
-        aulaService.borrarAula(1L);
-
-        verify(aulaRepository, times(1)).deleteById(1L);
-    }
-
-    @Test
-    @DisplayName("guardarAula lanza excepcion si capacidad invalida")
-    void guardarAula_lanzaExcepcionSiCapacidadInvalida() {
-        Aula invalida = new Aula(Curso.PRIMERO, Grupo.A, 10);
+    @DisplayName("guardarAsignatura lanza excepcion si horas semanales invalidas")
+    void guardarAsignatura_lanzaExcepcionSiHorasInvalidas() {
+        Asignatura invalida = new Asignatura("Lengua", Curso.PRIMERO, 8, "desc");
+        when(asignaturaRepository.existsByNombreAndCurso("Lengua", Curso.PRIMERO))
+                .thenReturn(false);
 
         assertThrows(RuntimeException.class, () -> {
-            aulaService.guardarAula(invalida);
+            asignaturaService.guardarAsignatura(invalida);
         });
     }
 
     @Test
-    @DisplayName("actualizarAula lanza excepcion si capacidad invalida")
-    void actualizarAula_lanzaExcepcionSiCapacidadInvalida() {
-        Aula datos = new Aula(Curso.PRIMERO, Grupo.A, 50);
-        when(aulaRepository.findById(1L)).thenReturn(Optional.of(aula));
+    @DisplayName("guardarAsignatura llama a save dos veces para asignar codigo")
+    void guardarAsignatura_llamaSaveDosVeces() {
+        when(asignaturaRepository.existsByNombreAndCurso("Matematicas", Curso.PRIMERO))
+                .thenReturn(false);
+        when(asignaturaRepository.save(any(Asignatura.class))).thenReturn(asignatura);
+
+        asignaturaService.guardarAsignatura(asignatura);
+
+        verify(asignaturaRepository, times(2)).save(any(Asignatura.class));
+    }
+
+    @Test
+    @DisplayName("actualizarAsignatura lanza excepcion si horas semanales invalidas")
+    void actualizarAsignatura_lanzaExcepcionSiHorasInvalidas() {
+        Asignatura datos = new Asignatura("Matematicas", Curso.PRIMERO, 0, "desc");
+        when(asignaturaRepository.findById(1L)).thenReturn(Optional.of(asignatura));
 
         assertThrows(RuntimeException.class, () -> {
-            aulaService.actualizarAula(1L, datos);
+            asignaturaService.actualizarAsignatura(1L, datos);
         });
     }
 
     @Test
-    @DisplayName("asignarTutor lanza excepcion si profesor ya es tutor de otra aula")
-    void asignarTutor_lanzaExcepcionSiProfesorYaEsTutor() {
-        when(aulaRepository.findById(1L)).thenReturn(Optional.of(aula));
-        when(profesorRepository.findById(1L)).thenReturn(Optional.of(profesor));
-        when(aulaRepository.existsByTutor(profesor)).thenReturn(true);
+    @DisplayName("borrarAsignatura llama a deleteById una vez")
+    void borrarAsignatura_llamaDeleteById() {
+        when(asignaturaRepository.findById(1L)).thenReturn(Optional.of(asignatura));
 
-        assertThrows(RuntimeException.class, () -> {
-            aulaService.asignarTutor(1L, 1L);
-        });
-    }
+        asignaturaService.borrarAsignatura(1L);
 
-    @Test
-    @DisplayName("asignarTutor asigna el tutor correctamente")
-    void asignarTutor_asignaTutorCorrectamente() {
-        when(aulaRepository.findById(1L)).thenReturn(Optional.of(aula));
-        when(profesorRepository.findById(1L)).thenReturn(Optional.of(profesor));
-        when(aulaRepository.existsByTutor(profesor)).thenReturn(false);
-        when(aulaRepository.save(aula)).thenReturn(aula);
-
-        Aula resultado = aulaService.asignarTutor(1L, 1L);
-
-        assertEquals(profesor, resultado.getTutor());
+        verify(asignaturaRepository, times(1)).deleteById(1L);
     }
 }

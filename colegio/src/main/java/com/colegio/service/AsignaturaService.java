@@ -38,10 +38,6 @@ public class AsignaturaService {
         return asignaturaRepository.findByCurso(curso);
     }
 
-    /**
-     * Guarda una nueva asignatura y le asigna su codigo. Valida unicidad por
-     * nombre y curso, y rango de horas semanales.
-     */
     public Asignatura guardarAsignatura(Asignatura asignatura) {
         if (asignaturaRepository.existsByNombreAndCurso(
                 asignatura.getNombre(), asignatura.getCurso())) {
