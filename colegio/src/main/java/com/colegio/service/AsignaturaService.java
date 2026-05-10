@@ -69,9 +69,6 @@ public class AsignaturaService {
         asignaturaRepository.deleteById(id);
     }
 
-    // ============================================================
-    // METODOS PRIVADOS
-    // ============================================================
     private void validarHorasSemana(int horas) {
         if (horas < 1 || horas > 6) {
             throw new RuntimeException("Las horas semanales deben estar entre 1 y 6");

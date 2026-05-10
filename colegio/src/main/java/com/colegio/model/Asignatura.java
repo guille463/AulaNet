@@ -31,7 +31,7 @@ public class Asignatura {
     /**
      * Codigo identificador con prefijo {@code ASG-}
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String codigo;
 
     @Column(nullable = false)

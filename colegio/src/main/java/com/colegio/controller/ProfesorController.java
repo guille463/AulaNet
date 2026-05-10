@@ -16,6 +16,12 @@ import com.colegio.model.Especialidad;
 import com.colegio.model.Profesor;
 import com.colegio.service.ProfesorService;
 
+/**
+ * Controlador REST para la gestion de profesores.
+ *
+ * @author Guillermo Rafael Jimenez Munoz
+ * @version 3.0
+ */
 @RestController
 @RequestMapping("/api/v1/profesores")
 public class ProfesorController {
