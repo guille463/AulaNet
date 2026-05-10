@@ -26,7 +26,7 @@ public class Profesor {
     /**
      * Codigo identificador con prefijo {@code PROF-}
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String codigo;
 
     @Column(nullable = false)
