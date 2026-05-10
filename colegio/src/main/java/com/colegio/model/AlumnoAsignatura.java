@@ -28,7 +28,7 @@ public class AlumnoAsignatura {
     /**
      * Codigo {@code MTR-}
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String codigo;
 
     /**

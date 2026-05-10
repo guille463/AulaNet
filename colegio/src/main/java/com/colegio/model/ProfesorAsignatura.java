@@ -14,10 +14,8 @@ import jakarta.persistence.Transient;
 /**
  * Entidad que representa la relacion entre un profesor y una asignatura.
  *
- * {@code profesor_asignatura} en la base de datos.
- *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 2.0
+ * @version 3.0
  */
 @Entity
 @Table(name = "profesor_asignatura")
@@ -125,7 +123,7 @@ public class ProfesorAsignatura {
     }
 
     /**
-     * Curso derivado de la asignatura, no persistido
+     * Curso derivado de la asignatura, no persistido.
      */
     @Transient
     public Curso getCurso() {

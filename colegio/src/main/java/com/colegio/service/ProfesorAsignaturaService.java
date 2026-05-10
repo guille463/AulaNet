@@ -14,9 +14,10 @@ import com.colegio.repository.ProfesorRepository;
 
 /**
  * Servicio que gestiona la logica de negocio de las relaciones
+ * profesor-asignatura.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 2.0
+ * @version 3.0
  */
 @Service
 public class ProfesorAsignaturaService {
@@ -62,9 +63,6 @@ public class ProfesorAsignaturaService {
         return profesorAsignaturaRepository.findByAsignaturaId(asignaturaId);
     }
 
-    /**
-     *
-     */
     public ProfesorAsignatura guardar(ProfesorAsignatura profesorAsignatura) {
         Profesor profesor = profesorRepository.findById(profesorAsignatura.getProfesor().getId())
                 .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
@@ -84,15 +82,29 @@ public class ProfesorAsignaturaService {
         return profesorAsignaturaRepository.save(profesorAsignatura);
     }
 
-    /**
-     * Actualiza los datos de una relacion profesor-asignatura existente.
-     */
     public ProfesorAsignatura actualizar(Long id, ProfesorAsignatura profesorAsignatura) {
         ProfesorAsignatura existente = buscarPorId(id);
+
+        Profesor profesor = profesorRepository.findById(profesorAsignatura.getProfesor().getId())
+                .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
+
+        Asignatura asignatura = asignaturaRepository.findById(profesorAsignatura.getAsignatura().getId())
+                .orElseThrow(() -> new RuntimeException("Asignatura no encontrada"));
+
+        boolean combinacionCambia = !existente.getProfesor().getId().equals(profesor.getId())
+                || !existente.getAsignatura().getId().equals(asignatura.getId());
+
+        if (combinacionCambia
+                && profesorAsignaturaRepository.existsByProfesorAndAsignatura(profesor, asignatura)) {
+            throw new RuntimeException("El profesor " + profesor.getCodigo()
+                    + " ya imparte la asignatura " + asignatura.getCodigo());
+        }
+
         validarHorasSemanales(profesorAsignatura.getHorasSemanales());
+
         existente.setHorasSemanales(profesorAsignatura.getHorasSemanales());
-        existente.setProfesor(profesorAsignatura.getProfesor());
-        existente.setAsignatura(profesorAsignatura.getAsignatura());
+        existente.setProfesor(profesor);
+        existente.setAsignatura(asignatura);
         return profesorAsignaturaRepository.save(existente);
     }
 
@@ -104,9 +116,6 @@ public class ProfesorAsignaturaService {
         profesorAsignaturaRepository.deleteById(id);
     }
 
-    // ============================================================
-    // METODOS PRIVADOS
-    // ============================================================
     private void validarHorasSemanales(int horas) {
         if (horas < 1 || horas > 6) {
             throw new RuntimeException("Las horas semanales deben estar entre 1 y 6");
