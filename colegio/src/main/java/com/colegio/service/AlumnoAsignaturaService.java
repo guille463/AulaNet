@@ -65,8 +65,7 @@ public class AlumnoAsignaturaService {
     }
 
     /**
-     * Guarda una nueva relacion alumno-asignatura. Valida unicidad, curso
-     * coincidente y nota entre 0 y 10.
+     * Guarda una nueva relacion alumno-asignatura
      */
     public AlumnoAsignatura guardar(AlumnoAsignatura alumnoAsignatura) {
         Alumno alumno = alumnoRepository.findById(alumnoAsignatura.getAlumno().getId())
