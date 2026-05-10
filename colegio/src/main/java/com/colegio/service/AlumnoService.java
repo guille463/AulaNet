@@ -16,7 +16,7 @@ import com.colegio.util.Constantes;
  * Servicio que gestiona la logica de negocio de los alumnos.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 2.0
+ * @version 3.0
  */
 @Service
 public class AlumnoService {
@@ -72,7 +72,7 @@ public class AlumnoService {
         Aula aula = aulaRepository.findById(alumno.getAula().getId())
                 .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
 
-        int ocupacion = alumnoRepository.findByAula(aula).size();
+        int ocupacion = aulaRepository.countAlumnosByAulaId(aula.getId());
         if (ocupacion >= aula.getCapacidad()) {
             throw new RuntimeException("El aula " + aula.getCodigo() + " está llena");
         }
