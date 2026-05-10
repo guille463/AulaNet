@@ -14,35 +14,19 @@ import com.colegio.repository.ProfesorRepository;
 
 /**
  * Servicio que gestiona la logica de negocio de las relaciones
- * profesor-asignatura.
- *
- * <p>
- * Actua como intermediario entre {@link ProfesorAsignaturaController} y
- * {@link ProfesorAsignaturaRepository}. Gestiona la relacion N:M entre
- * {@link Profesor} y {@link Asignatura} a traves de {@link ProfesorAsignatura}.
- * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 1.0
+ * @version 2.0
  */
 @Service
 public class ProfesorAsignaturaService {
 
-    /**
-     * Repositorio para acceder a los datos de {@link ProfesorAsignatura}
-     */
     @Autowired
     private ProfesorAsignaturaRepository profesorAsignaturaRepository;
 
-    /**
-     * Repositorio para verificar y cargar datos de {@link Profesor}
-     */
     @Autowired
     private ProfesorRepository profesorRepository;
 
-    /**
-     * Repositorio para verificar y cargar datos de {@link Asignatura}
-     */
     @Autowired
     private AsignaturaRepository asignaturaRepository;
 
@@ -51,8 +35,6 @@ public class ProfesorAsignaturaService {
     // ============================================================
     /**
      * Devuelve la lista completa de relaciones profesor-asignatura.
-     *
-     * @return lista de {@link ProfesorAsignatura}
      */
     public List<ProfesorAsignatura> listar() {
         return profesorAsignaturaRepository.findAll();
@@ -60,10 +42,6 @@ public class ProfesorAsignaturaService {
 
     /**
      * Busca una relacion profesor-asignatura por su identificador.
-     *
-     * @param id identificador de la relacion
-     * @return {@link ProfesorAsignatura} encontrada
-     * @throws RuntimeException si la relacion no existe
      */
     public ProfesorAsignatura buscarPorId(Long id) {
         return profesorAsignaturaRepository.findById(id)
@@ -71,40 +49,47 @@ public class ProfesorAsignaturaService {
     }
 
     /**
-     * Guarda una nueva relacion profesor-asignatura cargando el profesor y la
-     * asignatura completos.
+     * Devuelve las relaciones de un profesor concreto.
+     */
+    public List<ProfesorAsignatura> buscarPorProfesor(Long profesorId) {
+        return profesorAsignaturaRepository.findByProfesorId(profesorId);
+    }
+
+    /**
+     * Devuelve las relaciones de una asignatura concreta.
+     */
+    public List<ProfesorAsignatura> buscarPorAsignatura(Long asignaturaId) {
+        return profesorAsignaturaRepository.findByAsignaturaId(asignaturaId);
+    }
+
+    /**
      *
-     * <p>
-     * Verifica que el {@link Profesor} y la {@link Asignatura} existan antes de
-     * guardar.
-     * </p>
-     *
-     * @param profesorAsignatura datos de la relacion a guardar
-     * @return relacion guardada
-     * @throws RuntimeException si el profesor o la asignatura no existen
      */
     public ProfesorAsignatura guardar(ProfesorAsignatura profesorAsignatura) {
         Profesor profesor = profesorRepository.findById(profesorAsignatura.getProfesor().getId())
                 .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
+
         Asignatura asignatura = asignaturaRepository.findById(profesorAsignatura.getAsignatura().getId())
                 .orElseThrow(() -> new RuntimeException("Asignatura no encontrada"));
+
+        if (profesorAsignaturaRepository.existsByProfesorAndAsignatura(profesor, asignatura)) {
+            throw new RuntimeException("El profesor " + profesor.getCodigo()
+                    + " ya imparte la asignatura " + asignatura.getCodigo());
+        }
+
+        validarHorasSemanales(profesorAsignatura.getHorasSemanales());
+
         profesorAsignatura.setProfesor(profesor);
         profesorAsignatura.setAsignatura(asignatura);
-        ProfesorAsignatura guardado = profesorAsignaturaRepository.save(profesorAsignatura);
-        return profesorAsignaturaRepository.save(guardado);
+        return profesorAsignaturaRepository.save(profesorAsignatura);
     }
 
     /**
      * Actualiza los datos de una relacion profesor-asignatura existente.
-     *
-     * @param id identificador de la relacion a actualizar
-     * @param profesorAsignatura datos nuevos de la relacion
-     * @return relacion actualizada
-     * @throws RuntimeException si la relacion no existe
      */
     public ProfesorAsignatura actualizar(Long id, ProfesorAsignatura profesorAsignatura) {
         ProfesorAsignatura existente = buscarPorId(id);
-        existente.setCurso(profesorAsignatura.getCurso());
+        validarHorasSemanales(profesorAsignatura.getHorasSemanales());
         existente.setHorasSemanales(profesorAsignatura.getHorasSemanales());
         existente.setProfesor(profesorAsignatura.getProfesor());
         existente.setAsignatura(profesorAsignatura.getAsignatura());
@@ -113,10 +98,18 @@ public class ProfesorAsignaturaService {
 
     /**
      * Elimina una relacion profesor-asignatura por su identificador.
-     *
-     * @param id identificador de la relacion a eliminar
      */
     public void borrar(Long id) {
+        buscarPorId(id);
         profesorAsignaturaRepository.deleteById(id);
+    }
+
+    // ============================================================
+    // METODOS PRIVADOS
+    // ============================================================
+    private void validarHorasSemanales(int horas) {
+        if (horas < 1 || horas > 6) {
+            throw new RuntimeException("Las horas semanales deben estar entre 1 y 6");
+        }
     }
 }
