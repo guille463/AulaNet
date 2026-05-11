@@ -99,22 +99,18 @@ export async function putAlumno(id, alumno) {
 }
 
 export async function deleteAlumno(id) {
-    let datos = null; 
-
+    let ok = false;
     try {
         const respuesta = await fetch(`${URL_ALUMNOS}/${id}`, {
-            method: "DELETE",
+            method: "DELETE"
         });
-        if(respuesta.ok){
-            let ok = true; 
-        } else{
-            throw new Error("Error al Eliminar alumno")
+        if (respuesta.ok) {
+            ok = true;
+        } else {
+            throw new Error("Error al eliminar alumno");
         }
     } catch (error) {
-        console.log(error);
-                
+        console.error(error);
     }
-            return datos; 
-
-    
+    return ok;
 }

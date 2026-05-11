@@ -37,12 +37,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   cargarTodos();
 
-  document.getElementById("resultado").addEventListener("click", function (e) {
+ document.getElementById("resultado").addEventListener("click", function (e) {
     if (e.target.classList.contains("btnEliminar")) {
-      const id = e.target.getAttribute("data-id");
-      eliminarAlumno(id);
+        const id = e.target.getAttribute("data-id");
+        const confirmacion = confirm("¿Estás seguro de que quieres eliminar al alumno " + id + "?");
+        if (confirmacion) {
+            eliminarAlumno(id);
+        }
     }
-  });
+});
 
   document.getElementById("tipoBusqueda").addEventListener("change", function () {
     const container = document.getElementById("inputContainer");
