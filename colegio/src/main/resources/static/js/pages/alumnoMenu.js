@@ -1,97 +1,75 @@
-/**
- * 
- */
 import {
   getAlumnos,
   getAlumnoPorId,
   getAlumnoPorNombre,
   getAlumnoPorEmail,
   getAlumnosPorCodigoAula,
+  deleteAlumno,
 } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 
-/**
- * 
- */
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
 
   root.innerHTML = `
       <div class="containerBuscarAlumno">
-        <h1>Gestionar Alumnos </h1>
-
-        <button class="btn btn-CargarTodos" id="btnCargarTodos">Cargar todos los alumnos</button>
-
-       <div class="card">
-       <div class="card-body">
-                <h2 class="card-title">Buscar Alumno</h2>
-                <select id="tipoBusqueda" class="form-select mb-2">
-                    <option value="id">Por ID</option>
-                    <option value="nombre">Por Nombre</option>
-                    <option value="email">Por Email</option>
-                    <option value="curso">Por Curso y Grupo</option>
-                </select>
-                <div id="inputContainer">
-                    <input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">
-                </div>
-                <button class="btn btn-Buscar" id="btnBuscar">Buscar</button>
+        <h1>Gestionar Alumnos</h1>
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Buscar Alumno</h2>
+            <select id="tipoBusqueda" class="form-select mb-2">
+              <option value="id">Por ID</option>
+              <option value="nombre">Por Nombre</option>
+              <option value="email">Por Email</option>
+              <option value="curso">Por Curso y Grupo</option>
+            </select>
+            <div id="inputContainer">
+              <input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">
             </div>
-       </div>
-       
+            <button class="btn btn-Buscar" id="btnBuscar">Buscar</button>
+          </div>
+        </div>
         <div id="resultado"></div>
-    </div>
+      </div>
     `;
 
-/**
- * 
- */
-  document
-    .getElementById("btnCargarTodos")
-    .addEventListener("click", function () {
-      const resultado = document.getElementById("resultado");
-      if (resultado.innerHTML !== "") {
-        resultado.innerHTML = "";
-      } else {
-        cargarTodos();
-      }
-    });
+  cargarTodos();
 
-/**
- * 
- */
-  document
-    .getElementById("tipoBusqueda")
-    .addEventListener("change", function () {
-      const container = document.getElementById("inputContainer");
-      const tipo = this.value;
-      if (tipo === "id") {
-        container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">`;
-      } else if (tipo === "nombre") {
-        container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el nombre">`;
-      } else if (tipo === "email") {
-        container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el email">`;
-      } else if (tipo === "curso") {
-        container.innerHTML = `
-            <select id="inputCurso" class="form-select mb-2">
-                <option value="1º">1º</option>
-                <option value="2º">2º</option>
-                <option value="3º">3º</option>
-                <option value="4º">4º</option>
-                <option value="5º">5º</option>
-                <option value="6º">6º</option>
-            </select>
-            <select id="inputGrupo" class="form-select mb-2">
-                <option value="A">Grupo A</option>
-                <option value="B">Grupo B</option>
-            </select>`;
-      }
-    });
+  document.getElementById("resultado").addEventListener("click", function (e) {
+    if (e.target.classList.contains("btnEliminar")) {
+      const id = e.target.getAttribute("data-id");
+      eliminarAlumno(id);
+    }
+  });
 
-/**
- * 
- */
+  document.getElementById("tipoBusqueda").addEventListener("change", function () {
+    const container = document.getElementById("inputContainer");
+    const tipo = this.value;
+    if (tipo === "id") {
+      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">`;
+    } else if (tipo === "nombre") {
+      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el nombre">`;
+    } else if (tipo === "email") {
+      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el email">`;
+    } else if (tipo === "curso") {
+      container.innerHTML = `
+          <select id="inputCurso" class="form-select mb-2">
+              <option value="1º">1º</option>
+              <option value="2º">2º</option>
+              <option value="3º">3º</option>
+              <option value="4º">4º</option>
+              <option value="5º">5º</option>
+              <option value="6º">6º</option>
+          </select>
+          <select id="inputGrupo" class="form-select mb-2">
+              <option value="A">Grupo A</option>
+              <option value="B">Grupo B</option>
+          </select>`;
+    }
+  });
+
   document.getElementById("btnBuscar").addEventListener("click", function () {
     const tipo = document.getElementById("tipoBusqueda").value;
     if (tipo === "id") {
@@ -111,9 +89,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-/**
- * 
- */
 async function cargarTodos() {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -129,9 +104,6 @@ async function cargarTodos() {
   }
 }
 
-/**
- * 
- */
 async function buscarPorId(id) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -147,9 +119,6 @@ async function buscarPorId(id) {
   }
 }
 
-/**
- * 
- */
 async function buscarPorNombre(nombre) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -169,9 +138,6 @@ async function buscarPorNombre(nombre) {
   }
 }
 
-/**
- * 
- */
 async function buscarPorEmail(email) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -187,9 +153,6 @@ async function buscarPorEmail(email) {
   }
 }
 
-/**
- * 
- */
 async function buscarPorCodigoAula(codigo) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -202,5 +165,14 @@ async function buscarPorCodigoAula(codigo) {
     resultado.innerHTML = html;
   } else {
     resultado.innerHTML = `<p class="error">No se encontraron alumnos en esa aula</p>`;
+  }
+}
+
+async function eliminarAlumno(id) {
+  const ok = await deleteAlumno(id);
+  if (ok) {
+    cargarTodos();
+  } else {
+    document.getElementById("resultado").innerHTML += `<p class="error">Error al eliminar</p>`;
   }
 }

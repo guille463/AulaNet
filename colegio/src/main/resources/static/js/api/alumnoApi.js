@@ -97,3 +97,24 @@ export async function putAlumno(id, alumno) {
     }
     return datos;
 }
+
+export async function deleteAlumno(id) {
+    let datos = null; 
+
+    try {
+        const respuesta = await fetch(`${URL_ALUMNOS}/${id}`, {
+            method: "DELETE",
+        });
+        if(respuesta.ok){
+            let ok = true; 
+        } else{
+            throw new Error("Error al Eliminar alumno")
+        }
+    } catch (error) {
+        console.log(error);
+                
+    }
+            return datos; 
+
+    
+}

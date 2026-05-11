@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.colegio.model.Alumno;
 import com.colegio.model.Aula;
 import com.colegio.model.Curso;
+import com.colegio.repository.AlumnoAsignaturaRepository;
 import com.colegio.repository.AlumnoRepository;
 import com.colegio.repository.AulaRepository;
 import com.colegio.util.Constantes;
@@ -22,10 +23,17 @@ import com.colegio.util.Constantes;
 public class AlumnoService {
 
     @Autowired
+    private AlumnoAsignaturaRepository alumnoAsignaturaRepository;
+
+    @Autowired
     private AlumnoRepository alumnoRepository;
 
     @Autowired
     private AulaRepository aulaRepository;
+
+    AlumnoService(AlumnoAsignaturaRepository alumnoAsignaturaRepository) {
+        this.alumnoAsignaturaRepository = alumnoAsignaturaRepository;
+    }
 
     // ============================================================
     // METODOS CRUD
@@ -104,6 +112,7 @@ public class AlumnoService {
 
     public void borrarAlumno(Long id) {
         buscarPorId(id);
+        alumnoAsignaturaRepository.deleteAll(alumnoAsignaturaRepository.findByAlumnoId(id));
         alumnoRepository.deleteById(id);
     }
 
