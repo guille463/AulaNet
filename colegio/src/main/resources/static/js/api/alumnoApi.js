@@ -76,3 +76,24 @@ export async function getAlumnosPorCodigoAula(codigo) {
     }
     return datos;
 }
+
+export async function putAlumno(id, alumno) {
+    let datos = null;
+    try {
+        const respuesta = await fetch(`${URL_ALUMNOS}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(alumno)
+        });
+        if (respuesta.ok) {
+            datos = await respuesta.json();
+        } else {
+            throw new Error("Error al actualizar alumno");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+    return datos;
+}
