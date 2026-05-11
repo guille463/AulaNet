@@ -18,7 +18,9 @@ export function crearTarjetaAlumno(alumno) {
             <span>${aula.curso}</span>
             <span>${aula.grupo}</span>
             <span>${tutorTexto}</span>
-        </div>
-    </div>
+<a href="detalleAlumno.html?id=${alumno.id}">👁</a></div>
+<a href="editarAlumno.html?id=${alumno.id}">✏️</a>
+</div>
+</div>
 `;
 }
