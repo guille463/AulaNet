@@ -62,20 +62,17 @@ export async function getAlumnoPorEmail(email) {
     return datos;
 }
 
-export async function getAlumnosPorCurso(curso){
-     console.log("Buscando por curso:", curso);
-    let datos = null
+export async function getAlumnosPorCodigoAula(codigo) {
+    let datos = null;
     try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/curso/${encodeURIComponent(curso)}`)
-        if(respuesta.ok){
-            datos = await respuesta.json(); 
-        } else{
-            throw new Error("Alumno no encontrado")
+        const respuesta = await fetch(`${URL_ALUMNOS}/aula/codigo/${encodeURIComponent(codigo)}`);
+        if (respuesta.ok) {
+            datos = await respuesta.json();
+        } else {
+            throw new Error("No se encontraron alumnos");
         }
     } catch (error) {
-        console.log(error)
-        
+        console.log(error);
     }
-    return datos; 
+    return datos;
 }
-

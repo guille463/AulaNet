@@ -65,6 +65,11 @@ public class AlumnoController {
         return alumnoService.buscarPorNombreYApellido(nombre, apellido);
     }
 
+    @GetMapping("/aula/codigo/{codigo}")
+    public List<Alumno> obtenerPorCodigoAula(@PathVariable String codigo) {
+        return alumnoService.buscarPorCodigoAula(codigo);
+    }
+
     @PostMapping
     public Alumno guardar(@RequestBody Alumno alumno) {
         return alumnoService.guardarAlumno(alumno);

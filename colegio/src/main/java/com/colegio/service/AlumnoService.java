@@ -110,4 +110,8 @@ public class AlumnoService {
     public long count() {
         return alumnoRepository.count();
     }
+
+    public List<Alumno> buscarPorCodigoAula(String codigo) {
+        return alumnoRepository.findByAulaCodigo(codigo);
+    }
 }

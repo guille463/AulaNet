@@ -1,12 +1,24 @@
 export function crearTarjetaAlumno(alumno) {
-    return `
-        <div class="card">
-            <div class="card-body">
-                <h5>${alumno.codigo} - ${alumno.nombre} ${alumno.apellido}</h5>
-                <p>Email: ${alumno.email}</p>
-                <p>Curso: ${alumno.curso}</p>
-                <p>Fecha de nacimiento: ${alumno.fechaNac}</p>
-            </div>
+    const aula = alumno.aula;
+    const tutor = aula.tutor;
+
+    let tutorTexto;
+    if (tutor) {
+        tutorTexto = tutor.nombre + " " + tutor.apellido;
+    } else {
+        tutorTexto = "Sin tutor";
+    }
+
+   return `
+    <div class="card">
+        <div class="card-body" style="display:flex; gap:20px;">
+            <strong>${alumno.codigo}</strong>
+            <span>${alumno.nombre} ${alumno.apellido}</span>
+            <span>${alumno.email}</span>
+            <span>${aula.curso}</span>
+            <span>${aula.grupo}</span>
+            <span>${tutorTexto}</span>
         </div>
-    `;
+    </div>
+`;
 }
