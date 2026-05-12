@@ -1,8 +1,8 @@
 import { getAlumnoPorId } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import {
-  getAlumnoAsignaturasPorAlumno,
-  putNotaAlumno,
+  getAlumnoAsignaturaPorAlumno,
+  putNotaALumno,
 } from "../api/alumnoAsignaturaApi.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -34,14 +34,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     tutorTexto = "Sin tutor";
   }
 
-  const matriculas = await getAlumnoAsignaturasPorAlumno(id);
+  const matriculas = await getAlumnoAsignaturaPorAlumno(id);
   let asignaturasHtml = "";
   if (matriculas && matriculas.length > 0) {
-    matriculas.array.forEach(function (matricula) {
+    matriculas.forEach(function (matricula) {
       asignaturasHtml += `
                 <tr>
                     <td>${matricula.asignatura.nombre}</td>
-                    <td>${matricula.nota}</td>
+                    <td  id="notaActual-${matricula.id}">${matricula.nota}</td>
                     <td>
                         <input type="number" id="nota-${matricula.id}" value="${matricula.nota}" min="0" max="10" step="0.1">
                         <button class="btnEditarNota" data-id="${matricula.id}">Guardar</button>
@@ -84,16 +84,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
     `;
 
-     document.getElementById("root").addEventListener("click", async function (e) {
-        if (e.target.classList.contains("btnEditarNota")) {
-            const matriculaId = e.target.getAttribute("data-id");
-            const nota = document.getElementById("nota-" + matriculaId).value;
-            const resultado = await putNotaAlumno(matriculaId, nota);
-            if (resultado) {
-                document.getElementById("mensaje").textContent = "Nota actualizada correctamente";
-            } else {
-                document.getElementById("mensaje").textContent = "Error al actualizar la nota";
-            }
-        }
-    });
+  document.getElementById("root").addEventListener("click", async function (e) {
+    if (e.target.classList.contains("btnEditarNota")) {
+      const matriculaId = e.target.getAttribute("data-id");
+      const nota = document.getElementById("nota-" + matriculaId).value;
+      const resultado = await putNotaALumno(matriculaId, nota);
+      if (resultado) {
+        document.getElementById("notaActual-" + matriculaId).textContent = nota;
+        document.getElementById("mensaje").textContent =
+          "Nota actualizada correctamente";
+      } else {
+        document.getElementById("mensaje").textContent =
+          "Error al actualizar la nota";
+      }
+    }
+  });
 });
