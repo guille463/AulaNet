@@ -9,6 +9,8 @@ import {
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 
+let idAEliminar = null;
+
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
@@ -32,20 +34,34 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         </div>
         <div id="resultado"></div>
+        <hr>
+        <h2>Lista de Alumnos</h2>
+        <div id="listaAlumnos"></div>
       </div>
     `;
 
   cargarTodos();
 
- document.getElementById("resultado").addEventListener("click", function (e) {
+  document.getElementById("root").addEventListener("click", function (e) {
     if (e.target.classList.contains("btnEliminar")) {
-        const id = e.target.getAttribute("data-id");
-        const confirmacion = confirm("¿Estás seguro de que quieres eliminar al alumno " + id + "?");
-        if (confirmacion) {
-            eliminarAlumno(id);
-        }
+        idAEliminar = e.target.getAttribute("data-id");
+        document.getElementById("modalTexto").textContent = "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
+        document.getElementById("modalConfirmar").style.display = "block";
     }
 });
+
+  document.getElementById("btnConfirmarSi").addEventListener("click", async function () {
+    document.getElementById("modalConfirmar").style.display = "none";
+    await eliminarAlumno(idAEliminar);
+    idAEliminar = null;
+    document.getElementById("resultado").innerHTML = `<p>Alumno eliminado con éxito</p>`;
+  });
+
+  document.getElementById("btnConfirmarNo").addEventListener("click", function () {
+    document.getElementById("modalConfirmar").style.display = "none";
+    idAEliminar = null;
+   document.getElementById("resultado").innerHTML = `<p>Operación cancelada</p>`;
+  });
 
   document.getElementById("tipoBusqueda").addEventListener("change", function () {
     const container = document.getElementById("inputContainer");
@@ -93,17 +109,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function cargarTodos() {
-  const resultado = document.getElementById("resultado");
-  resultado.innerHTML = "";
+  const listaAlumnos = document.getElementById("listaAlumnos");
+  listaAlumnos.innerHTML = "";
   const alumnos = await getAlumnos();
   if (alumnos && alumnos.length > 0) {
     let html = "";
     alumnos.forEach(function (alumno) {
       html += crearTarjetaAlumno(alumno);
     });
-    resultado.innerHTML = html;
+    listaAlumnos.innerHTML = html;
   } else {
-    resultado.innerHTML = `<p class="error">No hay alumnos</p>`;
+    listaAlumnos.innerHTML = `<p class="error">No hay alumnos</p>`;
   }
 }
 
@@ -176,6 +192,6 @@ async function eliminarAlumno(id) {
   if (ok) {
     cargarTodos();
   } else {
-    document.getElementById("resultado").innerHTML += `<p class="error">Error al eliminar</p>`;
+    document.getElementById("listaAlumnos").innerHTML += `<p class="error">Error al eliminar</p>`;
   }
 }
