@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.colegio.model.Especialidad;
 import com.colegio.model.Profesor;
+import com.colegio.repository.ProfesorAsignaturaRepository;
 import com.colegio.repository.ProfesorRepository;
 import com.colegio.util.Constantes;
 
@@ -21,6 +22,9 @@ public class ProfesorService {
 
     @Autowired
     private ProfesorRepository profesorRepository;
+
+    @Autowired
+private ProfesorAsignaturaRepository profesorAsignaturaRepository;
 
     // ============================================================
     // METODOS CRUD
@@ -37,6 +41,10 @@ public class ProfesorService {
     public Profesor buscarProfesorPorEmail(String email) {
         return profesorRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Profesor con email " + email + " no encontrado"));
+    }
+
+   public List<Profesor> buscarPorNombre(String nombre) {
+        return profesorRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
     public List<Profesor> buscarPorEspecialidad(Especialidad especialidad) {
@@ -67,8 +75,11 @@ public class ProfesorService {
         return profesorRepository.save(existente);
     }
 
+
     public void borrarProfesor(Long id) {
-        buscarProfesorPorId(id);
-        profesorRepository.deleteById(id);
-    }
+    buscarProfesorPorId(id);
+    profesorAsignaturaRepository.deleteAll(profesorAsignaturaRepository.findByProfesorId(id));
+    profesorRepository.deleteById(id);
+}
+    
 }

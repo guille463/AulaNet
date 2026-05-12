@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
         <div class="containerAlumnos">
             <h1>Gestion colegio</h1>
             <a href="alumnoMenu.html" class="btn btn-Lista">Gestionar Alumnos</a>
+            <a href="profesorMenu.html" class="btn btn-Profesores">Gestionar Profesores</a>          
         </div>
     `;
 })

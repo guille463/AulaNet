@@ -16,6 +16,7 @@ import com.colegio.model.Especialidad;
 import com.colegio.model.Profesor;
 import com.colegio.service.ProfesorService;
 
+
 /**
  * Controlador REST para la gestion de profesores.
  *
@@ -38,6 +39,13 @@ public class ProfesorController {
     public Profesor obtenerPorId(@PathVariable Long id) {
         return profesorService.buscarProfesorPorId(id);
     }
+
+    @GetMapping("/buscar/{nombre}")
+    public List<Profesor> buscarPorNombre(@PathVariable String nombre) {
+        return profesorService.buscarPorNombre(nombre);
+    }
+    
+    
 
     @GetMapping("/email/{email}")
     public Profesor obtenerPorEmail(@PathVariable String email) {

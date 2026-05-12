@@ -4,6 +4,7 @@ export function crearBarraNavegacion() {
             <div class="container">
                 <a class="navbar-brand" href="index.html">Colegio</a>
                 <a class="btn btn-AlumnosMenu" href="alumnoMenu.html">Alumnos</a>
+                <a class="btn btn-ProfesoresMenu" href="profesorMenu.html">Porfesores</a>
             </div>
         </nav>
     `;
