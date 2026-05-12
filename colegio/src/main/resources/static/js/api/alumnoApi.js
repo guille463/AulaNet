@@ -117,6 +117,7 @@ export async function deleteAlumno(id) {
 
 export async function postAlumno(alumno) {
     let datos = null;
+    let error = null;
     try {
         const respuesta = await fetch(URL_ALUMNOS, {
             method: "POST",
@@ -128,10 +129,12 @@ export async function postAlumno(alumno) {
         if (respuesta.ok) {
             datos = await respuesta.json();
         } else {
-            throw new Error("Error al crear alumno");
+            error = await respuesta.text();
+            console.log(error);
+            
         }
-    } catch (error) {
-        console.error(error);
+    } catch (e) {
+        console.error(e);
     }
-    return datos;
+    return { datos, error };
 }
