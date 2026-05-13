@@ -21,6 +21,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <option value="LOGOPEDA">Logopeda</option>
                         <option value="RELIGION">Religión</option>
                     </select>
+                    <div id="selectAula">
+                        <select id="inputCurso">
+                            <option value="1º">1º</option>
+                            <option value="2º">2º</option>
+                            <option value="3º">3º</option>
+                            <option value="4º">4º</option>
+                            <option value="5º">5º</option>
+                            <option value="6º">6º</option>
+                        </select>
+                        <select id="inputGrupo">
+                            <option value="A">Grupo A</option>
+                            <option value="B">Grupo B</option>
+                        </select>
+                    </div>
                     <button id="btnCrear">Crear</button>
                     <a href="profesorMenu.html">Cancelar</a>
                     <p id="mensaje"></p>
@@ -29,36 +43,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
     `;
 
-    document.getElementById("btnCrear").addEventListener("click", async function () {
-        const nombre = document.getElementById("inputNombre").value.trim();
-        const apellido = document.getElementById("inputApellido").value.trim();
-        const email = document.getElementById("inputEmail").value.trim();
-        const especialidad = document.getElementById("inputEspecialidad").value;
-        const mensaje = document.getElementById("mensaje");
-
-        if (!nombre || !apellido || !email) {
-            mensaje.textContent = "Todos los campos son obligatorios";
-            return;
-        }
-
-        const profesor = {
-            nombre: nombre,
-            apellido: apellido,
-            email: email,
-            especialidad: especialidad
-        };
-
-        const resultado = await postProfesor(profesor);
-
-        if (resultado.datos) {
-            window.location.href = "profesorMenu.html";
+    document.getElementById("inputEspecialidad").addEventListener("change", function () {
+        const selectAula = document.getElementById("selectAula");
+        if (this.value === "GENERAL") {
+            selectAula.style.display = "block";
         } else {
-            const errorProfe = JSON.parse(resultado.error);
-            if (errorProfe.mensaje.includes("email")) {
-                mensaje.textContent = "Error: este email ya está registrado.";
-            } else {
-                mensaje.textContent = "Error: " + errorProfe.mensaje;
-            }
+            selectAula.style.display = "none";
         }
     });
+
 });
