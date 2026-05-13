@@ -13,11 +13,11 @@ export const ProfesorAPI = {
 
     obtenerPorCodigoAula: (codigo) => fetchApi ('GET', `/profesores/aula/codigo/${encodeURIComponent(codigo)}`),
 
-    obtenerPorEspecialidad: (especialidad)=> fetchApi('GET', `profesores/especialidad/${especialidad}`),  
+    obtenerPorEspecialidad: (especialidad)=> fetchApi('GET', `/profesores/especialidad/${especialidad}`),  
 
-    crear: (profesor) => fetchApi ('POST', `profesores`, profesor), 
+    crear: (profesor) => fetchApi ('POST', `/profesores`, profesor), 
 
-    actualizar: (id, profesor)=> fetchApi('PUT', `/profesores/${id}`, porfesor), 
+    actualizar: (id, profesor)=> fetchApi('PUT', `/profesores/${id}`, profesor), 
 
-    eliminar: (id) => fetchApi('DELETE', `/profesores/${id}`, alumno) 
+    eliminar: (id) => fetchApi('DELETE', `/profesores/${id}`) 
 }; 

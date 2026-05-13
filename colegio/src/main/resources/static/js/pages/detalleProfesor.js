@@ -1,5 +1,5 @@
 
-import { getProfesorPorId } from "../api/profesorApi.js";
+import { AlumnoAPI } from "../api/profesorApi.js";
 import {getProfesorAsignaturaPorProfesorId } from "../api/profesorAsignaturaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 
