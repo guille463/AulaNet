@@ -52,4 +52,41 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
+    document.getElementById("btnCrear").addEventListener("click", async function () {
+        const nombre = document.getElementById("inputNombre").value.trim();
+        const apellido = document.getElementById("inputApellido").value.trim();
+        const email = document.getElementById("inputEmail").value.trim();
+        const especialidad = document.getElementById("inputEspecialidad").value;
+        const mensaje = document.getElementById("mensaje");
+
+        if (!nombre || !apellido || !email) {
+            mensaje.textContent = "Todos los campos son obligatorios";
+            return;
+        }
+
+        const profesor = {};
+        profesor.nombre = nombre;
+        profesor.apellido = apellido;
+        profesor.email = email;
+        profesor.especialidad = especialidad;
+
+        if (especialidad === "GENERAL") {
+            const curso = document.getElementById("inputCurso").value;
+            const grupo = document.getElementById("inputGrupo").value;
+            profesor.codigoAula = curso + grupo;
+        }
+
+        const resultado = await postProfesor(profesor);
+
+        if (resultado.datos) {
+            window.location.href = "profesorMenu.html";
+        } else {
+            const errorProfe = JSON.parse(resultado.error);
+            if (errorProfe.mensaje.includes("email")) {
+                mensaje.textContent = "Error: este email ya está registrado.";
+            } else {
+                mensaje.textContent = "Error: " + errorProfe.mensaje;
+            }
+        }
+    });
 });
