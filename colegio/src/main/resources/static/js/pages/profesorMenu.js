@@ -1,4 +1,4 @@
-import { getProfesores, getProfesorPorEmail, getProfesorPorId, getProfesorPorEspecialidad, deleteProfesor, getProfesorPorNombre } from "../api/profesorApi.js";
+import {ProfesorAPI} from "../api/profesorApi.js"; 
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaProfesor } from "../components/profesorComponente.js";
 
@@ -105,10 +105,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function cargarTodos() {
     const listaProfesores = document.getElementById("listaProfesores");
     listaProfesores.innerHTML = "";
-    const profesores = await getProfesores();
-    if (profesores && profesores.length > 0) {
+    const resultado = await ProfesorAPI.obtenerTodos();
+    if (resultado.datos && resultado.datos.length > 0) {
         let html = "";
-        profesores.forEach(function (profesor) {
+        resultado.datos.forEach(function (profesor) {
             html += crearTarjetaProfesor(profesor);
         });
         listaProfesores.innerHTML = html;
@@ -121,9 +121,9 @@ async function buscarPorId(id) {
     const resultado = document.getElementById("resultado");
     resultado.innerHTML = "";
     if (id) {
-        const profesor = await getProfesorPorId(id);
-        if (profesor) {
-            resultado.innerHTML = crearTarjetaProfesor(profesor);
+        const respuesta = await ProfesorAPI.obtenerPorId(id); 
+        if (respuesta.datos) {
+            resultado.innerHTML = crearTarjetaProfesor(respuesta.datos);
         } else {
             resultado.innerHTML = `<p class="error">Profesor no encontrado</p>`;
         }
@@ -136,10 +136,10 @@ async function buscarPorNombre(nombre) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
   if (nombre) {
-    const profesores = await getProfesorPorNombre(nombre);
-    if (profesores && profesores.length > 0) {
+    const respuesta = await ProfesorAPI.obtenerPorNombre(nombre);
+    if (respuesta.datos && respuesta.datos.length > 0) {
       let html = "";
-      profesores.forEach(function (profesor) {
+      respuesta.datos.forEach(function (profesor) {
         html += crearTarjetaProfesor(profesor);
       });
       resultado.innerHTML = html;
@@ -155,9 +155,9 @@ async function buscarPorEmail(email) {
     const resultado = document.getElementById("resultado");
     resultado.innerHTML = "";
     if (email) {
-        const profesor = await getProfesorPorEmail(email);
-        if (profesor) {
-            resultado.innerHTML = crearTarjetaProfesor(profesor);
+        const respuesta = await ProfesorAPI.obtenerPorEmail(email);
+        if (respuesta.datos) {
+            resultado.innerHTML = crearTarjetarespuesta(respuesta.datos);
         } else {
             resultado.innerHTML = `<p class="error">Profesor no encontrado</p>`;
         }
@@ -170,10 +170,10 @@ async function buscarPorEspecialidad(especialidad) {
     const resultado = document.getElementById("resultado");
     resultado.innerHTML = "";
     if (especialidad) {
-        const profesores = await getProfesorPorEspecialidad(especialidad);
-        if (profesores && profesores.length > 0) {
+        const respuesta = await ProfesorAPI.obtenerPorEspecialidad(especialidad);
+        if (respuesta.datos && respuesta.datos.length > 0) {
             let html = "";
-            profesores.forEach(function (profesor) {
+            respuesta.datos.forEach(function (profesor) {
                 html += crearTarjetaProfesor(profesor);
             });
             resultado.innerHTML = html;
@@ -184,8 +184,8 @@ async function buscarPorEspecialidad(especialidad) {
 }
 
 async function eliminarProfesor(id) {
-    const ok = await deleteProfesor(id);
-    if (ok) {
+    const respuesta = await ProfesorAPI.eliminar(id)
+    if (respuesta.datos) {
         cargarTodos();
     } else {
         document.getElementById("listaProfesores").innerHTML += `<p class="error">Error al eliminar</p>`;
