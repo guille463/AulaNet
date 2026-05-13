@@ -157,7 +157,7 @@ async function buscarPorEmail(email) {
     if (email) {
         const respuesta = await ProfesorAPI.obtenerPorEmail(email);
         if (respuesta.datos) {
-            resultado.innerHTML = crearTarjetarespuesta(respuesta.datos);
+            resultado.innerHTML = crearTarjetaProfesor(respuesta.datos);
         } else {
             resultado.innerHTML = `<p class="error">Profesor no encontrado</p>`;
         }

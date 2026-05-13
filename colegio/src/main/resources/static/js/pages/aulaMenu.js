@@ -5,9 +5,8 @@ import { crearTarjetaAula } from "../components/aulaComponente.js";
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
-});
 
-root.innerHTML = `
+  root.innerHTML = `
       <div class="containerBuscarAula">
         <h1>Gestionar Aulas</h1>
         <div class="card">
@@ -31,13 +30,24 @@ root.innerHTML = `
     `;
 
 
-cargarTodos();
+  cargarTodos();
+
+  document.getElementById("btnBuscar").addEventListener("click", function () {
+    const tipo = document.getElementById("tipoBusqueda").value;
+    if (tipo === "id") {
+      const valor = document.getElementById("inputBusqueda").value.trim();
+      buscarPorId(valor);
+    }
+  });
+});
+
+
 
 async function cargarTodos() {
   const listaAulas = document.getElementById("listaAulas");
   listaAulas.innerHTML = "";
   const resultado = await AulaAPI.obtenerTodos();
-  
+
   if (resultado.datos && resultado.datos.length > 0) {
     let html = "";
     for (const aula of resultado.datos) {
@@ -47,6 +57,22 @@ async function cargarTodos() {
     listaAulas.innerHTML = html;
   } else {
     listaAulas.innerHTML = `<p class="error">No hay alumnos</p>`;
+  }
+}
+
+async function buscarPorId(id) {
+
+  const resultado = document.getElementById("resultado");
+  resultado.innerHTML = "";
+  if (id) {
+    const respuesta = await AulaAPI.obtenerPorId(id);
+    if (respuesta.datos) {
+      resultado.innerHTML = await crearTarjetaAula(respuesta.datos);
+    } else {
+      resultado.innerHTML = `<p class="error">Aula no encontrada</p>`;
+    }
+  } else {
+    resultado.innerHTML = `<p class="error">Introduce un ID</p>`;
   }
 }
 

@@ -123,7 +123,7 @@ async function buscarPorId(id) {
   if (id) {
     const respuesta = await AlumnoAPI.obtenerPorId(id);
     if (respuesta.datos) {
-      resultado.innerHTML = crearTarjetaAlumno(respuesta.datos);
+      resultado.innerHTML = await crearTarjetaAlumno(respuesta.datos);
     } else {
       resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     }
