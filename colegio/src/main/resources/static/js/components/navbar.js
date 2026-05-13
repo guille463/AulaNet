@@ -5,6 +5,7 @@ export function crearBarraNavegacion() {
                 <a class="navbar-brand" href="index.html">Colegio</a>
                 <a class="btn btn-AlumnosMenu" href="alumnoMenu.html">Alumnos</a>
                 <a class="btn btn-ProfesoresMenu" href="profesorMenu.html">Porfesores</a>
+                <a class="btn btn-AulaMenu" href="AulaMenu.html">Aula</a>
             </div>
         </nav>
     `;
