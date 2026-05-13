@@ -11,9 +11,7 @@ export function crearTarjetaAula(aula) {
     <div class="card">
     <div class = "card-body">
     <strong> ${aula.codigo}</strong>
-    <span>${aula.curso}</span>
-    <span>${aula.grupo}</span>
-    <span>Capacidad: ${aula.capacidd}</span>
+    <span>Capacidad: ${aula.capacidad}</span>
     <span> Tutor: ${aula.tutor}</span>
     <a href="detalleAula.html?id= ${aula.id}">Ver mas</a>
     </div>

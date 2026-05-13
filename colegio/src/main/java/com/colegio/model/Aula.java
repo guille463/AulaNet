@@ -69,7 +69,7 @@ public class Aula {
         this.curso = curso;
         this.grupo = grupo;
         this.codigo = curso.getEtiqueta() + grupo.getEtiqueta();
-        this.capacidad = capacidad;
+        this.capacidad = 30;
     }
 
     // ============================================================
