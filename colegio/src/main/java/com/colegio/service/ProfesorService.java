@@ -99,7 +99,13 @@ public class ProfesorService {
         existente.setNombre(profesor.getNombre());
         existente.setApellido(profesor.getApellido());
         existente.setEmail(profesor.getEmail());
-        existente.setEspecialidad(profesor.getEspecialidad());
+
+        if (!existente.getEspecialidad().equals(profesor.getEspecialidad())) {
+            profesorAsignaturaRepository.deleteAll(profesorAsignaturaRepository.findByProfesorId(id));
+            existente.setEspecialidad(profesor.getEspecialidad());
+            asignarAsignaturas(existente);
+        }
+
         return profesorRepository.save(existente);
     }
 
