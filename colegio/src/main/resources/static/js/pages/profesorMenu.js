@@ -108,9 +108,9 @@ async function cargarTodos() {
     const resultado = await ProfesorAPI.obtenerTodos();
     if (resultado.datos && resultado.datos.length > 0) {
         let html = "";
-        resultado.datos.forEach(function (profesor) {
-            html += crearTarjetaProfesor(profesor);
-        });
+       for (const profesor of resultado.datos) {
+            html += await crearTarjetaProfesor(profesor);
+          }
         listaProfesores.innerHTML = html;
     } else {
         listaProfesores.innerHTML = `<p class="error">No hay profesores</p>`;

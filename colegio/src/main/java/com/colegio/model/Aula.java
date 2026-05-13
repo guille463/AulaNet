@@ -52,6 +52,7 @@ public class Aula {
     @Column(nullable = false)
     private int capacidad;
 
+    
     /**
      * Profesor tutor del aula
      */
@@ -70,6 +71,7 @@ public class Aula {
         this.grupo = grupo;
         this.codigo = curso.getEtiqueta() + grupo.getEtiqueta();
         this.capacidad = 30;
+       
     }
 
     // ============================================================

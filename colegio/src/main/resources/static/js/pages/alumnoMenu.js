@@ -108,9 +108,9 @@ async function cargarTodos() {
   const resultado = await AlumnoAPI.obtenerTodos();
   if (resultado.datos && resultado.datos.length > 0) {
     let html = "";
-    resultado.datos.forEach(function (alumno) {
-      html += crearTarjetaAlumno(alumno);
-    });
+    for (const alumno of resultado.datos) {
+         html += await crearTarjetaAlumno(alumno);
+       }
     listaAlumnos.innerHTML = html;
   } else {
     listaAlumnos.innerHTML = `<p class="error">No hay alumnos</p>`;

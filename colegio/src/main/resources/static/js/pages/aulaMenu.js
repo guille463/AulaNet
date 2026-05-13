@@ -1,13 +1,13 @@
-import {AulaAPI} from "../api/aulaApi.js"; 
+import { AulaAPI } from "../api/aulaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
-import { crearTarjetaAula } from "../components/aulaComponente.js"; 
+import { crearTarjetaAula } from "../components/aulaComponente.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    document.getElementById("navbar").innerHTML = crearBarraNavegacion();
-    const root = document.getElementById("root");
+  document.getElementById("navbar").innerHTML = crearBarraNavegacion();
+  const root = document.getElementById("root");
 });
 
- root.innerHTML = `
+root.innerHTML = `
       <div class="containerBuscarAula">
         <h1>Gestionar Aulas</h1>
         <div class="card">
@@ -30,20 +30,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>
     `;
 
-     
-cargarTodos(); 
 
-    async function cargarTodos() {
+cargarTodos();
+
+async function cargarTodos() {
   const listaAulas = document.getElementById("listaAulas");
   listaAulas.innerHTML = "";
   const resultado = await AulaAPI.obtenerTodos();
+  
   if (resultado.datos && resultado.datos.length > 0) {
     let html = "";
-    resultado.datos.forEach(function (aula) {
-      html += crearTarjetaAula(aula);
-    });
+    for (const aula of resultado.datos) {
+      html += await crearTarjetaAula(aula);
+    }
+
     listaAulas.innerHTML = html;
   } else {
     listaAulas.innerHTML = `<p class="error">No hay alumnos</p>`;
   }
 }
+
+
+
