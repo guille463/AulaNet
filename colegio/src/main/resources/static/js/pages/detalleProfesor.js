@@ -1,6 +1,6 @@
 
-import { AlumnoAPI } from "../api/profesorApi.js";
-import {getProfesorAsignaturaPorProfesorId } from "../api/profesorAsignaturaApi.js";
+import { ProfesorAPI } from "../api/profesorApi.js";
+import { ProfesorAsignaturaAPI } from "../api/profesorAsignaturaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -15,14 +15,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const profesor = await getProfesorPorId(id);
+    const respuestaProfesor = await ProfesorAPI.obtenerPorId(id); 
+    const profesor = respuestaProfesor.datos; 
 
     if (!profesor) {
         root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
         return;
     }
 
-    const asignaturas = await getProfesorAsignaturaPorProfesorId(id);
+    const respuestaAsignaturas = await ProfesorAsignaturaAPI.obtenerPorProfesor(id); 
+    const asignaturas = respuestaAsignaturas.datos
 
     let asignaturasHtml = "";
     if (asignaturas && asignaturas.length > 0) {

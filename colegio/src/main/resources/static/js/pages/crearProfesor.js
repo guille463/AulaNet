@@ -1,4 +1,4 @@
-import { AlumnoAPI, ProfesorAPI } from "../api/profesorApi.js";
+import { ProfesorAPI } from "../api/profesorApi.js";
 import { AulaAPI } from "../api/aulaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 
