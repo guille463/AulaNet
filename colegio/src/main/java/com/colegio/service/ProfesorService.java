@@ -103,6 +103,7 @@ public class ProfesorService {
         if (!existente.getEspecialidad().equals(profesor.getEspecialidad())) {
             profesorAsignaturaRepository.deleteAll(profesorAsignaturaRepository.findByProfesorId(id));
             existente.setEspecialidad(profesor.getEspecialidad());
+            existente.setCodigoAula(profesor.getCodigoAula());
             asignarAsignaturas(existente);
         }
 
@@ -142,17 +143,23 @@ public class ProfesorService {
         for (Asignatura asignatura : todasAsignaturas) {
             if (nombresAsignaturas.contains(asignatura.getNombre())) {
                 boolean esCursoDelAula = true;
+
                 if (profesor.getEspecialidad().equals(Especialidad.GENERAL)
                         && profesor.getCodigoAula() != null
                         && !profesor.getCodigoAula().isEmpty()) {
-                    Aula aula = aulaRepository.findByCodigo(profesor.getCodigoAula()).orElse(null);
-                    if (aula != null) {
-                        esCursoDelAula = asignatura.getCurso().equals(aula.getCurso());
+                    Aula aulaEncontrada = aulaRepository.findByCodigo(profesor.getCodigoAula()).orElse(null);
+                    if (aulaEncontrada != null) {
+                        esCursoDelAula = asignatura.getCurso().equals(aulaEncontrada.getCurso());
+                    } else {
+                        esCursoDelAula = false;
                     }
                 }
-                if (esCursoDelAula && !profesorAsignaturaRepository.existsByProfesorAndAsignatura(profesor, asignatura)) {
-                    ProfesorAsignatura pa = new ProfesorAsignatura(asignatura.getHorasSemana(), profesor, asignatura);
-                    profesorAsignaturaRepository.save(pa);
+
+                if (esCursoDelAula) {
+                    if (!profesorAsignaturaRepository.existsByProfesorAndAsignatura(profesor, asignatura)) {
+                        ProfesorAsignatura pa = new ProfesorAsignatura(asignatura.getHorasSemana(), profesor, asignatura);
+                        profesorAsignaturaRepository.save(pa);
+                    }
                 }
             }
         }
