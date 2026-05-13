@@ -1,5 +1,5 @@
-import { postAlumno } from "../api/alumnoApi.js";
-import { getAulaPorCodigo } from "../api/aulaApi.js";
+import { AlumnoAPI } from "../api/alumnoApi.js";
+import { AulaAPI } from "../api/aulaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -34,9 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
     `;
 
-  document
-    .getElementById("btnCrear")
-    .addEventListener("click", async function () {
+  document.getElementById("btnCrear").addEventListener("click", async function () {
       const nombre = document.getElementById("inputNombre").value.trim();
       const apellido = document.getElementById("inputApellido").value.trim();
       const email = document.getElementById("inputEmail").value.trim();
@@ -44,38 +42,35 @@ document.addEventListener("DOMContentLoaded", async () => {
       const grupo = document.getElementById("inputGrupo").value;
       const mensaje = document.getElementById("mensaje");
 
-      if (!nombre || !apellido || !email) {
-        mensaje.textContent = "Todos los campos son obligatorios";
-        return;
-      }
+    if (!nombre || !apellido || !email) {
+    mensaje.textContent = "Todos los campos son obligatorios";
+} else {
+    const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
 
-      const aula = await getAulaPorCodigo(curso + grupo);
-
-      if (!aula) {
+    if (!respuestaAula.datos) {
         mensaje.textContent = "Aula no encontrada";
-        return;
-      }
+    } else {
+        const alumno = {};
+        alumno.nombre = nombre;
+        alumno.apellido = apellido;
+        alumno.email = email;
+        alumno.aula = { id: respuestaAula.datos.id };
 
-      const alumno = {
-        nombre: nombre,
-        apellido: apellido,
-        email: email,
-        aula: { id: aula.id },
-      };
+        const resultado = await AlumnoAPI.crear(alumno);
 
-      const resultado = await postAlumno(alumno);
-
-      if (resultado.datos) {
-        window.location.href = "alumnoMenu.html";
-      } else {
-        const errorCrear = JSON.parse(resultado.error);
-        if (errorCrear.mensaje.includes("email")) {
-          mensaje.textContent = "Error: este email ya está registrado.";
-        } else if (errorCrear.mensaje.includes("llena")) {
-          mensaje.textContent = "Error: el aula está llena.";
+        if (resultado.datos) {
+            window.location.href = "alumnoMenu.html";
         } else {
-          mensaje.textContent = "Error: " + errorCrear.mensaje;
+            const errorCrear = JSON.parse(resultado.error);
+            if (errorCrear.mensaje.includes("email")) {
+                mensaje.textContent = "Error: este email ya está registrado.";
+            } else if (errorCrear.mensaje.includes("llena")) {
+                mensaje.textContent = "Error: el aula está llena.";
+            } else {
+                mensaje.textContent = "Error: " + errorCrear.mensaje;
+            }
         }
-      }
-    });
+    }
+}
+  });
 });
