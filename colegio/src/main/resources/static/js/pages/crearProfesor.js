@@ -1,4 +1,5 @@
-import { postProfesor } from "../api/profesorApi.js";
+import { ProfesorAPI } from "../api/profesorApi.js";
+import { AulaAPI } from "../api/aulaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -76,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             profesor.codigoAula = curso + grupo;
         }
 
-        const resultado = await postProfesor(profesor);
+        const resultado = await ProfesorAPI.crear(profesor);
 
         if (resultado.datos) {
             window.location.href = "profesorMenu.html";

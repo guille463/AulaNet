@@ -1,158 +1,23 @@
 import { BASE_URL } from "../config/config.js";
+import { fetchApi } from "../utils/apiUtils.js";
 
-const URL_PROFESORES = BASE_URL + "/profesores"; 
 
-export async function getProfesores() {
-    let datos = null; 
-    try {
-        const respuesta = await fetch (URL_PROFESORES); 
-        if(respuesta.ok){
-            datos = await respuesta.json(); 
-        } else{
-            throw new Error ("Error al crgar la lista de profesores")
-        }
-    } catch (error) {
-        console.error(error)
-        
-    }
-
-    return datos; 
+export const ProfesorAPI = {
+    obtenerTodos: () => fetchApi('GET', '/profesores'),
     
-}
+    obtenerPorId: (id) => fetchApi('GET', `/profesores/${id}`),
 
-export async function getProfesorPorId(id) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_PROFESORES}/${id}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Profesor no encontrado");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    obtenerPorNombre: (nombre) => fetchApi('GET', `/profesores/buscar/${nombre}`), 
 
-export async function getProfesorPorNombre(nombre) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_PROFESORES}/buscar/${nombre}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Profesor no encontrado");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    obtenerPorEmail: (email) => fetchApi ('GET', `/profesores/email/${email}`), 
 
-export async function getProfesorPorEmail(email) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_PROFESORES}/email/${email}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Profesor no encontrado");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    obtenerPorCodigoAula: (codigo) => fetchApi ('GET', `/profesores/aula/codigo/${encodeURIComponent(codigo)}`),
 
-export async function getProfesorPorCodigoAula(codigo) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_PROFESORES}/aula/codigo/${encodeURIComponent(codigo)}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("No se encontraron Porfesores");
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    return datos;
-}
+    obtenerPorEspecialidad: (especialidad)=> fetchApi('GET', `/profesores/especialidad/${especialidad}`),  
 
-export async function putProfesor(id, profesor) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_PROFESORES}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(profesor)
-        });
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Error al actualizar profesor");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    crear: (profesor) => fetchApi ('POST', `/profesores`, profesor), 
 
-export async function deleteProfesor(id) {
-    let ok = false;
-    try {
-        const respuesta = await fetch(`${URL_PROFESORES}/${id}`, {
-            method: "DELETE"
-        });
-        if (respuesta.ok) {
-            ok = true;
-        } else {
-            throw new Error("Error al eliminar alumno");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return ok;
-}
+    actualizar: (id, profesor)=> fetchApi('PUT', `/profesores/${id}`, profesor), 
 
-export async function postProfesor(profesor) {
-    let datos = null;
-    let error = null;
-    try {
-        const respuesta = await fetch(URL_PROFESORES, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(profesor)
-        });
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            error = await respuesta.text();
-            console.log(error);
-            
-        }
-    } catch (e) {
-        console.error(e);
-    }
-    return { datos, error };
-}
-
-export async function getProfesorPorEspecialidad(especialidad) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_PROFESORES}/especialidad/${especialidad}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Profesores no encontrados");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    eliminar: (id) => fetchApi('DELETE', `/profesores/${id}`) 
+}; 

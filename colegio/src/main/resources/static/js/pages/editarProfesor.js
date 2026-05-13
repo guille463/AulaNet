@@ -1,4 +1,4 @@
-import { getProfesorPorId, putProfesor } from "../api/profesorApi.js";
+import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const profesor = await getProfesorPorId(id);
+    const respuestaProfesor = await ProfesorAPI.obtenerPorId(id);
+    const profesor = respuestaProfesor.datos; 
 
     if (!profesor) {
         root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
@@ -34,12 +35,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <input type="text" id="inputEmail" value="${profesor.email}">
                     <label>Especialidad</label>
                     <select id="inputEspecialidad">
-                        <option value="GENERAL" ${profesor.especialidad === "GENERAL" ? "selected" : ""}>General</option>
-                        <option value="EDUCACION_FISICA" ${profesor.especialidad === "EDUCACION_FISICA" ? "selected" : ""}>Educación Física</option>
-                        <option value="INGLES" ${profesor.especialidad === "INGLES" ? "selected" : ""}>Inglés</option>
-                        <option value="MUSICA" ${profesor.especialidad === "MUSICA" ? "selected" : ""}>Música</option>
-                        <option value="LOGOPEDA" ${profesor.especialidad === "LOGOPEDA" ? "selected" : ""}>Logopeda</option>
-                        <option value="RELIGION" ${profesor.especialidad === "RELIGION" ? "selected" : ""}>Religión</option>
+                        <option value="GENERAL">General</option>
+                        <option value="EDUCACION_FISICA">Educación Física</option>
+                        <option value="INGLES">Inglés</option>
+                        <option value="MUSICA">Música</option>
+                        <option value="LOGOPEDA">Logopeda</option>
+                        <option value="RELIGION">Religión</option>
                     </select>
                     <div id="selectAula" style="display:${profesor.especialidad === "GENERAL" ? "block" : "none"};">
                         <select id="inputCurso">
@@ -88,7 +89,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             profesor.codigoAula = null;
         }
 
-        const resultado = await putProfesor(id, profesor);
+        const resultadoActualizar = await ProfesorAPI.actualizar(id, profesor);
+        const resultado = resultadoActualizar.datos; 
 
         if (resultado) {
             window.location.href = "profesorMenu.html";
