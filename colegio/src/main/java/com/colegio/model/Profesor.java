@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 /**
  * Entidad que representa a un profesor del colegio.
@@ -41,6 +42,9 @@ public class Profesor {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Especialidad especialidad;
+
+    @Transient
+    private String codigoAula;
 
     // ============================================================
     // CONSTRUCTORES
@@ -100,6 +104,14 @@ public class Profesor {
 
     public void setEspecialidad(Especialidad especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public String getCodigoAula() {
+        return codigoAula;
+    }
+
+    public void setCodigoAula(String codigoAula) {
+        this.codigoAula = codigoAula;
     }
 
     // ============================================================
