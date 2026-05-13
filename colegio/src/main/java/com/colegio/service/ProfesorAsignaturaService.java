@@ -91,13 +91,26 @@ public class ProfesorAsignaturaService {
         Asignatura asignatura = asignaturaRepository.findById(profesorAsignatura.getAsignatura().getId())
                 .orElseThrow(() -> new RuntimeException("Asignatura no encontrada"));
 
-        boolean combinacionCambia = !existente.getProfesor().getId().equals(profesor.getId())
-                || !existente.getAsignatura().getId().equals(asignatura.getId());
+        boolean profesorCambia = false;
+        if (!existente.getProfesor().getId().equals(profesor.getId())) {
+            profesorCambia = true;
+        }
 
-        if (combinacionCambia
-                && profesorAsignaturaRepository.existsByProfesorAndAsignatura(profesor, asignatura)) {
-            throw new RuntimeException("El profesor " + profesor.getCodigo()
-                    + " ya imparte la asignatura " + asignatura.getCodigo());
+        boolean asignaturaCambia = false;
+        if (!existente.getAsignatura().getId().equals(asignatura.getId())) {
+            asignaturaCambia = true;
+        }
+
+        boolean combinacionCambia = false;
+        if (profesorCambia || asignaturaCambia) {
+            combinacionCambia = true;
+        }
+
+        if (combinacionCambia) {
+            if (profesorAsignaturaRepository.existsByProfesorAndAsignatura(profesor, asignatura)) {
+                throw new RuntimeException("El profesor " + profesor.getCodigo()
+                        + " ya imparte la asignatura " + asignatura.getCodigo());
+            }
         }
 
         validarHorasSemanales(profesorAsignatura.getHorasSemanales());

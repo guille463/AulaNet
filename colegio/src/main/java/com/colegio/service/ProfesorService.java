@@ -100,7 +100,20 @@ public class ProfesorService {
         existente.setApellido(profesor.getApellido());
         existente.setEmail(profesor.getEmail());
 
+        boolean especialidadCambia = false;
+        boolean aulaCambia = false;
+
         if (!existente.getEspecialidad().equals(profesor.getEspecialidad())) {
+            especialidadCambia = true;
+        }
+
+        if (profesor.getCodigoAula() == null) {
+            aulaCambia = false;
+        } else if (!profesor.getCodigoAula().equals(existente.getCodigoAula())) {
+            aulaCambia = true;
+        }
+
+        if (especialidadCambia || aulaCambia) {
             profesorAsignaturaRepository.deleteAll(profesorAsignaturaRepository.findByProfesorId(id));
             existente.setEspecialidad(profesor.getEspecialidad());
             existente.setCodigoAula(profesor.getCodigoAula());
