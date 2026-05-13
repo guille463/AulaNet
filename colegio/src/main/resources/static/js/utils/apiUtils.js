@@ -1,4 +1,4 @@
-import { API_CONFIG } from "../config/apiConfig.js";
+import {  BASE_URL } from "../config/config.js";
 
 export async function fetchApi(metodo, ruta, cuerpo = null) {
     let datos = null;
@@ -12,8 +12,7 @@ export async function fetchApi(metodo, ruta, cuerpo = null) {
             opciones.body = JSON.stringify(cuerpo);
         }
 
-        const respuesta = await fetch(API_CONFIG.BASE_URL + ruta, opciones);
-
+        const respuesta = await fetch(BASE_URL + ruta, opciones);
         if (respuesta.ok) {
             if (metodo === "DELETE") {
                 datos = true;

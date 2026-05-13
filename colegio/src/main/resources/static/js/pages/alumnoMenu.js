@@ -1,11 +1,4 @@
-import {
-  getAlumnos,
-  getAlumnoPorId,
-  getAlumnoPorNombre,
-  getAlumnoPorEmail,
-  getAlumnosPorCodigoAula,
-  deleteAlumno,
-} from "../api/alumnoApi.js";
+import { AlumnoAPI } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 
@@ -18,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   root.innerHTML = `
       <div class="containerBuscarAlumno">
         <h1>Gestionar Alumnos</h1>
-         <a href="crearAlumno.html">➕ Añadir alumno</a>
+        <a href="crearAlumno.html">➕ Añadir alumno</a>
         <div class="card">
           <div class="card-body">
             <h2 class="card-title">Buscar Alumno</h2>
@@ -45,11 +38,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("root").addEventListener("click", function (e) {
     if (e.target.classList.contains("btnEliminar")) {
-        idAEliminar = e.target.getAttribute("data-id");
-        document.getElementById("modalTexto").textContent = "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
-        document.getElementById("modalConfirmar").style.display = "block";
+      idAEliminar = e.target.getAttribute("data-id");
+      document.getElementById("modalTexto").textContent = "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
+      document.getElementById("modalConfirmar").style.display = "block";
     }
-});
+  });
 
   document.getElementById("btnConfirmarSi").addEventListener("click", async function () {
     document.getElementById("modalConfirmar").style.display = "none";
@@ -61,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("btnConfirmarNo").addEventListener("click", function () {
     document.getElementById("modalConfirmar").style.display = "none";
     idAEliminar = null;
-   document.getElementById("resultado").innerHTML = `<p>Operación cancelada</p>`;
+    document.getElementById("resultado").innerHTML = `<p>Operación cancelada</p>`;
   });
 
   document.getElementById("tipoBusqueda").addEventListener("change", function () {
@@ -112,10 +105,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function cargarTodos() {
   const listaAlumnos = document.getElementById("listaAlumnos");
   listaAlumnos.innerHTML = "";
-  const alumnos = await getAlumnos();
-  if (alumnos && alumnos.length > 0) {
+  const resultado = await AlumnoAPI.obtenerTodos();
+  if (resultado.datos && resultado.datos.length > 0) {
     let html = "";
-    alumnos.forEach(function (alumno) {
+    resultado.datos.forEach(function (alumno) {
       html += crearTarjetaAlumno(alumno);
     });
     listaAlumnos.innerHTML = html;
@@ -128,9 +121,9 @@ async function buscarPorId(id) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
   if (id) {
-    const alumno = await getAlumnoPorId(id);
-    if (alumno) {
-      resultado.innerHTML = crearTarjetaAlumno(alumno);
+    const respuesta = await AlumnoAPI.obtenerPorId(id);
+    if (respuesta.datos) {
+      resultado.innerHTML = crearTarjetaAlumno(respuesta.datos);
     } else {
       resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     }
@@ -143,10 +136,10 @@ async function buscarPorNombre(nombre) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
   if (nombre) {
-    const alumnos = await getAlumnoPorNombre(nombre);
-    if (alumnos && alumnos.length > 0) {
+    const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
+    if (respuesta.datos && respuesta.datos.length > 0) {
       let html = "";
-      alumnos.forEach(function (alumno) {
+      respuesta.datos.forEach(function (alumno) {
         html += crearTarjetaAlumno(alumno);
       });
       resultado.innerHTML = html;
@@ -162,9 +155,9 @@ async function buscarPorEmail(email) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
   if (email) {
-    const alumno = await getAlumnoPorEmail(email);
-    if (alumno) {
-      resultado.innerHTML = crearTarjetaAlumno(alumno);
+    const respuesta = await AlumnoAPI.obtenerPorEmail(email);
+    if (respuesta.datos) {
+      resultado.innerHTML = crearTarjetaAlumno(respuesta.datos);
     } else {
       resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     }
@@ -176,10 +169,10 @@ async function buscarPorEmail(email) {
 async function buscarPorCodigoAula(codigo) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
-  const alumnos = await getAlumnosPorCodigoAula(codigo);
-  if (alumnos && alumnos.length > 0) {
+  const respuesta = await AlumnoAPI.obtenerPorCodigoAula(codigo);
+  if (respuesta.datos && respuesta.datos.length > 0) {
     let html = "";
-    alumnos.forEach(function (alumno) {
+    respuesta.datos.forEach(function (alumno) {
       html += crearTarjetaAlumno(alumno);
     });
     resultado.innerHTML = html;
@@ -189,8 +182,8 @@ async function buscarPorCodigoAula(codigo) {
 }
 
 async function eliminarAlumno(id) {
-  const ok = await deleteAlumno(id);
-  if (ok) {
+  const respuesta = await AlumnoAPI.eliminar(id);
+  if (respuesta.datos) {
     cargarTodos();
   } else {
     document.getElementById("listaAlumnos").innerHTML += `<p class="error">Error al eliminar</p>`;

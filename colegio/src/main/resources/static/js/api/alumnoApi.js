@@ -1,140 +1,19 @@
-import {BASE_URL} from "../config/config.js"; 
+import { fetchApi } from "../utils/apiUtils.js";
 
-const URL_ALUMNOS = BASE_URL + "/alumnos"; 
+export const AlumnoAPI = {
+    obtenerTodos: () => fetchApi('GET', '/alumnos'),
 
-export async function getAlumnos() {
-    let datos = null;
-    try {
-        const respuesta = await fetch(URL_ALUMNOS);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Error al obtener alumnos");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    obtenerPorId: (id) => fetchApi('GET', `/alumnos/${id}`),
 
-export async function getAlumnoPorId(id) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/${id}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Alumno no encontrado");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    obtenerPorNombre: (nombre) => fetchApi('GET', `/alumnos/buscar/${nombre}`),
 
-export async function getAlumnoPorNombre(nombre) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/buscar/${nombre}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Alumno no encontrado");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    obtenerPorEmail: (email) => fetchApi('GET', `/alumnos/email/${email}`),
 
-export async function getAlumnoPorEmail(email) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/email/${email}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Alumno no encontrado");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
+    obtenerPorCodigoAula: (codigo) => fetchApi('GET', `/alumnos/aula/codigo/${encodeURIComponent(codigo)}`),
 
-export async function getAlumnosPorCodigoAula(codigo) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/aula/codigo/${encodeURIComponent(codigo)}`);
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("No se encontraron alumnos");
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    return datos;
-}
+    crear: (alumno) => fetchApi('POST', '/alumnos', alumno),
 
-export async function putAlumno(id, alumno) {
-    let datos = null;
-    try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(alumno)
-        });
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            throw new Error("Error al actualizar alumno");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return datos;
-}
-
-export async function deleteAlumno(id) {
-    let ok = false;
-    try {
-        const respuesta = await fetch(`${URL_ALUMNOS}/${id}`, {
-            method: "DELETE"
-        });
-        if (respuesta.ok) {
-            ok = true;
-        } else {
-            throw new Error("Error al eliminar alumno");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    return ok;
-}
-
-export async function postAlumno(alumno) {
-    let datos = null;
-    let error = null;
-    try {
-        const respuesta = await fetch(URL_ALUMNOS, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(alumno)
-        });
-        if (respuesta.ok) {
-            datos = await respuesta.json();
-        } else {
-            error = await respuesta.text();
-            console.log(error);
-            
-        }
-    } catch (e) {
-        console.error(e);
-    }
-    return { datos, error };
-}
+    actualizar: (id, alumno) => fetchApi('PUT', `/alumnos/${id}`, alumno),
+    
+    eliminar: (id) => fetchApi('DELETE', `/alumnos/${id}`)
+};
