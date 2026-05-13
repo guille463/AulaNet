@@ -80,7 +80,7 @@ export async function getProfesorPorCodigoAula(codigo) {
     return datos;
 }
 
-export async function putAlumno(id, profesor) {
+export async function putProfesor(id, profesor) {
     let datos = null;
     try {
         const respuesta = await fetch(`${URL_PROFESORES}/${id}`, {
