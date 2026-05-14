@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colegio.model.Alumno;
+import com.colegio.model.AlumnoAsignatura;
+import com.colegio.model.Asignatura;
 import com.colegio.model.Aula;
 import com.colegio.model.Curso;
 import com.colegio.repository.AlumnoAsignaturaRepository;
 import com.colegio.repository.AlumnoRepository;
+import com.colegio.repository.AsignaturaRepository;
 import com.colegio.repository.AulaRepository;
 import com.colegio.util.Constantes;
 
@@ -30,6 +33,9 @@ public class AlumnoService {
 
     @Autowired
     private AulaRepository aulaRepository;
+
+    @Autowired
+    private AsignaturaRepository asignaturaRepository;
 
     AlumnoService(AlumnoAsignaturaRepository alumnoAsignaturaRepository) {
         this.alumnoAsignaturaRepository = alumnoAsignaturaRepository;
@@ -88,7 +94,10 @@ public class AlumnoService {
         alumno.setAula(aula);
         Alumno guardado = alumnoRepository.save(alumno);
         guardado.setCodigo(Constantes.PREFIJO_ALUMNO + guardado.getId());
-        return alumnoRepository.save(guardado);
+        guardado = alumnoRepository.save(guardado);
+        matricularEnAsignaturas(guardado);
+        return guardado;
+
     }
 
     public Alumno actualizarAlumno(Long id, Alumno alumno) {
@@ -122,5 +131,18 @@ public class AlumnoService {
 
     public List<Alumno> buscarPorCodigoAula(String codigo) {
         return alumnoRepository.findByAulaCodigo(codigo);
+    }
+
+    private void matricularEnAsignaturas(Alumno alumno) {
+        List<Asignatura> asignaturas = asignaturaRepository.findByCurso(alumno.getCurso());
+
+        for (Asignatura asignatura : asignaturas) {
+            if (!alumnoAsignaturaRepository.existsByAlumnoAndAsignatura(alumno, asignatura)) {
+                AlumnoAsignatura matricula = new AlumnoAsignatura(0.0, alumno, asignatura);
+                AlumnoAsignatura guardada = alumnoAsignaturaRepository.save(matricula);
+                guardada.setCodigo(Constantes.PREFIJO_MATR + guardada.getId());
+                alumnoAsignaturaRepository.save(guardada);
+            }
+        }
     }
 }
