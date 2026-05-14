@@ -6,6 +6,8 @@ export function crearBarraNavegacion() {
                 <a class="btn btn-AlumnosMenu" href="alumnoMenu.html">Alumnos</a>
                 <a class="btn btn-ProfesoresMenu" href="profesorMenu.html">Porfesores</a>
                 <a class="btn btn-AulaMenu" href="AulaMenu.html">Aula</a>
+                <a class="btn btn-AsignaturaMenu" href="AsignaturaMenu.html">Aula</a>
+
             </div>
         </nav>
     `;
