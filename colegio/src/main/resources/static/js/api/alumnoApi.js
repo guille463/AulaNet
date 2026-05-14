@@ -11,6 +11,8 @@ export const AlumnoAPI = {
 
     obtenerPorCodigoAula: (codigo) => fetchApi('GET', `/alumnos/aula/codigo/${encodeURIComponent(codigo)}`),
 
+    obtenerPorAula: (aulaId) => fetchApi('GET', `/alumnos/aula/${aulaId}`),
+
     crear: (alumno) => fetchApi('POST', '/alumnos', alumno),
 
     actualizar: (id, alumno) => fetchApi('PUT', `/alumnos/${id}`, alumno),
