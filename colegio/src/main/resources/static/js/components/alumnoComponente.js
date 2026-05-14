@@ -1,12 +1,6 @@
 export function crearTarjetaAlumno(alumno) {
     const aula = alumno.aula;
-    const tutor = aula.tutor;
-    let tutorTexto;
-    if (tutor) {
-        tutorTexto = tutor.nombre + " " + tutor.apellido;
-    } else {
-        tutorTexto = "Sin tutor";
-    }
+
     return `
         <div class="card">
             <div class="card-body" style="display:flex; gap:20px;">
@@ -15,7 +9,7 @@ export function crearTarjetaAlumno(alumno) {
                 <span>${alumno.email}</span>
                 <span>${aula.curso}</span>
                 <span>${aula.grupo}</span>
-                <span>${tutorTexto}</span>
+                <span>${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</span>
                 <a href="detalleAlumno.html?id=${alumno.id}">👁</a>
                 <a href="editarAlumno.html?id=${alumno.id}">✏️</a>
                 <button class="btnEliminar" data-id="${alumno.id}">🗑️</button>
