@@ -1,12 +1,23 @@
 import { AlumnoAPI } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
+import { CURSOS, GRUPOS } from "../utils/constantes.js";
 
 let idAEliminar = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
+
+  let opcionesCurso = "";
+  for (const curso of CURSOS) {
+    opcionesCurso += `<option value="${curso}">${curso}</option>`;
+  }
+
+  let opcionesGrupo = "";
+  for (const grupo of GRUPOS) {
+    opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
+  }
 
   root.innerHTML = `
       <div class="containerBuscarAlumno">
@@ -36,9 +47,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   cargarTodos();
 
-  document.getElementById("root").addEventListener("click", function (e) {
-    if (e.target.classList.contains("btnEliminar")) {
-      idAEliminar = e.target.getAttribute("data-id");
+  document.getElementById("root").addEventListener("click", function (evento) {
+    if (evento.target.classList.contains("btnEliminar")) {
+      idAEliminar = evento.target.getAttribute("data-id");
       document.getElementById("modalTexto").textContent = "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
       document.getElementById("modalConfirmar").style.display = "block";
     }
@@ -68,18 +79,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el email">`;
     } else if (tipo === "curso") {
       container.innerHTML = `
-          <select id="inputCurso" class="form-select mb-2">
-              <option value="1º">1º</option>
-              <option value="2º">2º</option>
-              <option value="3º">3º</option>
-              <option value="4º">4º</option>
-              <option value="5º">5º</option>
-              <option value="6º">6º</option>
-          </select>
-          <select id="inputGrupo" class="form-select mb-2">
-              <option value="A">Grupo A</option>
-              <option value="B">Grupo B</option>
-          </select>`;
+          <select id="inputCurso" class="form-select mb-2">${opcionesCurso}</select>
+          <select id="inputGrupo" class="form-select mb-2">${opcionesGrupo}</select>`;
     }
   });
 
@@ -105,12 +106,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function cargarTodos() {
   const listaAlumnos = document.getElementById("listaAlumnos");
   listaAlumnos.innerHTML = "";
-  const resultado = await AlumnoAPI.obtenerTodos();
-  if (resultado.datos && resultado.datos.length > 0) {
+  const respuesta = await AlumnoAPI.obtenerTodos();
+  if (respuesta.datos && respuesta.datos.length > 0) {
     let html = "";
-    for (const alumno of resultado.datos) {
-         html += await crearTarjetaAlumno(alumno);
-       }
+    for (const alumno of respuesta.datos) {
+      html += crearTarjetaAlumno(alumno);
+    }
     listaAlumnos.innerHTML = html;
   } else {
     listaAlumnos.innerHTML = `<p class="error">No hay alumnos</p>`;
@@ -123,7 +124,7 @@ async function buscarPorId(id) {
   if (id) {
     const respuesta = await AlumnoAPI.obtenerPorId(id);
     if (respuesta.datos) {
-      resultado.innerHTML = await crearTarjetaAlumno(respuesta.datos);
+      resultado.innerHTML = crearTarjetaAlumno(respuesta.datos);
     } else {
       resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     }
@@ -139,9 +140,9 @@ async function buscarPorNombre(nombre) {
     const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
     if (respuesta.datos && respuesta.datos.length > 0) {
       let html = "";
-      respuesta.datos.forEach(function (alumno) {
+      for (const alumno of respuesta.datos) {
         html += crearTarjetaAlumno(alumno);
-      });
+      }
       resultado.innerHTML = html;
     } else {
       resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
@@ -166,15 +167,15 @@ async function buscarPorEmail(email) {
   }
 }
 
-async function buscarPorCodigoAula(codigo) {
+async function buscarPorCodigoAula(codigoAula) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
-  const respuesta = await AlumnoAPI.obtenerPorCodigoAula(codigo);
+  const respuesta = await AlumnoAPI.obtenerPorCodigoAula(codigoAula);
   if (respuesta.datos && respuesta.datos.length > 0) {
     let html = "";
-    respuesta.datos.forEach(function (alumno) {
+    for (const alumno of respuesta.datos) {
       html += crearTarjetaAlumno(alumno);
-    });
+    }
     resultado.innerHTML = html;
   } else {
     resultado.innerHTML = `<p class="error">No se encontraron alumnos en esa aula</p>`;
