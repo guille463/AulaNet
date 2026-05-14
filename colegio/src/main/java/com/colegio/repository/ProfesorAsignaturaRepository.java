@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Asignatura;
+import com.colegio.model.Curso;
 import com.colegio.model.Profesor;
 import com.colegio.model.ProfesorAsignatura;
 
@@ -25,6 +26,8 @@ public interface ProfesorAsignaturaRepository extends JpaRepository<ProfesorAsig
     List<ProfesorAsignatura> findByAsignatura(Asignatura asignatura);
 
     List<ProfesorAsignatura> findByAsignaturaId(Long asignaturaId);
+
+    List<ProfesorAsignatura> findByAsignaturaCurso(Curso curso);
 
     boolean existsByProfesorAndAsignatura(Profesor profesor, Asignatura asignatura);
 }
