@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colegio.model.Asignatura;
+import com.colegio.model.Aula;
 import com.colegio.model.Profesor;
 import com.colegio.model.ProfesorAsignatura;
 import com.colegio.repository.AsignaturaRepository;
+import com.colegio.repository.AulaRepository;
 import com.colegio.repository.ProfesorAsignaturaRepository;
 import com.colegio.repository.ProfesorRepository;
 
@@ -30,6 +32,9 @@ public class ProfesorAsignaturaService {
 
     @Autowired
     private AsignaturaRepository asignaturaRepository;
+
+    @Autowired
+    private AulaRepository aulaRepository;
 
     // ============================================================
     // METODOS CRUD
@@ -61,6 +66,12 @@ public class ProfesorAsignaturaService {
      */
     public List<ProfesorAsignatura> buscarPorAsignatura(Long asignaturaId) {
         return profesorAsignaturaRepository.findByAsignaturaId(asignaturaId);
+    }
+
+    public List<ProfesorAsignatura> buscarPorCursoAula(Long aulaId) {
+        Aula aula = aulaRepository.findById(aulaId)
+                .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
+        return profesorAsignaturaRepository.findByAsignaturaCurso(aula.getCurso());
     }
 
     public ProfesorAsignatura guardar(ProfesorAsignatura profesorAsignatura) {

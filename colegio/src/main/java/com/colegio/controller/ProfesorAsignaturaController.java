@@ -63,6 +63,11 @@ public class ProfesorAsignaturaController {
         return profesorAsignaturaService.buscarPorAsignatura(asignaturaId);
     }
 
+    @GetMapping("/aula/{aulaId}")
+    public List<ProfesorAsignatura> obtenerPorAula(@PathVariable Long aulaId) {
+        return profesorAsignaturaService.buscarPorCursoAula(aulaId);
+    }
+
     /**
      * Crea una nueva relacion entre un profesor y una asignatura.
      */
