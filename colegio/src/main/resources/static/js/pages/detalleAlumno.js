@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     root.innerHTML = `
       <div class="containerDetalle">
           <h1>Detalle del Alumno</h1>
-          <div class="--detalle">
+          <div class="card--detalle">
               <div class="card--detalle--body">
                   <h2>${alumno.codigo}</h2>
                   <hr>
