@@ -1,10 +1,21 @@
 import { AulaAPI } from "../api/aulaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAula } from "../components/aulaComponente.js";
+import { CURSOS, GRUPOS } from "../utils/constantes.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
     const root = document.getElementById("root");
+
+    let opcionesCurso = "";
+    for (const curso of CURSOS) {
+        opcionesCurso += `<option value="${curso}">${curso}</option>`;
+    }
+
+    let opcionesGrupo = "";
+    for (const grupo of GRUPOS) {
+        opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
+    }
 
     root.innerHTML = `
         <div class="containerBuscarAula">
@@ -38,18 +49,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">`;
         } else if (tipo === "codigo") {
             container.innerHTML = `
-                <select id="inputCurso" class="form-select mb-2">
-                    <option value="1º">1º</option>
-                    <option value="2º">2º</option>
-                    <option value="3º">3º</option>
-                    <option value="4º">4º</option>
-                    <option value="5º">5º</option>
-                    <option value="6º">6º</option>
-                </select>
-                <select id="inputGrupo" class="form-select mb-2">
-                    <option value="A">Grupo A</option>
-                    <option value="B">Grupo B</option>
-                </select>`;
+                <select id="inputCurso" class="form-select mb-2">${opcionesCurso}</select>
+                <select id="inputGrupo" class="form-select mb-2">${opcionesGrupo}</select>`;
         }
     });
 
@@ -65,21 +66,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 });
+
 async function cargarTodos() {
-  const listaAulas = document.getElementById("listaAulas");
-  listaAulas.innerHTML = "";
-  const resultado = await AulaAPI.obtenerTodos();
-
-  if (resultado.datos && resultado.datos.length > 0) {
-    let html = "";
-    for (const aula of resultado.datos) {
-      html += await crearTarjetaAula(aula);
+    const listaAulas = document.getElementById("listaAulas");
+    listaAulas.innerHTML = "";
+    const resultado = await AulaAPI.obtenerTodos();
+    if (resultado.datos && resultado.datos.length > 0) {
+        let html = "";
+        for (const aula of resultado.datos) {
+            html += await crearTarjetaAula(aula);
+        }
+        listaAulas.innerHTML = html;
+    } else {
+        listaAulas.innerHTML = `<p class="error">No hay aulas</p>`;
     }
-
-    listaAulas.innerHTML = html;
-  } else {
-    listaAulas.innerHTML = `<p class="error">No hay alumnos</p>`;
-  }
 }
 
 async function buscarPorId(id) {
@@ -97,14 +97,13 @@ async function buscarPorId(id) {
     }
 }
 
-async function buscarPorCodigo(codigo) {
+async function buscarPorCodigo(codigoAula) {
     const resultado = document.getElementById("resultado");
     resultado.innerHTML = "";
-    const respuesta = await AulaAPI.obtenerPorCodigo(codigo);
+    const respuesta = await AulaAPI.obtenerPorCodigo(codigoAula);
     if (respuesta.datos) {
         resultado.innerHTML = await crearTarjetaAula(respuesta.datos);
     } else {
         resultado.innerHTML = `<p class="error">Aula no encontrada</p>`;
     }
 }
-
