@@ -1,0 +1,41 @@
+.navbar {
+    background-color: aqua;
+    padding: 1 rem 2 rem
+}
+
+.navbar .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5 rem;
+    flex-wrap: wrap;
+}
+
+.navbar-brand{
+    margin-right: 1.5 rem;
+    text-decoration: none;
+}
+
+.navbar-brand:hover{
+    color:blue
+}
+
+.navbar .btn{
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar .btn:hover{
+    background-color: antiquewhite;
+    color: blueviolet;
+}
+
+.body--inicio .navbar{
+    position: absolute;
+    z-index: 10;
+    background-color: transparent;
+}
