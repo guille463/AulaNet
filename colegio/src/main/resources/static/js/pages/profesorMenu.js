@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="card">
           <div class="card-body">
             <h2 class="card-title">Buscar Docente</h2>
-            <select id="tipoBusqueda" class="form-select mb-2">
+            <select id="tipoBusqueda" class="form-select">
               <option value="id">Por ID</option>
               <option value="nombre">Por Nombre</option>
               <option value="email">Por Email</option>
               <option value="especialidad">Por Especialidad</option>
             </select>
             <div id="inputContainer">
-              <input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">
+              <input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">
             </div>
             <button class="btn btn-Buscar" id="btnBuscar">Buscar</button>
           </div>
@@ -67,13 +67,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         const container = document.getElementById("inputContainer");
         const tipo = this.value;
         if (tipo === "id") {
-            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">`;
+            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">`;
         } else if (tipo === "nombre") {
-            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el nombre">`;
+            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el nombre">`;
         } else if (tipo === "email") {
-            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el email">`;
+            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el email">`;
         } else if (tipo === "especialidad") {
-            container.innerHTML = `<select id="inputBusqueda" class="form-select mb-2">${opcionesEspecialidad}</select>`;
+            container.innerHTML = `<select id="inputBusqueda" class="form-select">${opcionesEspecialidad}</select>`;
         }
     });
 

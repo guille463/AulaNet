@@ -26,14 +26,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="card">
           <div class="card-body">
             <h2 class="card-title">Buscar Alumno</h2>
-            <select id="tipoBusqueda" class="form-select mb-2">
+            <select id="tipoBusqueda" class="form-select">
               <option value="id">Por ID</option>
               <option value="nombre">Por Nombre</option>
               <option value="email">Por Email</option>
               <option value="curso">Por Curso y Grupo</option>
             </select>
             <div id="inputContainer">
-              <input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">
+              <input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">
             </div>
             <button class="btn btn-Buscar" id="btnBuscar">Buscar</button>
           </div>
@@ -72,15 +72,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("inputContainer");
     const tipo = this.value;
     if (tipo === "id") {
-      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">`;
+      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">`;
     } else if (tipo === "nombre") {
-      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el nombre">`;
+      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el nombre">`;
     } else if (tipo === "email") {
-      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el email">`;
+      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el email">`;
     } else if (tipo === "curso") {
       container.innerHTML = `
-          <select id="inputCurso" class="form-select mb-2">${opcionesCurso}</select>
-          <select id="inputGrupo" class="form-select mb-2">${opcionesGrupo}</select>`;
+          <select id="inputCurso" class="form-select">${opcionesCurso}</select>
+          <select id="inputGrupo" class="form-select">${opcionesGrupo}</select>`;
     }
   });
 
