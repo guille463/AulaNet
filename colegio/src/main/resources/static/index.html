@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
+    <head class="headInicio">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inicio - Colegio</title>
+        <title id="tituloInicio">Inicio - Colegio</title>
+        <link rel="stylesheet" href="js/css/base.css">
+        <link rel="stylesheet" href="js/css/index.css">
     </head>
-    <body>
+    <body class="body--inicio">
         <nav id="navbar"></nav>
+        <div class="hero">
+            <img id="imagenInicio" src="js/media/imgs/imagenInicio.jpg">
+            <div class="hero__contenido">
+                <h1 class="hero__titulo">Gestion Escolar</h1>
+                <p class="hero__subtitulo">Panel de Administracion</p>
+            </div>
+        </div>
         <div id="root"></div>
         <script type="module" src="js/pages/inicio.js"></script>
     </body>
+
 </html>
