@@ -1,12 +1,18 @@
-import {ProfesorAPI} from "../api/profesorApi.js"; 
+import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaProfesor } from "../components/profesorComponente.js";
+import { ESPECIALIDADES } from "../utils/constantes.js";
 
 let idAEliminar = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
     const root = document.getElementById("root");
+
+    let opcionesEspecialidad = "";
+    for (const especialidad of ESPECIALIDADES) {
+        opcionesEspecialidad += `<option value="${especialidad.valor}">${especialidad.etiqueta}</option>`;
+    }
 
     root.innerHTML = `
       <div class="containerBuscarProfesor">
@@ -36,9 +42,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     cargarTodos();
 
-    document.getElementById("root").addEventListener("click", function (e) {
-        if (e.target.classList.contains("btnEliminar")) {
-            idAEliminar = e.target.getAttribute("data-id");
+    document.getElementById("root").addEventListener("click", function (evento) {
+        if (evento.target.classList.contains("btnEliminar")) {
+            idAEliminar = evento.target.getAttribute("data-id");
             document.getElementById("modalTexto").textContent = "¿Estás seguro de que quieres eliminar al profesor " + idAEliminar + "?";
             document.getElementById("modalConfirmar").style.display = "block";
         }
@@ -62,24 +68,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         const tipo = this.value;
         if (tipo === "id") {
             container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el ID">`;
+        } else if (tipo === "nombre") {
+            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el nombre">`;
         } else if (tipo === "email") {
             container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el email">`;
         } else if (tipo === "especialidad") {
-            container.innerHTML = `
-                <select id="inputBusqueda" class="form-select mb-2">
-                    <option value="GENERAL">General</option>
-                    <option value="EDUCACION_FISICA">Educación Física</option>
-                    <option value="INGLES">Inglés</option>
-                    <option value="MUSICA">Música</option>
-                    <option value="LOGOPEDA">Logopeda</option>
-                    <option value="RELIGION">Religión</option>
-                </select>`;
-        } else if (tipo === "nombre") {
-
-            container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control mb-2" placeholder="Introduce el nombre">`;
-
-
-            
+            container.innerHTML = `<select id="inputBusqueda" class="form-select mb-2">${opcionesEspecialidad}</select>`;
         }
     });
 
@@ -88,16 +82,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (tipo === "id") {
             const valor = document.getElementById("inputBusqueda").value.trim();
             buscarPorId(valor);
+        } else if (tipo === "nombre") {
+            const valor = document.getElementById("inputBusqueda").value.trim();
+            buscarPorNombre(valor);
         } else if (tipo === "email") {
             const valor = document.getElementById("inputBusqueda").value.trim();
             buscarPorEmail(valor);
         } else if (tipo === "especialidad") {
             const valor = document.getElementById("inputBusqueda").value;
             buscarPorEspecialidad(valor);
-        } else if (tipo === "nombre"){
-            const valor = document.getElementById("inputBusqueda").value.trim(); 
-            buscarPorNombre(valor)
-
         }
     });
 });
@@ -108,9 +101,9 @@ async function cargarTodos() {
     const resultado = await ProfesorAPI.obtenerTodos();
     if (resultado.datos && resultado.datos.length > 0) {
         let html = "";
-       for (const profesor of resultado.datos) {
-            html += await crearTarjetaProfesor(profesor);
-          }
+        for (const profesor of resultado.datos) {
+            html += crearTarjetaProfesor(profesor);
+        }
         listaProfesores.innerHTML = html;
     } else {
         listaProfesores.innerHTML = `<p class="error">No hay profesores</p>`;
@@ -121,7 +114,7 @@ async function buscarPorId(id) {
     const resultado = document.getElementById("resultado");
     resultado.innerHTML = "";
     if (id) {
-        const respuesta = await ProfesorAPI.obtenerPorId(id); 
+        const respuesta = await ProfesorAPI.obtenerPorId(id);
         if (respuesta.datos) {
             resultado.innerHTML = crearTarjetaProfesor(respuesta.datos);
         } else {
@@ -133,22 +126,22 @@ async function buscarPorId(id) {
 }
 
 async function buscarPorNombre(nombre) {
-  const resultado = document.getElementById("resultado");
-  resultado.innerHTML = "";
-  if (nombre) {
-    const respuesta = await ProfesorAPI.obtenerPorNombre(nombre);
-    if (respuesta.datos && respuesta.datos.length > 0) {
-      let html = "";
-      respuesta.datos.forEach(function (profesor) {
-        html += crearTarjetaProfesor(profesor);
-      });
-      resultado.innerHTML = html;
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = "";
+    if (nombre) {
+        const respuesta = await ProfesorAPI.obtenerPorNombre(nombre);
+        if (respuesta.datos && respuesta.datos.length > 0) {
+            let html = "";
+            for (const profesor of respuesta.datos) {
+                html += crearTarjetaProfesor(profesor);
+            }
+            resultado.innerHTML = html;
+        } else {
+            resultado.innerHTML = `<p class="error">No se encontraron profesores</p>`;
+        }
     } else {
-      resultado.innerHTML = `<p class="error">No se encontraron Profesores</p>`;
+        resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
     }
-  } else {
-    resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
-  }
 }
 
 async function buscarPorEmail(email) {
@@ -173,9 +166,9 @@ async function buscarPorEspecialidad(especialidad) {
         const respuesta = await ProfesorAPI.obtenerPorEspecialidad(especialidad);
         if (respuesta.datos && respuesta.datos.length > 0) {
             let html = "";
-            respuesta.datos.forEach(function (profesor) {
+            for (const profesor of respuesta.datos) {
                 html += crearTarjetaProfesor(profesor);
-            });
+            }
             resultado.innerHTML = html;
         } else {
             resultado.innerHTML = `<p class="error">No se encontraron profesores</p>`;
@@ -184,7 +177,7 @@ async function buscarPorEspecialidad(especialidad) {
 }
 
 async function eliminarProfesor(id) {
-    const respuesta = await ProfesorAPI.eliminar(id)
+    const respuesta = await ProfesorAPI.eliminar(id);
     if (respuesta.datos) {
         cargarTodos();
     } else {
