@@ -1,22 +1,9 @@
 import { AsignaturaAPI } from "../api/asignaturaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAsignatura } from "../components/asignaturaComponente.js";
+import { NOMBRES_ASIGNATURAS, CURSOS } from "../utils/constantes.js";
 
 let todasAsignaturas = [];
-
-const nombresAsignaturas = [
-  "Matematicas",
-  "Lengua Castellana y Literatura",
-  "Ciencias de la Naturaleza",
-  "Ciencias Sociales",
-  "Educacion Fisica",
-  "Ingles",
-  "Musica",
-  "Plastica",
-  "Religion",
-];
-
-const cursos = ["1º", "2º", "3º", "4º", "5º", "6º"];
 
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -56,17 +43,21 @@ document.addEventListener("DOMContentLoaded", async () => {
           "tarjeta-" + nombreAsignatura,
         );
 
-        const asignaturaEncontrada = todasAsignaturas.find(
-          function (asignatura) {
-            return (
-              asignatura.nombre === nombreAsignatura &&
-              asignatura.curso === cursoSeleccionado
-            );
-          },
-        );
+        let asignaturaEncontrada = null;
+
+        for (const asignatura of todasAsignaturas) {
+          if (
+            asignatura.nombre === nombreAsignatura &&
+            asignatura.curso === cursoSeleccionado
+          ) {
+            asignaturaEncontrada = asignatura;
+          }
+        }
 
         if (asignaturaEncontrada) {
           divTarjeta.innerHTML = crearTarjetaAsignatura(asignaturaEncontrada);
+        } else {
+          divTarjeta.innerHTML = `<p class="error">Asignatura no encontrada</p>`;
         }
       }
     });
@@ -80,22 +71,21 @@ async function cargarTodos() {
     todasAsignaturas = respuesta.datos;
     let html = "";
 
-    nombresAsignaturas.forEach(function (nombreAsignatura) {
+    for (const nombreAsignatura of NOMBRES_ASIGNATURAS) {
       let cursosHtml = "";
-      cursos.forEach(function (curso) {
+      for (const curso of CURSOS) {
         cursosHtml += `<button class="btnCurso" data-nombre="${nombreAsignatura}" data-curso="${curso}">${curso}</button>`;
-      });
-
+      }
       html += `
-    <div class="asignaturaItem">
-        <button class="btnNombreAsignatura" data-nombre="${nombreAsignatura}">${nombreAsignatura}</button>
-        <div id="cursos-${nombreAsignatura}" style="display:none;">
-            ${cursosHtml}
-        </div>
-        <div id="tarjeta-${nombreAsignatura}"></div>
-    </div>
-`;
-    });
+                <div class="asignaturaItem">
+                    <button class="btnNombreAsignatura" data-nombre="${nombreAsignatura}">${nombreAsignatura}</button>
+                    <div id="cursos-${nombreAsignatura}" style="display:none;">
+                        ${cursosHtml}
+                    </div>
+                    <div id="tarjeta-${nombreAsignatura}"></div>
+                </div>
+            `;
+    }
 
     listaAsignaturas.innerHTML = html;
   } else {

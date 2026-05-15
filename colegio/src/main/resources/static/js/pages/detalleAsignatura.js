@@ -15,81 +15,80 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!asignatura) {
         root.innerHTML = `<p class="error">Asignatura no encontrada</p>`;
-        return;
-    }
-
-    const respuestaProfesores = await ProfesorAsignaturaAPI.obtenerPorAsignatura(id);
-    const profesores = respuestaProfesores.datos;
-
-    let profesoresHtml = "";
-    if (profesores && profesores.length > 0) {
-        for (const pa of profesores) {
-            profesoresHtml += `
-                <tr>
-                    <td>${pa.profesor.nombre} ${pa.profesor.apellido}</td>
-                    <td>${pa.profesor.especialidad}</td>
-                    <td>${pa.horasSemanales}</td>
-                </tr>
-            `;
-        }
     } else {
-        profesoresHtml = `<tr><td colspan="3">Sin profesores</td></tr>`;
-    }
+        const respuestaProfesores = await ProfesorAsignaturaAPI.obtenerPorAsignatura(id);
+        const profesores = respuestaProfesores.datos;
 
-    const respuestaAlumnos = await AlumnoAsignaturaAPI.obtenerPorAsignatura(id);
-    const matriculas = respuestaAlumnos.datos;
-
-    let alumnosHtml = "";
-    if (matriculas && matriculas.length > 0) {
-        for (const matricula of matriculas) {
-            alumnosHtml += `
-                <tr>
-                    <td>${matricula.alumno.codigo}</td>
-                    <td>${matricula.alumno.nombre} ${matricula.alumno.apellido}</td>
-                    <td>${matricula.nota}</td>
-                </tr>
-            `;
+        let profesoresHtml = "";
+        if (profesores && profesores.length > 0) {
+            for (const pa of profesores) {
+                profesoresHtml += `
+                    <tr>
+                        <td>${pa.profesor.nombre} ${pa.profesor.apellido}</td>
+                        <td>${pa.profesor.especialidad}</td>
+                        <td>${pa.horasSemanales}</td>
+                    </tr>
+                `;
+            }
+        } else {
+            profesoresHtml = `<tr><td colspan="3">Sin profesores</td></tr>`;
         }
-    } else {
-        alumnosHtml = `<tr><td colspan="3">Sin alumnos matriculados</td></tr>`;
-    }
 
-    root.innerHTML = `
-        <div class="containerDetalle">
-            <h1>Detalle de la Asignatura</h1>
-            <div class="card">
-                <div class="card-body">
-                    <h2>${asignatura.codigo}</h2>
-                    <hr>
-                    <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
-                    <p><strong>Curso:</strong> ${asignatura.curso}</p>
-                    <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
-                    <p><strong>Descripción:</strong> ${asignatura.descripcion}</p>
+        const respuestaAlumnos = await AlumnoAsignaturaAPI.obtenerPorAsignatura(id);
+        const matriculas = respuestaAlumnos.datos;
+
+        let alumnosHtml = "";
+        if (matriculas && matriculas.length > 0) {
+            for (const matricula of matriculas) {
+                alumnosHtml += `
+                    <tr>
+                        <td>${matricula.alumno.codigo}</td>
+                        <td>${matricula.alumno.nombre} ${matricula.alumno.apellido}</td>
+                        <td>${matricula.nota}</td>
+                    </tr>
+                `;
+            }
+        } else {
+            alumnosHtml = `<tr><td colspan="3">Sin alumnos matriculados</td></tr>`;
+        }
+
+        root.innerHTML = `
+            <div class="containerDetalle">
+                <h1>Detalle de la Asignatura</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <h2>${asignatura.codigo}</h2>
+                        <hr>
+                        <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
+                        <p><strong>Curso:</strong> ${asignatura.curso}</p>
+                        <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
+                        <p><strong>Descripción:</strong> ${asignatura.descripcion}</p>
+                    </div>
                 </div>
+                <h2>Profesores</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Especialidad</th>
+                            <th>Horas semanales</th>
+                        </tr>
+                    </thead>
+                    <tbody>${profesoresHtml}</tbody>
+                </table>
+                <h2>Alumnos matriculados</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Nota</th>
+                        </tr>
+                    </thead>
+                    <tbody>${alumnosHtml}</tbody>
+                </table>
+                <a href="asignaturaMenu.html">Volver</a>
             </div>
-            <h2>Profesores</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Especialidad</th>
-                        <th>Horas semanales</th>
-                    </tr>
-                </thead>
-                <tbody>${profesoresHtml}</tbody>
-            </table>
-            <h2>Alumnos matriculados</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Nota</th>
-                    </tr>
-                </thead>
-                <tbody>${alumnosHtml}</tbody>
-            </table>
-            <a href="asignaturaMenu.html">Volver</a>
-        </div>
-    `;
+        `;
+    }
 });
