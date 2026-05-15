@@ -1,3 +1,5 @@
+/*CARTAS*/
+
 .card{
     background-color: aliceblue;
     border: 1px solid; 
@@ -38,3 +40,4 @@
     margin-bottom: 1rem;
     margin-top: 0;
 }
+
