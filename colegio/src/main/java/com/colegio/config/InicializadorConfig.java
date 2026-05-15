@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "colegio.inicializacion")
 public class InicializadorConfig {
 
-    private int numeroAlumnos = 360;
+    private int numeroAlumnos = 3;
 
     public int getNumeroAlumnos() {
         return numeroAlumnos;
