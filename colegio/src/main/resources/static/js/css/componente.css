@@ -3,7 +3,6 @@
 .card{
     background-color: aliceblue;
     border: 1px solid; 
-    border-radius: 12px;
     transition: 0.5ms;
     margin-bottom: 1rem;
 }
@@ -25,7 +24,7 @@
     font-weight: 500;
     background-color: brown;
     padding: 0.25rem 0.5rem;
-    border-radius: 6px;
+    
 }
 
 .card-body span{
