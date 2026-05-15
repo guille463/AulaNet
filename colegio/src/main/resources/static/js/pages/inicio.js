@@ -1,16 +1,10 @@
 import { crearBarraNavegacion } from "../components/navbar.js";
-
 document.addEventListener("DOMContentLoaded", async () =>{
     document.getElementById("navbar").innerHTML = crearBarraNavegacion(); 
     const root = document.getElementById("root"); 
     root.innerHTML = `
-        <div class="containerAlumnos">
+        <div class="containerInicio">
             <h1>Gestion colegio</h1>
-            <a href="alumnoMenu.html" class="btn btn-Lista">Gestionar Alumnos</a>
-            <a href="profesorMenu.html" class="btn btn-Profesores">Gestionar Profesores</a>
-            <a href="aulaMenu.html" class="btn btn-Aula">Gestionar Aulas</a>  
-            <a href="asignaturaMenu.html" class="btn btn-Asignatura">Gestionar Asignaturas</a>               
-             
         </div>
     `;
 })
