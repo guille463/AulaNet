@@ -37,10 +37,6 @@ public class AlumnoService {
     @Autowired
     private AsignaturaRepository asignaturaRepository;
 
-    AlumnoService(AlumnoAsignaturaRepository alumnoAsignaturaRepository) {
-        this.alumnoAsignaturaRepository = alumnoAsignaturaRepository;
-    }
-
     // ============================================================
     // METODOS CRUD
     // ============================================================
