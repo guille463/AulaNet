@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 alumnosHtml += `
                     <tr>
                         <td>${alumno.codigo}</td>
-                        <td>${alumno.nombre} ${alumno.apellido}</td>
+                        <td><a href="detalleAlumno.html?id=${alumno.id}">${alumno.nombre} ${alumno.apellido}</a></td>
                         <td>${alumno.email}</td>
                     </tr>
                 `;

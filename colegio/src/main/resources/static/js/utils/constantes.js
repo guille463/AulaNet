@@ -11,14 +11,3 @@ export const ESPECIALIDADES = [
     { valor: "RELIGION", etiqueta: "Religión" }
 ];
 
-export const NOMBRES_ASIGNATURAS = [
-    "Matematicas",
-    "Lengua Castellana y Literatura",
-    "Ciencias de la Naturaleza",
-    "Ciencias Sociales",
-    "Educacion Fisica",
-    "Ingles",
-    "Musica",
-    "Plastica",
-    "Religion"
-];

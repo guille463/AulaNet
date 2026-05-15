@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 for (const pa of asignaturas) {
                     asignaturasHtml += `
                         <tr>
-                            <td>${pa.asignatura.nombre}</td>
+                           <td><a href="detalleAsignatura.html?id=${pa.asignatura.id}">${pa.asignatura.nombre}</a></td>
                             <td>${pa.asignatura.curso}</td>
                             <td>${pa.horasSemanales}</td>
                         </tr>

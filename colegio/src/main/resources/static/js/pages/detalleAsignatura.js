@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             for (const pa of profesores) {
                 profesoresHtml += `
                     <tr>
-                        <td>${pa.profesor.nombre} ${pa.profesor.apellido}</td>
+                        <td><a href="detalleProfesor.html?id=${pa.profesor.id}">${pa.profesor.nombre} ${pa.profesor.apellido}</a></td>
                         <td>${pa.profesor.especialidad}</td>
                         <td>${pa.horasSemanales}</td>
                     </tr>
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 alumnosHtml += `
                     <tr>
                         <td>${matricula.alumno.codigo}</td>
-                        <td>${matricula.alumno.nombre} ${matricula.alumno.apellido}</td>
+                        <td><a href="detalleAlumno.html?id=${matricula.alumno.id}">${matricula.alumno.nombre} ${matricula.alumno.apellido}</a></td>
                         <td>${matricula.nota}</td>
                     </tr>
                 `;
