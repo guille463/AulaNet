@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p id="mensajeTutor"></p>
                 </div>
                 <h2>Alumnos</h2>
+                <a href="crearAlumno.html">Añadir alumno</a>
                 <table>
                     <thead>
                         <tr>
