@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     root.innerHTML = `
       <div class="containerDetalle">
           <h1>Detalle del Alumno</h1>
-          <div class="card">
-              <div class="card-body">
+          <div class="--detalle">
+              <div class="card--detalle--body">
                   <h2>${alumno.codigo}</h2>
                   <hr>
                   <p><strong>Nombre:</strong> ${alumno.nombre} ${alumno.apellido}</p>
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
               </div>
           </div>
-          <h2>Asignaturas</h2>
+          <h2 id="Tab.Asig">Asignaturas</h2>
           <table>
               <thead>
                   <tr>
