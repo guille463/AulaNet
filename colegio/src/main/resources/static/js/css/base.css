@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* =============================================
+   RESET
+   ============================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =============================================
+   FUENTES Y BODY
+   ============================================= */
+
+
+/* <body> */
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #1e293b;
+    background-color: #f4f6f9;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =============================================
+   TIPOGRAFIA GLOBAL
+   ============================================= */
+
+/* <h1> */
+
+h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1a3a5c;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+}
+
+/* <h2> */
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a3a5c;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+/* <p> */
+
+p {
+    font-size: 0.875rem;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* <a> */
+
+a {
+    color: #4a90d9;
+    text-decoration: none;
+    transition: color 150ms ease;
+}
+
+a:hover {
+    color: #3478c0;
+}
+
+/* <hr> */
+
+hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 1rem 0;
+}
+
+/* <strong> */
+
+strong {
+    font-weight: 600;
+}
+
+/* =============================================
+   MENSAJES DE ESTADO
+   ============================================= */
+
+/* <p class="error"> */
+
+.error {
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background-color: #fef2f2;
+    border-left: 3px solid #dc2626;
+    border-radius: 6px;
+    margin: 0.5rem 0;
+}
+
+/* <p id="mensaje"> */
+
+#mensaje {
+    font-size: 0.875rem;
+    font-weight: 500;
+    min-height: 1.5rem;
+    margin-top: 0.5rem;
+    color: #dc2626;
+}
