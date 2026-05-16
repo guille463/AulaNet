@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const root = document.getElementById("root");
 
     root.innerHTML = `
-        <div class="containerAulas">
-            <h1>Gestionar Aulas</h1>
-            <div id="listaAulas"></div>
-        </div>
+      <div class="containerGestion">
+        <h1>Gestionar Aulas</h1>
+        <div id="listaAulas"></div>
+    </div>
     `;
 
     await cargarTodos();

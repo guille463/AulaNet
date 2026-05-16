@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   root.innerHTML = `
-      <div class="containerGestionAlumno">
+      <div class="containerGestion">
         <h1>Gestionar Alumnos</h1>
         <a href="crearAlumno.html">➕ Añadir alumno</a>
         <div class="card">

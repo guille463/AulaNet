@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   root.innerHTML = `
-        <div class="containerCrearAlumno">
+        <div class="containerCrear">
             <h1>Crear Alumno</h1>
             <div class="card">
                 <div class="card-body">

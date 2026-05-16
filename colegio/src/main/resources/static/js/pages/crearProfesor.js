@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     root.innerHTML = `
-        <div class="containerCrearProfesor">
+        <div class="containerCrear">
             <h1>Crear Profesor</h1>
             <div class="card">
                 <div class="card-body">
