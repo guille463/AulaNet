@@ -19,13 +19,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
   }
 
-  root.innerHTML = `
-      <div class="containerGestion">
+root.innerHTML = `
+  <div class="containerGestion">
         <h1>Gestionar Alumnos</h1>
         <a href="crearAlumno.html">➕ Añadir alumno</a>
       <div class="card card--buscador">
-  <div class="card-body">
-    <h2 class="card-title">Buscar Alumno</h2>
+          <div class="card-body">
+            <h2 class="card-title">Buscar Alumno</h2>
             <select id="tipoBusqueda" class="form-select">
               <option value="id">Por ID</option>
               <option value="nombre">Por Nombre</option>
@@ -41,9 +41,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div id="resultado"></div>
         <hr>
         <h2>Lista de Alumnos</h2>
-        <div id="listaAlumnos"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Curso</th>
+                    <th>Grupo</th>
+                    <th>Tutor</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="listaAlumnos"></tbody>
+        </table>
       </div>
-    `;
+`;
 
   cargarTodos();
 
@@ -123,7 +138,7 @@ async function cargarTodos() {
     }
     listaAlumnos.innerHTML = html;
   } else {
-    listaAlumnos.innerHTML = `<p class="error">No hay alumnos</p>`;
+    listaAlumnos.innerHTML = `<tr><td colspan="9" class="error">No hay alumnos</td></tr>`;
   }
 }
 
