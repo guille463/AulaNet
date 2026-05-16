@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div class="containerGestion">
         <h1>Gestionar Alumnos</h1>
         <a href="crearAlumno.html">➕ Añadir alumno</a>
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title">Buscar Alumno</h2>
+      <div class="card card--buscador">
+  <div class="card-body">
+    <h2 class="card-title">Buscar Alumno</h2>
             <select id="tipoBusqueda" class="form-select">
               <option value="id">Por ID</option>
               <option value="nombre">Por Nombre</option>
@@ -50,39 +50,48 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("root").addEventListener("click", function (evento) {
     if (evento.target.classList.contains("btnEliminar")) {
       idAEliminar = evento.target.getAttribute("data-id");
-      document.getElementById("modalTexto").textContent = "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
+      document.getElementById("modalTexto").textContent =
+        "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
       document.getElementById("modalConfirmar").style.display = "block";
     }
   });
 
-  document.getElementById("btnConfirmarSi").addEventListener("click", async function () {
-    document.getElementById("modalConfirmar").style.display = "none";
-    await eliminarAlumno(idAEliminar);
-    idAEliminar = null;
-    document.getElementById("resultado").innerHTML = `<p>Alumno eliminado con éxito</p>`;
-  });
+  document
+    .getElementById("btnConfirmarSi")
+    .addEventListener("click", async function () {
+      document.getElementById("modalConfirmar").style.display = "none";
+      await eliminarAlumno(idAEliminar);
+      idAEliminar = null;
+      document.getElementById("resultado").innerHTML =
+        `<p>Alumno eliminado con éxito</p>`;
+    });
 
-  document.getElementById("btnConfirmarNo").addEventListener("click", function () {
-    document.getElementById("modalConfirmar").style.display = "none";
-    idAEliminar = null;
-    document.getElementById("resultado").innerHTML = `<p>Operación cancelada</p>`;
-  });
+  document
+    .getElementById("btnConfirmarNo")
+    .addEventListener("click", function () {
+      document.getElementById("modalConfirmar").style.display = "none";
+      idAEliminar = null;
+      document.getElementById("resultado").innerHTML =
+        `<p>Operación cancelada</p>`;
+    });
 
-  document.getElementById("tipoBusqueda").addEventListener("change", function () {
-    const container = document.getElementById("inputContainer");
-    const tipo = this.value;
-    if (tipo === "id") {
-      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">`;
-    } else if (tipo === "nombre") {
-      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el nombre">`;
-    } else if (tipo === "email") {
-      container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el email">`;
-    } else if (tipo === "curso") {
-      container.innerHTML = `
+  document
+    .getElementById("tipoBusqueda")
+    .addEventListener("change", function () {
+      const container = document.getElementById("inputContainer");
+      const tipo = this.value;
+      if (tipo === "id") {
+        container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">`;
+      } else if (tipo === "nombre") {
+        container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el nombre">`;
+      } else if (tipo === "email") {
+        container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el email">`;
+      } else if (tipo === "curso") {
+        container.innerHTML = `
           <select id="inputCurso" class="form-select">${opcionesCurso}</select>
           <select id="inputGrupo" class="form-select">${opcionesGrupo}</select>`;
-    }
-  });
+      }
+    });
 
   document.getElementById("btnBuscar").addEventListener("click", function () {
     const tipo = document.getElementById("tipoBusqueda").value;
@@ -187,6 +196,7 @@ async function eliminarAlumno(id) {
   if (respuesta.datos) {
     cargarTodos();
   } else {
-    document.getElementById("listaAlumnos").innerHTML += `<p class="error">Error al eliminar</p>`;
+    document.getElementById("listaAlumnos").innerHTML +=
+      `<p class="error">Error al eliminar</p>`;
   }
 }

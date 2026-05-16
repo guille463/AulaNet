@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const root = document.getElementById("root");
 
     root.innerHTML = `
-        <div class="containerAsignaturas">
+        <div class="containerGestion">
             <h1>Gestionar Asignaturas</h1>
             <div id="listaAsignaturas"></div>
         </div>
