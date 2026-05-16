@@ -1,0 +1,68 @@
+/* =============================================
+   CONTENEDOR GESTION
+   ============================================= */
+
+/* <div class="containerGestion"> */
+
+.containerGestion {
+   max-width: 90%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* <a href="crearAlumno.html"> enlace añadir */
+
+.containerGestion > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: #4a90d9;
+    color: #ffffff;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    transition: background-color 150ms ease;
+}
+
+.containerGestion > a:hover {
+    background-color: #3478c0;
+    color: #ffffff;
+}
+
+/* <div class="card-body"> del buscador en columna */
+
+.containerGestion .card--buscador .card-body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+}
+
+/* <div id="resultado"> */
+
+#resultado {
+    margin-top: 1rem;
+}
+
+/* <div id="listaAlumnos"> <div id="listaProfesores"> <div id="listaAulas"> <div id="listaAsignaturas"> */
+
+#listaAlumnos,
+#listaProfesores,
+#listaAulas,
+#listaAsignaturas {
+    margin-top: 1rem;
+}
+
+/* <div class="aulaItem"> <div class="asignaturaItem"> */
+
+.aulaItem,
+.asignaturaItem {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
