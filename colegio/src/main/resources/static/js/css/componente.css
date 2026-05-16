@@ -55,3 +55,43 @@ tr:hover {
     padding: 0.5rem 1.5rem;
     font-size: 1rem;
 }
+
+/* BOTONES */
+
+/* <button> base */
+
+button {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+/* <button id="btnBuscar"> */
+
+#btnBuscar {
+    background-color: #4a90d9;
+    color: #ffffff;
+}
+
+#btnBuscar:hover {
+    background-color: #3478c0;
+}
+
+/* <button class="btnEliminar"> */
+
+.btnEliminar {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 0.25rem 0.5rem;
+}
+
+.btnEliminar:hover {
+    background-color: #dc2626;
+    color: #ffffff;
+}
