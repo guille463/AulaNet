@@ -3,7 +3,7 @@ export function crearTarjetaAlumno(alumno) {
 
     return `
         <div class="card">
-            <div class="card-body" style="display:flex; gap:20px;">
+            <div class="card-body">
                 <strong>${alumno.codigo}</strong>
                 <span>${alumno.nombre} ${alumno.apellido}</span>
                 <span>${alumno.email}</span>
