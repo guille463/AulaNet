@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         opcionesEspecialidad += `<option value="${especialidad.valor}">${especialidad.etiqueta}</option>`;
     }
 
-    root.innerHTML = `
+  root.innerHTML = `
     <div class="containerGestion">
         <h1>Gestionar Profesores</h1>
         <a href="crearProfesor.html">➕ Añadir Docente</a>
-        <div class="card">
+        <div class="card card--buscador">
           <div class="card-body">
             <h2 class="card-title">Buscar Docente</h2>
             <select id="tipoBusqueda" class="form-select">
@@ -36,9 +36,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div id="resultado"></div>
         <hr>
         <h2>Lista de Profesores</h2>
-        <div id="listaProfesores"></div>
-      </div>
-    `;
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Especialidad</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="listaProfesores"></tbody>
+        </table>
+    </div>
+`;
 
     cargarTodos();
 
@@ -106,7 +119,7 @@ async function cargarTodos() {
         }
         listaProfesores.innerHTML = html;
     } else {
-        listaProfesores.innerHTML = `<p class="error">No hay profesores</p>`;
+       listaProfesores.innerHTML = `<tr><td colspan="7" class="error">No hay profesores</td></tr>`;
     }
 }
 
