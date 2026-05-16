@@ -148,7 +148,7 @@ async function buscarPorId(id) {
   if (id) {
     const respuesta = await AlumnoAPI.obtenerPorId(id);
     if (respuesta.datos) {
-      resultado.innerHTML = crearTarjetaAlumno(respuesta.datos);
+     resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
     } else {
       resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     }
@@ -158,23 +158,24 @@ async function buscarPorId(id) {
 }
 
 async function buscarPorNombre(nombre) {
-  const resultado = document.getElementById("resultado");
-  resultado.innerHTML = "";
-  if (nombre) {
-    const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
-    if (respuesta.datos && respuesta.datos.length > 0) {
-      let html = "";
-      for (const alumno of respuesta.datos) {
-        html += crearTarjetaAlumno(alumno);
-      }
-      resultado.innerHTML = html;
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = "";
+    if (nombre) {
+        const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
+        if (respuesta.datos && respuesta.datos.length > 0) {
+            let html = "";
+            for (const alumno of respuesta.datos) {
+                html += crearTarjetaAlumno(alumno);
+            }
+            resultado.innerHTML = crearTablaAlumnos(html);
+        } else {
+            resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
+        }
     } else {
-      resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
+        resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
     }
-  } else {
-    resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
-  }
 }
+
 
 async function buscarPorEmail(email) {
   const resultado = document.getElementById("resultado");
@@ -182,7 +183,7 @@ async function buscarPorEmail(email) {
   if (email) {
     const respuesta = await AlumnoAPI.obtenerPorEmail(email);
     if (respuesta.datos) {
-      resultado.innerHTML = crearTarjetaAlumno(respuesta.datos);
+     resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
     } else {
       resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     }
@@ -192,18 +193,18 @@ async function buscarPorEmail(email) {
 }
 
 async function buscarPorCodigoAula(codigoAula) {
-  const resultado = document.getElementById("resultado");
-  resultado.innerHTML = "";
-  const respuesta = await AlumnoAPI.obtenerPorCodigoAula(codigoAula);
-  if (respuesta.datos && respuesta.datos.length > 0) {
-    let html = "";
-    for (const alumno of respuesta.datos) {
-      html += crearTarjetaAlumno(alumno);
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = "";
+    const respuesta = await AlumnoAPI.obtenerPorCodigoAula(codigoAula);
+    if (respuesta.datos && respuesta.datos.length > 0) {
+        let html = "";
+        for (const alumno of respuesta.datos) {
+            html += crearTarjetaAlumno(alumno);
+        }
+        resultado.innerHTML = crearTablaAlumnos(html);
+    } else {
+        resultado.innerHTML = `<p class="error">No se encontraron alumnos en esa aula</p>`;
     }
-    resultado.innerHTML = html;
-  } else {
-    resultado.innerHTML = `<p class="error">No se encontraron alumnos en esa aula</p>`;
-  }
 }
 
 async function eliminarAlumno(id) {
@@ -214,4 +215,25 @@ async function eliminarAlumno(id) {
     document.getElementById("listaAlumnos").innerHTML +=
       `<p class="error">Error al eliminar</p>`;
   }
+}
+
+function crearTablaAlumnos(filas) {
+    return `
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Curso</th>
+                    <th>Grupo</th>
+                    <th>Tutor</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>${filas}</tbody>
+        </table>
+    `;
 }
