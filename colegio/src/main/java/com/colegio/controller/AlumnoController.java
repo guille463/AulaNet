@@ -1,5 +1,6 @@
 package com.colegio.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,9 @@ public class AlumnoController {
         return alumnoService.buscarPorId(id);
     }
 
-    @GetMapping("/email/{email}")
-    public Alumno obtenerPorEmail(@PathVariable String email) {
-        return alumnoService.buscarPorEmail(email);
+    @GetMapping("/fecha/{fecha}")
+    public List<Alumno> obtenerPorFechaNacimiento(@PathVariable LocalDate fecha) {
+        return alumnoService.buscarPorFechaNacimiento(fecha);
     }
 
     @GetMapping("/aula/{aulaId}")

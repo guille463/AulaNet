@@ -1,5 +1,6 @@
 package com.colegio.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -22,14 +23,16 @@ import com.colegio.model.Alumno;
 import com.colegio.model.Aula;
 import com.colegio.model.Curso;
 import com.colegio.model.Grupo;
+import com.colegio.repository.AlumnoAsignaturaRepository;
 import com.colegio.repository.AlumnoRepository;
+import com.colegio.repository.AsignaturaRepository;
 import com.colegio.repository.AulaRepository;
 
 /**
  * Pruebas unitarias del servicio {@link AlumnoService}.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 2.0
+ * @version 3.0
  */
 @ExtendWith(MockitoExtension.class)
 class AlumnoServiceTest {
@@ -40,6 +43,12 @@ class AlumnoServiceTest {
     @Mock
     private AulaRepository aulaRepository;
 
+    @Mock
+    private AlumnoAsignaturaRepository alumnoAsignaturaRepository;
+
+    @Mock
+    private AsignaturaRepository asignaturaRepository;
+
     @InjectMocks
     private AlumnoService alumnoService;
 
@@ -49,7 +58,7 @@ class AlumnoServiceTest {
     @BeforeEach
     void setUp() {
         aula = new Aula(Curso.PRIMERO, Grupo.A, 25);
-        alumno = new Alumno("juan@colegio.com", "Juan", "Garcia", aula);
+        alumno = new Alumno("Juan", "Garcia", LocalDate.of(2015, 6, 15), aula);
         alumno.setCodigo("ALUM-1");
     }
 
@@ -93,28 +102,6 @@ class AlumnoServiceTest {
         alumnoService.borrarAlumno(1L);
 
         verify(alumnoRepository, times(1)).deleteById(1L);
-    }
-
-    @Test
-    @DisplayName("guardarAlumno lanza excepcion si email duplicado")
-    void guardarAlumno_lanzaExcepcionSiEmailDuplicado() {
-        when(alumnoRepository.existsByEmail("juan@colegio.com")).thenReturn(true);
-
-        assertThrows(RuntimeException.class, () -> {
-            alumnoService.guardarAlumno(alumno);
-        });
-    }
-
-    @Test
-    @DisplayName("actualizarAlumno lanza excepcion si email duplicado")
-    void actualizarAlumno_lanzaExcepcionSiEmailDuplicado() {
-        Alumno datos = new Alumno("otro@colegio.com", "Juan", "Garcia", aula);
-        when(alumnoRepository.findById(1L)).thenReturn(Optional.of(alumno));
-        when(alumnoRepository.existsByEmail("otro@colegio.com")).thenReturn(true);
-
-        assertThrows(RuntimeException.class, () -> {
-            alumnoService.actualizarAlumno(1L, datos);
-        });
     }
 
     @Test

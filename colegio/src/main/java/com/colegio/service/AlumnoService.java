@@ -1,5 +1,6 @@
 package com.colegio.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import com.colegio.util.Constantes;
  * Servicio que gestiona la logica de negocio de los alumnos.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 3.0
+ * @version 4.0
  */
 @Service
 public class AlumnoService {
@@ -49,11 +50,6 @@ public class AlumnoService {
                 .orElseThrow(() -> new RuntimeException("Alumno con id " + id + " no encontrado"));
     }
 
-    public Alumno buscarPorEmail(String email) {
-        return alumnoRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Alumno con email " + email + " no encontrado"));
-    }
-
     public List<Alumno> buscarPorAula(Long aulaId) {
         return alumnoRepository.findByAulaId(aulaId);
     }
@@ -70,15 +66,15 @@ public class AlumnoService {
         return alumnoRepository.findByNombreAndApellido(nombre, apellido);
     }
 
+    public List<Alumno> buscarPorFechaNacimiento(LocalDate fechaNacimiento) {
+        return alumnoRepository.findByFechaNacimiento(fechaNacimiento);
+    }
+
     /**
      * Guarda un nuevo alumno verificando que el aula exista y tenga plazas
      * libres.
      */
     public Alumno guardarAlumno(Alumno alumno) {
-        if (alumnoRepository.existsByEmail(alumno.getEmail())) {
-            throw new RuntimeException("Ya existe un alumno con el email: " + alumno.getEmail());
-        }
-
         Aula aula = aulaRepository.findById(alumno.getAula().getId())
                 .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
 
@@ -93,20 +89,14 @@ public class AlumnoService {
         guardado = alumnoRepository.save(guardado);
         matricularEnAsignaturas(guardado);
         return guardado;
-
     }
 
     public Alumno actualizarAlumno(Long id, Alumno alumno) {
         Alumno existente = buscarPorId(id);
 
-        if (!existente.getEmail().equals(alumno.getEmail())
-                && alumnoRepository.existsByEmail(alumno.getEmail())) {
-            throw new RuntimeException("Ya existe un alumno con el email: " + alumno.getEmail());
-        }
-
         existente.setNombre(alumno.getNombre());
         existente.setApellido(alumno.getApellido());
-        existente.setEmail(alumno.getEmail());
+        existente.setFechaNacimiento(alumno.getFechaNacimiento());
         if (alumno.getAula() != null) {
             Aula aula = aulaRepository.findById(alumno.getAula().getId())
                     .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
@@ -129,6 +119,9 @@ public class AlumnoService {
         return alumnoRepository.findByAulaCodigo(codigo);
     }
 
+    // ============================================================
+    // METODOS PRIVADOS
+    // ============================================================
     private void matricularEnAsignaturas(Alumno alumno) {
         List<Asignatura> asignaturas = asignaturaRepository.findByCurso(alumno.getCurso());
 
