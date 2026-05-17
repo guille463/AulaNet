@@ -22,10 +22,6 @@ td {
     border-bottom: 1px solid #e2e8f0;
 }
 
-tr:hover {
-    background-color: #f4f6f9;
-}
-
 /* CARDS */
 
 .card {
@@ -94,4 +90,44 @@ button {
 .btnEliminar:hover {
     background-color: #dc2626;
     color: #ffffff;
+}
+
+/* MODAL */
+
+#modalConfirmar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+#modalConfirmar[style*="display:none"]{
+    display: none !important;
+}
+
+#modalConfirmar > div {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 400px;
+}
+
+#btnConfirmarSi {
+    background-color: #dc2626;
+    color: #ffffff;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#btnConfirmarNo {
+    background-color: #f4f6f9;
+    color: #64748b;
+    width: 100%;
+    padding: 0.5rem;
 }
