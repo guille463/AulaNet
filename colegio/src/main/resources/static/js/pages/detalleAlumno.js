@@ -75,8 +75,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (resultado.datos) {
           document.getElementById("notaActual-" + matriculaId).textContent = nota;
           document.getElementById("mensaje").textContent = "Nota actualizada correctamente";
+          document.getElementById("mensaje").className = "mensaje--exito";
         } else {
           document.getElementById("mensaje").textContent = "Error al actualizar la nota";
+          document.getElementById("mensaje").className = "mensaje--error";
         }
       }
     });

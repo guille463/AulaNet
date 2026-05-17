@@ -104,12 +104,18 @@ strong {
     margin: 0.5rem 0;
 }
 
-/* <p id="mensaje"> */
+/* <p id="mensaje"> exito */
 
-#mensaje {
+.mensaje--exito {
+    color: #16a34a;
     font-size: 0.875rem;
     font-weight: 500;
-    min-height: 1.5rem;
-    margin-top: 0.5rem;
+}
+
+/* <p id="mensaje"> error */
+
+.mensaje--error {
     color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 500;
 }
