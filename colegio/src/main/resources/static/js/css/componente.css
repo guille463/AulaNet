@@ -131,3 +131,19 @@ button {
     width: 100%;
     padding: 0.5rem;
 }
+
+.btnCurso,
+.btnNombreAsignatura {
+    margin-bottom: 0.5rem;
+}
+
+/*DESPLEGABLES CURSOS Y ASIGNATURAS*/
+/* <div id="grupos-"> y <div id="cursos-"> */
+
+.aulaItem > div,
+.asignaturaItem > div {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
