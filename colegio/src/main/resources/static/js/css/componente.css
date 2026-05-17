@@ -137,6 +137,14 @@ button {
     margin-bottom: 0.5rem;
 }
 
+.btnCurso:hover,
+.btnGrupo:hover,
+.btnNombreAsignatura:hover {
+    background-color: #1a3a5c;
+    color: #ffffff;
+    border-color: #1a3a5c;
+}
+
 /*DESPLEGABLES CURSOS Y ASIGNATURAS*/
 /* <div id="grupos-"> y <div id="cursos-"> */
 
