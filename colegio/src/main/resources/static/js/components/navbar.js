@@ -1,13 +1,36 @@
 export function crearBarraNavegacion() {
     return `
-        <nav class="navbar navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">Colegio</a>
-                <a class="btn btn-AlumnosMenu" href="alumnoMenu.html">Alumnos</a>
-                <a class="btn btn-ProfesoresMenu" href="profesorMenu.html">Profesores</a>
-                <a class="btn btn-AulaMenu" href="aulaMenu.html">Aula</a>
-                <a class="btn btn-AsignaturaMenu" href="asignaturaMenu.html">Asignaturas</a>
-
+        <nav class="navbar">
+            <div class="navbar__container">
+                <a class="navbar__brand" href="index.html">Colegio</a>
+                <ul class="navbar__menu">
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="alumnoMenu.html">Alumnos</a>
+                        <ul class="navbar__dropdown">
+                            <li><a href="alumnoMenu.html">Ver todos</a></li>
+                            <li><a href="crearAlumno.html">Crear alumno</a></li>
+                        </ul>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="profesorMenu.html">Profesores</a>
+                        <ul class="navbar__dropdown">
+                            <li><a href="profesorMenu.html">Ver todos</a></li>
+                            <li><a href="crearProfesor.html">Crear profesor</a></li>
+                        </ul>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="aulaMenu.html">Aulas</a>
+                        <ul class="navbar__dropdown">
+                            <li><a href="aulaMenu.html">Ver todas</a></li>
+                        </ul>
+                    </li>
+                    <li class="navbar__item">
+                        <a class="navbar__link" href="asignaturaMenu.html">Asignaturas</a>
+                        <ul class="navbar__dropdown">
+                            <li><a href="asignaturaMenu.html">Ver todas</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </nav>
     `;
