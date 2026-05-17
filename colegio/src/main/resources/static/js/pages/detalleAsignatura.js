@@ -55,16 +55,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         root.innerHTML = `
             <div class="containerDetalle">
                 <h1>Detalle de la Asignatura</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <h2>${asignatura.codigo}</h2>
-                        <hr>
-                        <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
-                        <p><strong>Curso:</strong> ${asignatura.curso}</p>
-                        <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
-                        <p><strong>Descripción:</strong> ${asignatura.descripcion}</p>
-                    </div>
-                </div>
+               <div class="card--detalle">
+    <div class="card--detalle--body">
+        <h2>${asignatura.codigo}</h2>
+        <hr>
+        <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
+        <p><strong>Curso:</strong> ${asignatura.curso}</p>
+        <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
+        <p><strong>Descripción:</strong> ${asignatura.descripcion}</p>
+    </div>
+</div>
                 <h2>Profesores</h2>
                 <table>
                     <thead>
