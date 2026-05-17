@@ -66,3 +66,54 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
+/* =============================================
+   CONTENEDOR EDITAR
+   ============================================= */
+
+/* <div class="containerEditar"> */
+
+.containerEditar {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* <div class="card-body"> en columna */
+
+.containerEditar .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* <button id="btnGuardar"> */
+
+.containerEditar #btnGuardar {
+    background-color: #4a90d9;
+    color: #ffffff;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.containerEditar #btnGuardar:hover {
+    background-color: #3478c0;
+}
+
+/* <a> cancelar */
+
+.containerEditar a {
+    font-size: 0.875rem;
+    color: #64748b;
+    text-align: center;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    width: 100%;
+}
