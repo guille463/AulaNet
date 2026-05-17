@@ -7,7 +7,7 @@ export const AlumnoAPI = {
 
     obtenerPorNombre: (nombre) => fetchApi('GET', `/alumnos/buscar/${nombre}`),
 
-    obtenerPorEmail: (email) => fetchApi('GET', `/alumnos/email/${email}`),
+    obtenerPorFecha: (fecha) => fetchApi('GET', `/alumnos/fecha/${fecha}`),
 
     obtenerPorCodigoAula: (codigo) => fetchApi('GET', `/alumnos/aula/codigo/${encodeURIComponent(codigo)}`),
 
@@ -16,6 +16,6 @@ export const AlumnoAPI = {
     crear: (alumno) => fetchApi('POST', '/alumnos', alumno),
 
     actualizar: (id, alumno) => fetchApi('PUT', `/alumnos/${id}`, alumno),
-    
+
     eliminar: (id) => fetchApi('DELETE', `/alumnos/${id}`)
 };

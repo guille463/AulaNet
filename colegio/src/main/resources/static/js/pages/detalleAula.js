@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <tr>
                         <td>${alumno.codigo}</td>
                         <td><a href="detalleAlumno.html?id=${alumno.id}">${alumno.nombre} ${alumno.apellido}</a></td>
-                        <td>${alumno.email}</td>
+                        <td>${alumno.fechaNacimiento}</td>
                     </tr>
                 `;
             }
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         root.innerHTML = `
-            < class="containerDetalle">
+           <div class="containerDetalle">
                 <h1>Detalle del Aula</h1>
                <div class="card--detalle">
     <div class="card--detalle--body">
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <tr>
                             <th>Código</th>
                             <th>Nombre</th>
-                            <th>Email</th>
+                           <th>Fecha Nacimiento</th>
                         </tr>
                     </thead>
                     <tbody>${alumnosHtml}</tbody>

@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   <h2>${alumno.codigo}</h2>
                   <hr>
                   <p><strong>Nombre:</strong> ${alumno.nombre} ${alumno.apellido}</p>
-                  <p><strong>Email:</strong> ${alumno.email}</p>
+                  <p><strong>Fecha de Nacimiento:</strong> ${alumno.fechaNacimiento}</p>
                   <p><strong>Curso:</strong> ${aula.curso}</p>
                   <p><strong>Grupo:</strong> ${aula.grupo}</p>
                  <p><strong>Aula:</strong> <a href="detalleAula.html?id=${aula.id}">${aula.codigo}</a></p>

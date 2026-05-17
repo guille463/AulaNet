@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <input type="text" id="inputNombre" value="${alumno.nombre}">
                         <label>Apellido</label>
                         <input type="text" id="inputApellido" value="${alumno.apellido}">
-                        <label>Email</label>
-                        <input type="text" id="inputEmail" value="${alumno.email}">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" id="inputFecha" value="${alumno.fechaNacimiento}">
                         <label>Curso</label>
                         <select id="inputCurso">${opcionesCurso}</select>
                         <label>Grupo</label>
@@ -59,25 +59,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
 
-           if (!respuestaAula.datos) {
-    mensaje.textContent = "Aula no encontrada";
-    mensaje.className = "mensaje--error";
-} else {
-    alumno.nombre = document.getElementById("inputNombre").value.trim();
-    alumno.apellido = document.getElementById("inputApellido").value.trim();
-    alumno.email = document.getElementById("inputEmail").value.trim();
-    alumno.aula = {};
-    alumno.aula.id = respuestaAula.datos.id;
+            if (!respuestaAula.datos) {
+                mensaje.textContent = "Aula no encontrada";
+                mensaje.className = "mensaje--error";
+            } else {
+                alumno.nombre = document.getElementById("inputNombre").value.trim();
+                alumno.apellido = document.getElementById("inputApellido").value.trim();
+                alumno.fechaNacimiento = document.getElementById("inputFecha").value;
+                alumno.aula = {};
+                alumno.aula.id = respuestaAula.datos.id;
 
-    const resultado = await AlumnoAPI.actualizar(id, alumno);
+                const resultado = await AlumnoAPI.actualizar(id, alumno);
 
-    if (resultado.datos) {
-        window.location.href = "alumnoMenu.html";
-    } else {
-        mensaje.textContent = "Error al actualizar el alumno";
-        mensaje.className = "mensaje--error";
-    }
-}
+                if (resultado.datos) {
+                    window.location.href = "alumnoMenu.html";
+                } else {
+                    mensaje.textContent = "Error al actualizar el alumno";
+                    mensaje.className = "mensaje--error";
+                }
+            }
         });
     }
 });

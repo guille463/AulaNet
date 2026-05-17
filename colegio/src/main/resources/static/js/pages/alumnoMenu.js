@@ -29,7 +29,7 @@ root.innerHTML = `
             <select id="tipoBusqueda" class="form-select">
               <option value="id">Por ID</option>
               <option value="nombre">Por Nombre</option>
-              <option value="email">Por Email</option>
+              <option value="fecha">Por Fecha de Nacimiento</option>
               <option value="curso">Por Curso y Grupo</option>
             </select>
             <div id="inputContainer">
@@ -46,7 +46,7 @@ root.innerHTML = `
                 <tr>
                     <th>Código</th>
                     <th>Nombre</th>
-                    <th>Email</th>
+                    <th>Fecha Nacimiento</th>
                     <th>Curso</th>
                     <th>Grupo</th>
                     <th>Tutor</th>
@@ -99,8 +99,8 @@ root.innerHTML = `
         container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">`;
       } else if (tipo === "nombre") {
         container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el nombre">`;
-      } else if (tipo === "email") {
-        container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el email">`;
+      } else if (tipo === "fecha") {
+    container.innerHTML = `<input type="date" id="inputBusqueda" class="form-control">`;
       } else if (tipo === "curso") {
         container.innerHTML = `
           <select id="inputCurso" class="form-select">${opcionesCurso}</select>
@@ -116,9 +116,9 @@ root.innerHTML = `
     } else if (tipo === "nombre") {
       const valor = document.getElementById("inputBusqueda").value.trim();
       buscarPorNombre(valor);
-    } else if (tipo === "email") {
-      const valor = document.getElementById("inputBusqueda").value.trim();
-      buscarPorEmail(valor);
+    }else if (tipo === "fecha") {
+    const valor = document.getElementById("inputBusqueda").value;
+    buscarPorFecha(valor);
     } else if (tipo === "curso") {
       const curso = document.getElementById("inputCurso").value;
       const grupo = document.getElementById("inputGrupo").value;
@@ -177,19 +177,23 @@ async function buscarPorNombre(nombre) {
 }
 
 
-async function buscarPorEmail(email) {
-  const resultado = document.getElementById("resultado");
-  resultado.innerHTML = "";
-  if (email) {
-    const respuesta = await AlumnoAPI.obtenerPorEmail(email);
-    if (respuesta.datos) {
-     resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
+async function buscarPorFecha(fecha) {
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = "";
+    if (fecha) {
+        const respuesta = await AlumnoAPI.obtenerPorFecha(fecha);
+        if (respuesta.datos && respuesta.datos.length > 0) {
+            let html = "";
+            for (const alumno of respuesta.datos) {
+                html += crearTarjetaAlumno(alumno);
+            }
+            resultado.innerHTML = crearTablaAlumnos(html);
+        } else {
+            resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
+        }
     } else {
-      resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
+        resultado.innerHTML = `<p class="error">Introduce una fecha</p>`;
     }
-  } else {
-    resultado.innerHTML = `<p class="error">Introduce un email</p>`;
-  }
 }
 
 async function buscarPorCodigoAula(codigoAula) {
@@ -224,7 +228,7 @@ function crearTablaAlumnos(filas) {
                 <tr>
                     <th>Código</th>
                     <th>Nombre</th>
-                    <th>Email</th>
+                    <th>Fecha Nacimiento</th>
                     <th>Curso</th>
                     <th>Grupo</th>
                     <th>Tutor</th>
