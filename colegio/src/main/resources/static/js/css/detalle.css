@@ -1,0 +1,91 @@
+/* =============================================
+   DETALLE
+   ============================================= */
+
+/* <div class="containerDetalle"> */
+
+.containerDetalle {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* <div class="card--detalle"> */
+
+.card--detalle {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* <div class="card--detalle--body"> */
+
+.card--detalle--body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* <h2> codigo del alumno */
+
+.card--detalle--body h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a3a5c;
+    margin: 0;
+}
+
+/* <p> datos del alumno */
+
+.card--detalle--body p {
+    font-size: 0.875rem;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* <strong> etiquetas */
+
+.card--detalle--body strong {
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* <button class="btnEditarNota"> */
+
+.btnEditarNota {
+    background-color: #e8eef5;
+    color: #1a3a5c;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btnEditarNota:hover {
+    background-color: #4a90d9;
+    color: #ffffff;
+}
+
+/* <input type="number"> nota */
+
+.containerDetalle input[type="number"] {
+    width: 70px;
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0;
+}
+
+/* <a> volver */
+
+.containerDetalle > div > a {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 1rem;
+}
+
+.containerDetalle > div > a:hover {
+    color: #1a3a5c;
+}
