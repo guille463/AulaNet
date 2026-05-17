@@ -30,6 +30,12 @@ public class Profesorinitializater {
         crearSiNoExiste("Carmen", "Moreno", "carmen.moreno@colegio.com", Especialidad.GENERAL);
         crearSiNoExiste("Antonio", "Romero", "antonio.romero@colegio.com", Especialidad.GENERAL);
         crearSiNoExiste("Isabel", "Navarro", "isabel.navarro@colegio.com", Especialidad.GENERAL);
+        crearSiNoExiste("Javier", "Molina", "javier.molina@colegio.com", Especialidad.GENERAL);
+        crearSiNoExiste("Patricia", "Vega", "patricia.vega@colegio.com", Especialidad.GENERAL);
+        crearSiNoExiste("Fernando", "Reyes", "fernando.reyes@colegio.com", Especialidad.GENERAL);
+        crearSiNoExiste("Elena", "Campos", "elena.campos@colegio.com", Especialidad.GENERAL);
+        crearSiNoExiste("Roberto", "Perez", "roberto.perez@colegio.com", Especialidad.GENERAL);
+        crearSiNoExiste("Cristina", "Soto", "cristina.soto@colegio.com", Especialidad.GENERAL);
         crearSiNoExiste("Luis", "Martinez", "luis.martinez@colegio.com", Especialidad.EDUCACION_FISICA);
         crearSiNoExiste("Maria", "Lopez", "maria.lopez@colegio.com", Especialidad.INGLES);
         crearSiNoExiste("Carlos", "Fernandez", "carlos.fernandez@colegio.com", Especialidad.MUSICA);

@@ -77,18 +77,20 @@ public class AlumnoInitializater {
     }
 
     private Curso obtenerCursoPorEdad(int edad) {
+        Curso curso;
         if (edad == 6) {
-            return Curso.PRIMERO;
+            curso = Curso.PRIMERO;
         } else if (edad == 7) {
-            return Curso.SEGUNDO;
+            curso = Curso.SEGUNDO;
         } else if (edad == 8) {
-            return Curso.TERCERO;
+            curso = Curso.TERCERO;
         } else if (edad == 9) {
-            return Curso.CUARTO;
+            curso = Curso.CUARTO;
         } else if (edad == 10) {
-            return Curso.QUINTO;
+            curso = Curso.QUINTO;
         } else {
-            return Curso.SEXTO;
+            curso = Curso.SEXTO;
         }
+        return curso;
     }
 }
