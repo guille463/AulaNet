@@ -1,5 +1,7 @@
 package com.colegio.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,7 +17,7 @@ import jakarta.persistence.Transient;
  * Entidad que representa a un alumno del colegio.
  *
  * @author Guillermo Rafael Jimenez Munoz
- * @version 2.0
+ * @version 3.0
  */
 @Entity
 @Table(name = "alumnos")
@@ -37,8 +39,11 @@ public class Alumno {
     @Column(nullable = false)
     private String apellido;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    /**
+     * Fecha de nacimiento del alumno
+     */
+    @Column(nullable = false)
+    private LocalDate fechaNacimiento;
 
     /**
      * Aula a la que pertenece el alumno
@@ -53,10 +58,10 @@ public class Alumno {
     public Alumno() {
     }
 
-    public Alumno(String email, String nombre, String apellido, Aula aula) {
-        this.email = email;
+    public Alumno(String nombre, String apellido, LocalDate fechaNacimiento, Aula aula) {
         this.nombre = nombre;
         this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
         this.aula = aula;
     }
 
@@ -91,12 +96,12 @@ public class Alumno {
         this.apellido = apellido;
     }
 
-    public String getEmail() {
-        return email;
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public Aula getAula() {
@@ -121,7 +126,7 @@ public class Alumno {
     @Override
     public String toString() {
         return "Alumno{id=" + id + ", codigo=" + codigo + ", nombre=" + nombre
-                + ", apellido=" + apellido + ", email=" + email
+                + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento
                 + ", aula=" + (aula != null ? aula.getCodigo() : "sin aula") + "}";
     }
 }
