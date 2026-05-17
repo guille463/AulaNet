@@ -45,11 +45,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!nombre || !apellido || !email) {
       mensaje.textContent = "Todos los campos son obligatorios";
+       mensaje.className = "mensaje--error";
     } else {
       const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
 
       if (!respuestaAula.datos) {
         mensaje.textContent = "Aula no encontrada";
+         mensaje.className = "mensaje--error";
       } else {
         const alumno = {};
         alumno.nombre = nombre;
@@ -60,17 +62,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const resultado = await AlumnoAPI.crear(alumno);
 
-        if (resultado.datos) {
-          window.location.href = "alumnoMenu.html";
+      if (resultado.datos) {
+            window.location.href = "alumnoMenu.html";
         } else {
-          const errorCrear = JSON.parse(resultado.error);
-          if (errorCrear.mensaje.includes("email")) {
-            mensaje.textContent = "Error: este email ya está registrado.";
-          } else if (errorCrear.mensaje.includes("llena")) {
-            mensaje.textContent = "Error: el aula está llena.";
-          } else {
-            mensaje.textContent = "Error: " + errorCrear.mensaje;
-          }
+            const errorCrear = JSON.parse(resultado.error);
+            if (errorCrear.mensaje.includes("email")) {
+                mensaje.textContent = "Error: este email ya está registrado.";
+            } else if (errorCrear.mensaje.includes("llena")) {
+                mensaje.textContent = "Error: el aula está llena.";
+            } else {
+                mensaje.textContent = "Error: " + errorCrear.mensaje;
+            }
+            mensaje.className = "mensaje--error";
         }
       }
     }

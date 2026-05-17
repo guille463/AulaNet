@@ -58,33 +58,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         const especialidad = document.getElementById("inputEspecialidad").value;
         const mensaje = document.getElementById("mensaje");
 
-        if (!nombre || !apellido || !email) {
-            mensaje.textContent = "Todos los campos son obligatorios";
+       if (!nombre || !apellido || !email) {
+    mensaje.textContent = "Todos los campos son obligatorios";
+    mensaje.className = "mensaje--error";
+} else {
+    const profesor = {};
+    profesor.nombre = nombre;
+    profesor.apellido = apellido;
+    profesor.email = email;
+    profesor.especialidad = especialidad;
+
+    if (especialidad === "GENERAL") {
+        const curso = document.getElementById("inputCurso").value;
+        const grupo = document.getElementById("inputGrupo").value;
+        profesor.codigoAula = curso + grupo;
+    }
+
+    const resultado = await ProfesorAPI.crear(profesor);
+
+    if (resultado.datos) {
+        window.location.href = "profesorMenu.html";
+    } else {
+        const errorProfe = JSON.parse(resultado.error);
+        if (errorProfe.mensaje.includes("email")) {
+            mensaje.textContent = "Error: este email ya está registrado.";
         } else {
-            const profesor = {};
-            profesor.nombre = nombre;
-            profesor.apellido = apellido;
-            profesor.email = email;
-            profesor.especialidad = especialidad;
-
-            if (especialidad === "GENERAL") {
-                const curso = document.getElementById("inputCurso").value;
-                const grupo = document.getElementById("inputGrupo").value;
-                profesor.codigoAula = curso + grupo;
-            }
-
-            const resultado = await ProfesorAPI.crear(profesor);
-
-            if (resultado.datos) {
-                window.location.href = "profesorMenu.html";
-            } else {
-                const errorProfe = JSON.parse(resultado.error);
-                if (errorProfe.mensaje.includes("email")) {
-                    mensaje.textContent = "Error: este email ya está registrado.";
-                } else {
-                    mensaje.textContent = "Error: " + errorProfe.mensaje;
-                }
-            }
+            mensaje.textContent = "Error: " + errorProfe.mensaje;
         }
+        mensaje.className = "mensaje--error";
+    }
+}
     });
 });

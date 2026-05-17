@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         root.innerHTML = `
-            <div class="containerDetalle">
+            < class="containerDetalle">
                 <h1>Detalle del Aula</h1>
                <div class="card--detalle">
     <div class="card--detalle--body">
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
     </div>
 </div>
-                </div>
+                
                 <h2>Gestionar Tutor</h2>
                 <div id="gestionTutor">
                     <select id="selectProfesor"></select>
@@ -115,24 +115,28 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         }
 
-        document.getElementById("btnAsignarTutor").addEventListener("click", async function () {
-            const profesorId = selectProfesor.value;
-            const resultado = await AulaAPI.asignarTutor(id, profesorId);
-            if (resultado.datos) {
-                window.location.reload();
-            } else {
-                const errorAula = JSON.parse(resultado.error);
-                document.getElementById("mensajeTutor").textContent = errorAula.mensaje;
-            }
-        });
+       document.getElementById("btnAsignarTutor").addEventListener("click", async function () {
+    const profesorId = selectProfesor.value;
+    const resultado = await AulaAPI.asignarTutor(id, profesorId);
+    if (resultado.datos) {
+        window.location.reload();
+    } else {
+        const errorAula = JSON.parse(resultado.error);
+        const mensajeTutor = document.getElementById("mensajeTutor");
+        mensajeTutor.textContent = errorAula.mensaje;
+        mensajeTutor.className = "mensaje--error";
+    }
+});
 
-        document.getElementById("btnEliminarTutor").addEventListener("click", async function () {
-            const resultado = await AulaAPI.eliminarTutor(id);
-            if (resultado.datos) {
-                window.location.reload();
-            } else {
-                document.getElementById("mensajeTutor").textContent = "Error al eliminar el tutor";
-            }
-        });
+document.getElementById("btnEliminarTutor").addEventListener("click", async function () {
+    const resultado = await AulaAPI.eliminarTutor(id);
+    if (resultado.datos) {
+        window.location.reload();
+    } else {
+        const mensajeTutor = document.getElementById("mensajeTutor");
+        mensajeTutor.textContent = "Error al eliminar el tutor";
+        mensajeTutor.className = "mensaje--error";
+    }
+});
     }
 });

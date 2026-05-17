@@ -59,23 +59,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
 
-            if (!respuestaAula.datos) {
-                mensaje.textContent = "Aula no encontrada";
-            } else {
-                alumno.nombre = document.getElementById("inputNombre").value.trim();
-                alumno.apellido = document.getElementById("inputApellido").value.trim();
-                alumno.email = document.getElementById("inputEmail").value.trim();
-                alumno.aula = {};
-                alumno.aula.id = respuestaAula.datos.id;
+           if (!respuestaAula.datos) {
+    mensaje.textContent = "Aula no encontrada";
+    mensaje.className = "mensaje--error";
+} else {
+    alumno.nombre = document.getElementById("inputNombre").value.trim();
+    alumno.apellido = document.getElementById("inputApellido").value.trim();
+    alumno.email = document.getElementById("inputEmail").value.trim();
+    alumno.aula = {};
+    alumno.aula.id = respuestaAula.datos.id;
 
-                const resultado = await AlumnoAPI.actualizar(id, alumno);
+    const resultado = await AlumnoAPI.actualizar(id, alumno);
 
-                if (resultado.datos) {
-                    window.location.href = "alumnoMenu.html";
-                } else {
-                    mensaje.textContent = "Error al actualizar el alumno";
-                }
-            }
+    if (resultado.datos) {
+        window.location.href = "alumnoMenu.html";
+    } else {
+        mensaje.textContent = "Error al actualizar el alumno";
+        mensaje.className = "mensaje--error";
+    }
+}
         });
     }
 });

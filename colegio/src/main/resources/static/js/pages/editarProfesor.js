@@ -87,11 +87,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 const resultadoActualizar = await ProfesorAPI.actualizar(id, profesor);
 
-                if (resultadoActualizar.datos) {
-                    window.location.href = "profesorMenu.html";
-                } else {
-                    mensaje.textContent = "Error al actualizar el profesor";
-                }
+               if (resultadoActualizar.datos) {
+    window.location.href = "profesorMenu.html";
+} else {
+    mensaje.textContent = "Error al actualizar el profesor";
+    mensaje.className = "mensaje--error";
+}
             });
         }
     }
