@@ -57,15 +57,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         root.innerHTML = `
             <div class="containerDetalle">
                 <h1>Detalle del Aula</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <h2>${aula.codigo}</h2>
-                        <hr>
-                        <p><strong>Curso:</strong> ${aula.curso}</p>
-                        <p><strong>Grupo:</strong> ${aula.grupo}</p>
-                        <p><strong>Ocupación:</strong> ${totalAlumnos}/${aula.capacidad}</p>
-                        <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
-                    </div>
+               <div class="card--detalle">
+    <div class="card--detalle--body">
+        <h2>${aula.codigo}</h2>
+        <hr>
+        <p><strong>Curso:</strong> ${aula.curso}</p>
+        <p><strong>Grupo:</strong> ${aula.grupo}</p>
+        <p><strong>Ocupación:</strong> ${totalAlumnos}/${aula.capacidad}</p>
+        <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
+    </div>
+</div>
                 </div>
                 <h2>Gestionar Tutor</h2>
                 <div id="gestionTutor">
