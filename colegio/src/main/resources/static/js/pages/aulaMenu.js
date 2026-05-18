@@ -103,7 +103,7 @@ async function buscarPorId(id) {
     if (respuesta.datos) {
       resultado.innerHTML = await crearTarjetaAula(respuesta.datos);
     } else {
-      resultado.innerHTML = `<p class="error">Aula no encontrada</p>`;
+      resultado.innerHTML = `<p class="error">Aula con id: ${id} no encontrada</p>`;
     }
   } else {
     resultado.innerHTML = `<p class="error">Introduce un ID</p>`;
@@ -117,6 +117,6 @@ async function buscarPorCodigo(codigoAula) {
   if (respuesta.datos) {
     resultado.innerHTML = await crearTarjetaAula(respuesta.datos);
   } else {
-    resultado.innerHTML = `<p class="error">Aula no encontrada</p>`;
+    resultado.innerHTML = `<p class="error">Aula con codigo: ${codigoAula} no encontrada</p>`;
   }
 }

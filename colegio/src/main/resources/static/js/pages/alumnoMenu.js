@@ -141,7 +141,7 @@ async function cargarTodos() {
     }
     listaAlumnos.innerHTML = html;
   } else {
-    listaAlumnos.innerHTML = `<tr><td colspan="9" class="error">No hay alumnos</td></tr>`;
+    listaAlumnos.innerHTML = `<tr><td colspan="9" class="mensaje--error">No hay alumnos</td></tr>`;
   }
 }
 
@@ -153,10 +153,10 @@ async function buscarPorId(id) {
     if (respuesta.datos) {
       resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
     } else {
-      resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
+      resultado.innerHTML = `<p class="mensaje--error">Alumno con id: ${id} no encontrado</p>`;
     }
   } else {
-    resultado.innerHTML = `<p class="error">Introduce un ID</p>`;
+    resultado.innerHTML = `<p class="mensaje--error">Introduce un ID</p>`;
   }
 }
 
@@ -172,10 +172,10 @@ async function buscarPorNombre(nombre) {
       }
       resultado.innerHTML = crearTablaAlumnos(html);
     } else {
-      resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
+      resultado.innerHTML = `<p class="mensaje--error">No se encontraron alumnos con nombre: ${nombre}</p>`;
     }
   } else {
-    resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
+    resultado.innerHTML = `<p class="mensaje--error">Introduce un nombre</p>`;
   }
 }
 
@@ -192,10 +192,10 @@ async function buscarPorFecha(fecha) {
       }
       resultado.innerHTML = crearTablaAlumnos(html);
     } else {
-      resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
+      resultado.innerHTML = `<p class="mensaje--error">No se encontraron alumnos nacidos a fecha: ${fecha}</p>`;
     }
   } else {
-    resultado.innerHTML = `<p class="error">Introduce una fecha</p>`;
+    resultado.innerHTML = `<p class="mensaje--error">Introduce una fecha</p>`;
   }
 }
 
@@ -210,7 +210,7 @@ async function buscarPorCodigoAula(codigoAula) {
     }
     resultado.innerHTML = crearTablaAlumnos(html);
   } else {
-    resultado.innerHTML = `<p class="error">No se encontraron alumnos en esa aula</p>`;
+    resultado.innerHTML = `<p class="mensaje--error">No se encontraron alumnos en esa aula: ${codigoAula}</p>`;
   }
 }
 
@@ -220,7 +220,7 @@ async function eliminarAlumno(id) {
     cargarTodos();
   } else {
     document.getElementById("listaAlumnos").innerHTML +=
-      `<p class="error">Error al eliminar</p>`;
+      `<p class="mensaje--error">Error al eliminar</p>`;
   }
 }
 

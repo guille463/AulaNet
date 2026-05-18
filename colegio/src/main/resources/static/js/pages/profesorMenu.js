@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("modalConfirmar").classList.remove("activo");
         await eliminarProfesor(idAEliminar);
         idAEliminar = null;
-        document.getElementById("resultado").innerHTML = `<p>Profesor eliminado con éxito</p>`;
+        document.getElementById("resultado").innerHTML = `<p>Profesor con id: ${idAEliminar} eliminado con éxito</p>`;
     });
 
     document.getElementById("btnConfirmarNo").addEventListener("click", function () {
@@ -119,7 +119,7 @@ async function cargarTodos() {
         }
         listaProfesores.innerHTML = html;
     } else {
-        listaProfesores.innerHTML = `<tr><td colspan="7" class="error">No hay profesores</td></tr>`;
+        listaProfesores.innerHTML = `<tr><td colspan="7" class="mensaje--error">No hay profesores</td></tr>`;
     }
 }
 
@@ -131,10 +131,10 @@ async function buscarPorId(id) {
         if (respuesta.datos) {
             resultado.innerHTML = crearTarjetaProfesor(respuesta.datos);
         } else {
-            resultado.innerHTML = `<p class="error">Profesor no encontrado</p>`;
+            resultado.innerHTML = `<p class="mensaje--error">Profesor con id: ${id} no encontrado</p>`;
         }
     } else {
-        resultado.innerHTML = `<p class="error">Introduce un ID</p>`;
+        resultado.innerHTML = `<p class="mensaje--error">Introduce un ID</p>`;
     }
 }
 
@@ -150,10 +150,10 @@ async function buscarPorNombre(nombre) {
             }
             resultado.innerHTML = html;
         } else {
-            resultado.innerHTML = `<p class="error">No se encontraron profesores</p>`;
+            resultado.innerHTML = `<p class="mensaje--error">No se encontraron  con nombre: ${nombre}</p>`;
         }
     } else {
-        resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
+        resultado.innerHTML = `<p class="mensaje--error">Introduce un nombre</p>`;
     }
 }
 
@@ -165,10 +165,10 @@ async function buscarPorEmail(email) {
         if (respuesta.datos) {
             resultado.innerHTML = crearTarjetaProfesor(respuesta.datos);
         } else {
-            resultado.innerHTML = `<p class="error">Profesor no encontrado</p>`;
+            resultado.innerHTML = `<p class="mensaje--error">Profesor con email: ${email} no encontrado</p>`;
         }
     } else {
-        resultado.innerHTML = `<p class="error">Introduce un email</p>`;
+        resultado.innerHTML = `<p class="mensaje--error">Introduce un email</p>`;
     }
 }
 
@@ -184,7 +184,7 @@ async function buscarPorEspecialidad(especialidad) {
             }
             resultado.innerHTML = html;
         } else {
-            resultado.innerHTML = `<p class="error">No se encontraron profesores</p>`;
+            resultado.innerHTML = `<p class="mensaje-error">No se encontraron profesores de especialidad: ${especialidad}</p>`;
         }
     }
 }
@@ -194,6 +194,6 @@ async function eliminarProfesor(id) {
     if (respuesta.datos) {
         cargarTodos();
     } else {
-        document.getElementById("listaProfesores").innerHTML += `<p class="error">Error al eliminar</p>`;
+        document.getElementById("listaProfesores").innerHTML += `<p class="mensaje--error">Error al eliminar</p>`;
     }
 }
