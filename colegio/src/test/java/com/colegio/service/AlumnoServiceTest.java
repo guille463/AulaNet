@@ -31,8 +31,12 @@ import com.colegio.repository.AulaRepository;
 /**
  * Pruebas unitarias del servicio {@link AlumnoService}.
  *
+ * <p>
+ * Casos principales: busqueda, borrado y filtrado por curso.</p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
+ * @see AlumnoService
  */
 @ExtendWith(MockitoExtension.class)
 class AlumnoServiceTest {
@@ -52,9 +56,22 @@ class AlumnoServiceTest {
     @InjectMocks
     private AlumnoService alumnoService;
 
+    /**
+     * Alumno de prueba reutilizado en todos los tests.
+     */
     private Alumno alumno;
+
+    /**
+     * Aula de prueba asociada al alumno.
+     */
     private Aula aula;
 
+    // ============================================================
+    // CONFIGURACION
+    // ============================================================
+    /**
+     * Inicializa los objetos de prueba antes de cada test.
+     */
     @BeforeEach
     void setUp() {
         aula = new Aula(Curso.PRIMERO, Grupo.A, 25);
@@ -62,6 +79,12 @@ class AlumnoServiceTest {
         alumno.setCodigo("ALUM-1");
     }
 
+    // ============================================================
+    // TESTS
+    // ============================================================
+    /**
+     * Verifica que {@code listarAlumnos} devuelve la lista completa.
+     */
     @Test
     @DisplayName("listarAlumnos devuelve lista correcta")
     void listarAlumnos_devuelveListaCorrecta() {
@@ -73,6 +96,10 @@ class AlumnoServiceTest {
         assertEquals("Juan", resultado.get(0).getNombre());
     }
 
+    /**
+     * Verifica que {@code buscarPorId} devuelve el alumno correcto cuando
+     * existe.
+     */
     @Test
     @DisplayName("buscarPorId devuelve el alumno correcto")
     void buscarPorId_devuelveAlumnoCorrecto() {
@@ -84,6 +111,10 @@ class AlumnoServiceTest {
         assertEquals("Juan", resultado.getNombre());
     }
 
+    /**
+     * Verifica que {@code buscarPorId} lanza {@link RuntimeException} cuando el
+     * alumno no existe.
+     */
     @Test
     @DisplayName("buscarPorId lanza excepcion si el alumno no existe")
     void buscarPorId_lanzaExcepcionSiNoExiste() {
@@ -94,6 +125,10 @@ class AlumnoServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code borrarAlumno} invoca {@code deleteById} exactamente
+     * una vez.
+     */
     @Test
     @DisplayName("borrarAlumno llama a deleteById una vez")
     void borrarAlumno_llamaDeleteById() {
@@ -104,6 +139,10 @@ class AlumnoServiceTest {
         verify(alumnoRepository, times(1)).deleteById(1L);
     }
 
+    /**
+     * Verifica que {@code buscarPorCurso} devuelve los alumnos del curso
+     * indicado.
+     */
     @Test
     @DisplayName("buscarPorCurso devuelve lista correcta")
     void buscarPorCurso_devuelveListaCorrecta() {
