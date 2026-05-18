@@ -106,7 +106,8 @@ button {
     justify-content: center;
 }
 
-#modalConfirmar[style*="display:none"]{
+#modalConfirmar[style*="display:none"],
+#modalConfirmar[style*="display: none"] {
     display: none !important;
 }
 
