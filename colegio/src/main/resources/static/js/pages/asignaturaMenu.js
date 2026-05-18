@@ -3,6 +3,7 @@ import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAsignatura } from "../components/asignaturaComponente.js";
 import { CURSOS } from "../utils/constantes.js";
 
+//VARIABLES
 let todasAsignaturas = [];
 
 document.addEventListener("DOMContentLoaded", async () => {

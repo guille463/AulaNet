@@ -3,21 +3,24 @@ import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 import { CURSOS, GRUPOS } from "../utils/constantes.js";
 
+//VARIABLES
 let idAEliminar = null;
+let opcionesCurso = "";
+let opcionesGrupo = "";
+  
+for (const curso of CURSOS) {
+    opcionesCurso += `<option value="${curso}">${curso}</option>`;
+  }
+
+  
+  
+for (const grupo of GRUPOS) {
+    opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
+  }
 
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
-
-  let opcionesCurso = "";
-  for (const curso of CURSOS) {
-    opcionesCurso += `<option value="${curso}">${curso}</option>`;
-  }
-
-  let opcionesGrupo = "";
-  for (const grupo of GRUPOS) {
-    opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
-  }
 
 root.innerHTML = `
   <div class="containerGestion">
