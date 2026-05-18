@@ -16,7 +16,10 @@ import com.colegio.util.Constantes;
 /**
  * Servicio que gestiona la logica de negocio de las relaciones
  * alumno-asignatura.
- *
+ *<p>
+ * Busqueda, consulta, actualizacion de {@link AlumnoSiganatura}. 
+ * </p>
+ * 
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
  */
@@ -37,6 +40,8 @@ public class AlumnoAsignaturaService {
     // ============================================================
     /**
      * Devuelve la lista completa de relaciones alumno-asignatura.
+     * 
+     * @return lista de la lista de las asignaturas del alumno
      */
     public List<AlumnoAsignatura> listar() {
         return alumnoAsignaturaRepository.findAll();
@@ -44,6 +49,10 @@ public class AlumnoAsignaturaService {
 
     /**
      * Busca una relacion alumno-asignatura por su identificador.
+     * 
+     * @param id id del alumno
+     * @return alumno encontrado
+     * @throws RuntimeException si no existe un alumno con ese id 
      */
     public AlumnoAsignatura buscarPorId(Long id) {
         return alumnoAsignaturaRepository.findById(id)
@@ -52,6 +61,8 @@ public class AlumnoAsignaturaService {
 
     /**
      * Devuelve las asignaturas de un alumno concreto.
+     * @param alumnoId id del alumno
+     * @return las asignaturas del alumno encontrado
      */
     public List<AlumnoAsignatura> buscarPorAlumno(Long alumnoId) {
         return alumnoAsignaturaRepository.findByAlumnoId(alumnoId);
@@ -59,6 +70,8 @@ public class AlumnoAsignaturaService {
 
     /**
      * Devuelve los alumnos de una asignatura concreta.
+     * @param id de la asignatura
+     *@return los alumnos matriculados a la asignatura encontrada
      */
     public List<AlumnoAsignatura> buscarPorAsignatura(Long asignaturaId) {
         return alumnoAsignaturaRepository.findByAsignaturaId(asignaturaId);
@@ -66,6 +79,11 @@ public class AlumnoAsignaturaService {
 
     /**
      * Guarda una nueva relacion alumno-asignatura
+     * @param alumnoAsignatura el alumno que queremos matricular
+     * @return la matricula guardada
+     * @throws RuntimeException si el alumono, no ha sido encontrado, si la asignatura no ha sido encontrada,
+     * si el alumno ya estaba matriculado en la asignatura o si el curso del alumno o la asignautra no 
+     * coincide con el curso de la asignatura a la que se quiere matricular 
      */
     public AlumnoAsignatura guardar(AlumnoAsignatura alumnoAsignatura) {
         Alumno alumno = alumnoRepository.findById(alumnoAsignatura.getAlumno().getId())
@@ -95,6 +113,9 @@ public class AlumnoAsignaturaService {
 
     /**
      * Actualiza la nota de una relacion alumno-asignatura existente.
+     * @param id id del alumno
+     * @param alumnoAsignatura la asignatura del alumno 
+     * @return la nota actualizda de la asignatura del alumno 
      */
     public AlumnoAsignatura actualizar(Long id, AlumnoAsignatura alumnoAsignatura) {
         AlumnoAsignatura existente = buscarPorId(id);
@@ -105,6 +126,7 @@ public class AlumnoAsignaturaService {
 
     /**
      * Elimina una relacion alumno-asignatura por su identificador.
+     * @param id del alumno
      */
     public void borrar(Long id) {
         buscarPorId(id);
