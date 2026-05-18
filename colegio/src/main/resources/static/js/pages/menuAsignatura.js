@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (asignaturaEncontrada) {
           divTarjeta.innerHTML = crearTarjetaAsignatura(asignaturaEncontrada);
         } else {
-          divTarjeta.innerHTML = `<p class="error">Asignatura no encontrada</p>`;
+          divTarjeta.innerHTML = `<p class="mensaje--error">Asignatura no encontrada</p>`;
         }
       }
     });
@@ -98,6 +98,6 @@ async function cargarTodos() {
 
     listaAsignaturas.innerHTML = html;
   } else {
-    listaAsignaturas.innerHTML = `<p class="error">No hay asignaturas</p>`;
+    listaAsignaturas.innerHTML = `<p class="mensaje--error">No hay asignaturas</p>`;
   }
 }

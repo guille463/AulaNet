@@ -91,7 +91,7 @@ async function cargarTodos() {
 
     listaAulas.innerHTML = html;
   } else {
-    listaAulas.innerHTML = `<p class="error">No hay aulas</p>`;
+    listaAulas.innerHTML = `<p class="mensaje--error">No hay aulas</p>`;
   }
 }
 
@@ -103,10 +103,10 @@ async function buscarPorId(id) {
     if (respuesta.datos) {
       resultado.innerHTML = await crearTarjetaAula(respuesta.datos);
     } else {
-      resultado.innerHTML = `<p class="error">Aula con id: ${id} no encontrada</p>`;
+      resultado.innerHTML = `<p class="mensaje--error">Aula con id: ${id} no encontrada</p>`;
     }
   } else {
-    resultado.innerHTML = `<p class="error">Introduce un ID</p>`;
+    resultado.innerHTML = `<p class="mensaje--error">Introduce un ID</p>`;
   }
 }
 
@@ -117,6 +117,6 @@ async function buscarPorCodigo(codigoAula) {
   if (respuesta.datos) {
     resultado.innerHTML = await crearTarjetaAula(respuesta.datos);
   } else {
-    resultado.innerHTML = `<p class="error">Aula con codigo: ${codigoAula} no encontrada</p>`;
+    resultado.innerHTML = `<p class="mensaje--error">Aula con codigo: ${codigoAula} no encontrada</p>`;
   }
 }
