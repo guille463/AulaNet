@@ -1,8 +1,10 @@
 export function crearBarraNavegacion() {
-    return `
+  return `
         <nav class="navbar">
             <div class="navbar__container">
-                <a class="navbar__brand" href="index.html">Colegio</a>
+              <a class="navbar__brand" href="index.html">
+    <img src="js/media/imgs/Logotipo.png" alt="Colegio" class="navbar__logo">
+</a>
                 <ul class="navbar__menu">
                     <li class="navbar__item">
                         <a class="navbar__link" href="alumnoMenu.html">Alumnos</a>
