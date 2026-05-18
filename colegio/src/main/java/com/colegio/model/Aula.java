@@ -57,7 +57,7 @@ public class Aula {
      * Profesor tutor del aula
      */
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tutor_id")
+    @JoinColumn(name = "tutor_id" ,nullable = true)
     private Profesor tutor;
 
     // ============================================================
