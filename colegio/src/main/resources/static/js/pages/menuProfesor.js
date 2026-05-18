@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("modalConfirmar").classList.remove("activo");
         await eliminarProfesor(idAEliminar);
         idAEliminar = null;
-        document.getElementById("resultado").innerHTML = `<p>Profesor con id: ${idAEliminar} eliminado con éxito</p>`;
+        document.getElementById("resultado").innerHTML = `<p class="mensaje--exito">Profesor con id: ${idAEliminar} eliminado con éxito</p>`;
     });
 
     document.getElementById("btnConfirmarNo").addEventListener("click", function () {

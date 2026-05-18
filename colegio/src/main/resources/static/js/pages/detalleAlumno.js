@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               <tbody>${asignaturasHtml}</tbody>
           </table>
           <p id="mensaje"></p>
-          <a href="alumnoMenu.html">Volver</a>
+          <a href="menuAlumno.html">Volver</a>
       </div>
     `;
 

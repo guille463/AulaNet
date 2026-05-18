@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             </div>
                             <p id="mensaje"></p>
                             <button id="btnGuardar">Guardar</button>
-                            <a href="profesorMenu.html">Cancelar</a>
+                            <a href="menuProfesor.html">Cancelar</a>
                         </div>
                     </div>
                 </div>

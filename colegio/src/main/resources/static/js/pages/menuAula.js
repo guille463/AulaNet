@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (aulaEncontrada) {
           divTarjeta.innerHTML = await crearTarjetaAula(aulaEncontrada);
         } else {
-          divTarjeta.innerHTML = `<p class="error">Aula no encontrada</p>`;
+          divTarjeta.innerHTML = `<p class="mensaje--error">Aula no encontrada</p>`;
         }
       }
     });

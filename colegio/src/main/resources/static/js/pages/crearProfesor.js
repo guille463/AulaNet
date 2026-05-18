@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <select id="inputGrupo">${opcionesGrupo}</select>
                     </div>
                     <button id="btnCrear">Crear</button>
-                    <a href="profesorMenu.html">Cancelar</a>
+                    <a href="menuProfesor.html">Cancelar</a>
                     <p id="mensaje"></p>
                 </div>
             </div>
