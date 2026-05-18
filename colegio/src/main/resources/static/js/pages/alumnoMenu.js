@@ -7,22 +7,22 @@ import { CURSOS, GRUPOS } from "../utils/constantes.js";
 let idAEliminar = null;
 let opcionesCurso = "";
 let opcionesGrupo = "";
-  
-for (const curso of CURSOS) {
-    opcionesCurso += `<option value="${curso}">${curso}</option>`;
-  }
 
-  
-  
+for (const curso of CURSOS) {
+  opcionesCurso += `<option value="${curso}">${curso}</option>`;
+}
+
+
+
 for (const grupo of GRUPOS) {
-    opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
-  }
+  opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
 
-root.innerHTML = `
+  root.innerHTML = `
   <div class="containerGestion">
         <h1>Gestionar Alumnos</h1>
         <a href="crearAlumno.html">➕ Añadir alumno</a>
@@ -70,27 +70,27 @@ root.innerHTML = `
       idAEliminar = evento.target.getAttribute("data-id");
       document.getElementById("modalTexto").textContent =
         "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
-      document.getElementById("modalConfirmar").style.display = "block";
+      document.getElementById("modalConfirmar").classList.add("activo");
     }
   });
 
   document
     .getElementById("btnConfirmarSi")
     .addEventListener("click", async function () {
-      document.getElementById("modalConfirmar").style.display = "none";
+      document.getElementById("modalConfirmar").classList.remove("activo");
       await eliminarAlumno(idAEliminar);
       idAEliminar = null;
       document.getElementById("resultado").innerHTML =
-        `<p>Alumno eliminado con éxito</p>`;
+        `<p class="mensaje--exito">Alumno eliminado con éxito</p>`;
     });
 
   document
     .getElementById("btnConfirmarNo")
     .addEventListener("click", function () {
-      document.getElementById("modalConfirmar").style.display = "none";
+      document.getElementById("modalConfirmar").classList.remove("activo");
       idAEliminar = null;
       document.getElementById("resultado").innerHTML =
-        `<p>Operación cancelada</p>`;
+        `<p class="mensaje--error">Operación cancelada</p>`;
     });
 
   document
@@ -103,7 +103,7 @@ root.innerHTML = `
       } else if (tipo === "nombre") {
         container.innerHTML = `<input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el nombre">`;
       } else if (tipo === "fecha") {
-    container.innerHTML = `<input type="date" id="inputBusqueda" class="form-control">`;
+        container.innerHTML = `<input type="date" id="inputBusqueda" class="form-control">`;
       } else if (tipo === "curso") {
         container.innerHTML = `
           <select id="inputCurso" class="form-select">${opcionesCurso}</select>
@@ -119,9 +119,9 @@ root.innerHTML = `
     } else if (tipo === "nombre") {
       const valor = document.getElementById("inputBusqueda").value.trim();
       buscarPorNombre(valor);
-    }else if (tipo === "fecha") {
-    const valor = document.getElementById("inputBusqueda").value;
-    buscarPorFecha(valor);
+    } else if (tipo === "fecha") {
+      const valor = document.getElementById("inputBusqueda").value;
+      buscarPorFecha(valor);
     } else if (tipo === "curso") {
       const curso = document.getElementById("inputCurso").value;
       const grupo = document.getElementById("inputGrupo").value;
@@ -151,7 +151,7 @@ async function buscarPorId(id) {
   if (id) {
     const respuesta = await AlumnoAPI.obtenerPorId(id);
     if (respuesta.datos) {
-     resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
+      resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
     } else {
       resultado.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     }
@@ -161,57 +161,57 @@ async function buscarPorId(id) {
 }
 
 async function buscarPorNombre(nombre) {
-    const resultado = document.getElementById("resultado");
-    resultado.innerHTML = "";
-    if (nombre) {
-        const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
-        if (respuesta.datos && respuesta.datos.length > 0) {
-            let html = "";
-            for (const alumno of respuesta.datos) {
-                html += crearTarjetaAlumno(alumno);
-            }
-            resultado.innerHTML = crearTablaAlumnos(html);
-        } else {
-            resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
-        }
+  const resultado = document.getElementById("resultado");
+  resultado.innerHTML = "";
+  if (nombre) {
+    const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
+    if (respuesta.datos && respuesta.datos.length > 0) {
+      let html = "";
+      for (const alumno of respuesta.datos) {
+        html += crearTarjetaAlumno(alumno);
+      }
+      resultado.innerHTML = crearTablaAlumnos(html);
     } else {
-        resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
+      resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
     }
+  } else {
+    resultado.innerHTML = `<p class="error">Introduce un nombre</p>`;
+  }
 }
 
 
 async function buscarPorFecha(fecha) {
-    const resultado = document.getElementById("resultado");
-    resultado.innerHTML = "";
-    if (fecha) {
-        const respuesta = await AlumnoAPI.obtenerPorFecha(fecha);
-        if (respuesta.datos && respuesta.datos.length > 0) {
-            let html = "";
-            for (const alumno of respuesta.datos) {
-                html += crearTarjetaAlumno(alumno);
-            }
-            resultado.innerHTML = crearTablaAlumnos(html);
-        } else {
-            resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
-        }
+  const resultado = document.getElementById("resultado");
+  resultado.innerHTML = "";
+  if (fecha) {
+    const respuesta = await AlumnoAPI.obtenerPorFecha(fecha);
+    if (respuesta.datos && respuesta.datos.length > 0) {
+      let html = "";
+      for (const alumno of respuesta.datos) {
+        html += crearTarjetaAlumno(alumno);
+      }
+      resultado.innerHTML = crearTablaAlumnos(html);
     } else {
-        resultado.innerHTML = `<p class="error">Introduce una fecha</p>`;
+      resultado.innerHTML = `<p class="error">No se encontraron alumnos</p>`;
     }
+  } else {
+    resultado.innerHTML = `<p class="error">Introduce una fecha</p>`;
+  }
 }
 
 async function buscarPorCodigoAula(codigoAula) {
-    const resultado = document.getElementById("resultado");
-    resultado.innerHTML = "";
-    const respuesta = await AlumnoAPI.obtenerPorCodigoAula(codigoAula);
-    if (respuesta.datos && respuesta.datos.length > 0) {
-        let html = "";
-        for (const alumno of respuesta.datos) {
-            html += crearTarjetaAlumno(alumno);
-        }
-        resultado.innerHTML = crearTablaAlumnos(html);
-    } else {
-        resultado.innerHTML = `<p class="error">No se encontraron alumnos en esa aula</p>`;
+  const resultado = document.getElementById("resultado");
+  resultado.innerHTML = "";
+  const respuesta = await AlumnoAPI.obtenerPorCodigoAula(codigoAula);
+  if (respuesta.datos && respuesta.datos.length > 0) {
+    let html = "";
+    for (const alumno of respuesta.datos) {
+      html += crearTarjetaAlumno(alumno);
     }
+    resultado.innerHTML = crearTablaAlumnos(html);
+  } else {
+    resultado.innerHTML = `<p class="error">No se encontraron alumnos en esa aula</p>`;
+  }
 }
 
 async function eliminarAlumno(id) {
@@ -225,7 +225,7 @@ async function eliminarAlumno(id) {
 }
 
 function crearTablaAlumnos(filas) {
-    return `
+  return `
         <table>
             <thead>
                 <tr>

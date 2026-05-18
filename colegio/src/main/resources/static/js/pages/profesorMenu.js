@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         opcionesEspecialidad += `<option value="${especialidad.valor}">${especialidad.etiqueta}</option>`;
     }
 
-  root.innerHTML = `
+    root.innerHTML = `
     <div class="containerGestion">
         <h1>Gestionar Profesores</h1>
         <a href="crearProfesor.html">➕ Añadir Docente</a>
@@ -59,19 +59,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (evento.target.classList.contains("btnEliminar")) {
             idAEliminar = evento.target.getAttribute("data-id");
             document.getElementById("modalTexto").textContent = "¿Estás seguro de que quieres eliminar al profesor " + idAEliminar + "?";
-            document.getElementById("modalConfirmar").style.display = "block";
+            document.getElementById("modalConfirmar").classList.add("activo");
         }
     });
 
     document.getElementById("btnConfirmarSi").addEventListener("click", async function () {
-        document.getElementById("modalConfirmar").style.display = "none";
+        document.getElementById("modalConfirmar").classList.remove("activo");
         await eliminarProfesor(idAEliminar);
         idAEliminar = null;
         document.getElementById("resultado").innerHTML = `<p>Profesor eliminado con éxito</p>`;
     });
 
     document.getElementById("btnConfirmarNo").addEventListener("click", function () {
-        document.getElementById("modalConfirmar").style.display = "none";
+        document.getElementById("modalConfirmar").classList.remove("activo");
         idAEliminar = null;
         document.getElementById("resultado").innerHTML = `<p>Operación cancelada</p>`;
     });
@@ -119,7 +119,7 @@ async function cargarTodos() {
         }
         listaProfesores.innerHTML = html;
     } else {
-       listaProfesores.innerHTML = `<tr><td colspan="7" class="error">No hay profesores</td></tr>`;
+        listaProfesores.innerHTML = `<tr><td colspan="7" class="error">No hay profesores</td></tr>`;
     }
 }
 
