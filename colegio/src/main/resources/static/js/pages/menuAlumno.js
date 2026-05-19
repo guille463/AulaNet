@@ -79,9 +79,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("click", async function () {
       document.getElementById("modalConfirmar").classList.remove("activo");
       await eliminarAlumno(idAEliminar);
+      const eliminado = idAEliminar; 
       idAEliminar = null;
       document.getElementById("resultado").innerHTML =
-        `<p class="mensaje--exito">Alumno eliminado con éxito</p>`;
+        `<p class="mensaje--exito">Alumno con id ${eliminado} eliminado con éxito</p>`;
     });
 
   document
