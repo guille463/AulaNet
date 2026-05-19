@@ -11,9 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,8 +26,13 @@ import com.colegio.repository.ProfesorRepository;
 /**
  * Pruebas unitarias del servicio {@link ProfesorService}.
  *
+ * <p>
+ * Cubre los casos principales de listado, busqueda, guardado, actualizacion y
+ * borrado.</p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
+ * @see ProfesorService
  */
 @ExtendWith(MockitoExtension.class)
 class ProfesorServiceTest {
@@ -38,9 +43,22 @@ class ProfesorServiceTest {
     @InjectMocks
     private ProfesorService profesorService;
 
+    /**
+     * Profesor de prueba con especialidad {@code GENERAL}.
+     */
     private Profesor profesor;
+
+    /**
+     * Profesor de prueba con especialidad {@code EDUCACION_FISICA}.
+     */
     private Profesor profesor2;
 
+    // ============================================================
+    // CONFIGURACION
+    // ============================================================
+    /**
+     * Inicializa los objetos de prueba antes de cada test.
+     */
     @BeforeEach
     void setUp() {
         profesor = new Profesor("Carlos", "Martinez", "carlos@colegio.com", Especialidad.GENERAL);
@@ -49,6 +67,12 @@ class ProfesorServiceTest {
         profesor2.setCodigo("PROF-2");
     }
 
+    // ============================================================
+    // TESTS
+    // ============================================================
+    /**
+     * Verifica que {@code listarProfesores} devuelve la lista completa.
+     */
     @Test
     @DisplayName("listarProfesores devuelve lista correcta")
     void listarProfesores_devuelveListaCorrecta() {
@@ -60,6 +84,10 @@ class ProfesorServiceTest {
         assertEquals("Carlos", resultado.get(0).getNombre());
     }
 
+    /**
+     * Verifica que {@code buscarProfesorPorId} devuelve el profesor correcto
+     * cuando existe.
+     */
     @Test
     @DisplayName("buscarProfesorPorId devuelve el profesor correcto")
     void buscarProfesorPorId_devuelveProfesorCorrecto() {
@@ -71,6 +99,10 @@ class ProfesorServiceTest {
         assertEquals("Carlos", resultado.getNombre());
     }
 
+    /**
+     * Verifica que {@code buscarProfesorPorId} lanza {@link RuntimeException}
+     * cuando el profesor no existe.
+     */
     @Test
     @DisplayName("buscarProfesorPorId lanza excepcion si no existe")
     void buscarProfesorPorId_lanzaExcepcionSiNoExiste() {
@@ -81,6 +113,10 @@ class ProfesorServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code buscarProfesorPorEmail} devuelve el profesor correcto
+     * cuando existe.
+     */
     @Test
     @DisplayName("buscarProfesorPorEmail devuelve el profesor correcto")
     void buscarProfesorPorEmail_devuelveProfesorCorrecto() {
@@ -92,6 +128,10 @@ class ProfesorServiceTest {
         assertEquals("carlos@colegio.com", resultado.getEmail());
     }
 
+    /**
+     * Verifica que {@code buscarProfesorPorEmail} lanza
+     * {@link RuntimeException} cuando el profesor no existe.
+     */
     @Test
     @DisplayName("buscarProfesorPorEmail lanza excepcion si no existe")
     void buscarProfesorPorEmail_lanzaExcepcionSiNoExiste() {
@@ -102,6 +142,10 @@ class ProfesorServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code buscarPorEspecialidad} devuelve los profesores de la
+     * especialidad indicada.
+     */
     @Test
     @DisplayName("buscarPorEspecialidad devuelve lista correcta")
     void buscarPorEspecialidad_devuelveListaCorrecta() {
@@ -114,6 +158,10 @@ class ProfesorServiceTest {
         assertEquals(Especialidad.GENERAL, resultado.get(0).getEspecialidad());
     }
 
+    /**
+     * Verifica que {@code guardarProfesor} lanza {@link RuntimeException}
+     * cuando ya existe un profesor con el mismo email.
+     */
     @Test
     @DisplayName("guardarProfesor lanza excepcion si email duplicado")
     void guardarProfesor_lanzaExcepcionSiEmailDuplicado() {
@@ -124,6 +172,10 @@ class ProfesorServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code guardarProfesor} invoca {@code save} dos veces para
+     * asignar el codigo.
+     */
     @Test
     @DisplayName("guardarProfesor llama a save dos veces para asignar codigo")
     void guardarProfesor_llamaSaveDosVeces() {
@@ -135,6 +187,10 @@ class ProfesorServiceTest {
         verify(profesorRepository, times(2)).save(any(Profesor.class));
     }
 
+    /**
+     * Verifica que {@code actualizarProfesor} lanza {@link RuntimeException}
+     * cuando el nuevo email ya pertenece a otro profesor.
+     */
     @Test
     @DisplayName("actualizarProfesor lanza excepcion si email ya pertenece a otro profesor")
     void actualizarProfesor_lanzaExcepcionSiEmailDuplicado() {
@@ -147,6 +203,10 @@ class ProfesorServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code borrarProfesor} invoca {@code deleteById} exactamente
+     * una vez.
+     */
     @Test
     @DisplayName("borrarProfesor llama a deleteById una vez")
     void borrarProfesor_llamaDeleteById() {

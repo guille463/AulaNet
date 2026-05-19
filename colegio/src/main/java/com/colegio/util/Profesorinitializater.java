@@ -11,8 +11,14 @@ import com.colegio.service.ProfesorService;
 /**
  * Inicializador de profesores del colegio.
  *
+ * <p>
+ * Crea un conjunto de profesores con distintas especialidades a traves de
+ * {@link ProfesorService}. Solo crea cada profesor si no existe ya en la base
+ * de datos.</p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
+ * @see ProfesorService
  */
 @Component
 public class Profesorinitializater {
@@ -23,6 +29,17 @@ public class Profesorinitializater {
     @Autowired
     private ProfesorRepository profesorRepository;
 
+    // ============================================================
+    // METODOS PUBLICOS
+    // ============================================================
+    /**
+     * Inicializa los profesores si no existen en la base de datos.
+     *
+     * <p>
+     * Crea profesores de especialidad {@code GENERAL},
+     * {@code EDUCACION_FISICA}, {@code INGLES}, {@code MUSICA},
+     * {@code LOGOPEDA} y {@code RELIGION}.</p>
+     */
     public void iniciarProfesores() {
         crearSiNoExiste("Ana", "Garcia", "ana.garcia@colegio.com", Especialidad.GENERAL);
         crearSiNoExiste("Laura", "Torres", "laura.torres@colegio.com", Especialidad.GENERAL);
@@ -44,6 +61,17 @@ public class Profesorinitializater {
         crearSiNoExiste("Rosa", "Castillo", "rosa.castillo@colegio.com", Especialidad.INGLES);
     }
 
+    // ============================================================
+    // METODOS PRIVADOS
+    // ============================================================
+    /**
+     * Crea un profesor si no existe ya un registro con el email indicado.
+     *
+     * @param nombre nombre del profesor
+     * @param apellido apellido del profesor
+     * @param email email del profesor
+     * @param especialidad especialidad del profesor
+     */
     private void crearSiNoExiste(String nombre, String apellido, String email,
             Especialidad especialidad) {
         if (!profesorRepository.existsByEmail(email)) {
