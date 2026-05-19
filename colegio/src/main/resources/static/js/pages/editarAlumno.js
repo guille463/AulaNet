@@ -10,12 +10,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    const respuesta = await AlumnoAPI.obtenerPorId(id);
-    const alumno = respuesta.datos;
-
-    if (!alumno) {
+    if (!id || !REGEX.SOLO_NUMEROS.test(id)) {
         root.innerHTML = `<p class="error">Alumno no encontrado</p>`;
     } else {
+        const respuesta = await AlumnoAPI.obtenerPorId(id);
+        const alumno = respuesta.datos;
+
+        if (!alumno) {
+            root.innerHTML = `<p class="error">Alumno no encontrado</p>`;
+        } else {
         let opcionesCurso = "";
         for (const curso of CURSOS) {
             const seleccionado = alumno.aula.curso === curso ? "selected" : "";
@@ -93,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const resultado = await AlumnoAPI.actualizar(id, alumno);
 
                     if (resultado.datos) {
-                        window.location.href = "alumnoMenu.html";
+                        window.location.href = "menuAlumno.html";
                     } else {
                         mensaje.textContent = resultado.error.mensaje;
                         mensaje.className = "mensaje--error";
@@ -101,5 +104,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             }
         });
+    }
     }
 });
