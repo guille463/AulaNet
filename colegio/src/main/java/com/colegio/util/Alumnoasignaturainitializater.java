@@ -12,19 +12,18 @@ import com.colegio.repository.AlumnoAsignaturaRepository;
 import com.colegio.repository.AlumnoRepository;
 import com.colegio.repository.AsignaturaRepository;
 import com.colegio.service.AlumnoAsignaturaService;
-import com.github.javafaker.Faker;
 
 /**
  * Inicializador de relaciones alumno-asignatura del colegio.
  *
-* <p>
- * Genera las relaciones de los alumnos con las asignaturas usando {@link Faker} y los
- * guarda a traves de {@link AlumnoAsignaturaService}. Solo se ejecuta si no hay alumnos y asignaturas
- * en la base de datos.</p>
+ * <p>
+ * Recorre todos los alumnos y los matricula en las asignaturas de su curso a
+ * traves de {@link AlumnoAsignaturaService}. Solo crea la matricula si no
+ * existe ya.</p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
- * @see AlumnoAsignatura
+ * @see AlumnoAsignaturaService
  */
 @Component
 public class Alumnoasignaturainitializater {
@@ -41,10 +40,15 @@ public class Alumnoasignaturainitializater {
     @Autowired
     private AlumnoAsignaturaRepository alumnoAsignaturaRepository;
 
+    // ============================================================
+    // METODOS PUBLICOS
+    // ============================================================
     /**
-     * Inicializa las erlaciones entre los alumnos y las asignaturas si la base de datos esta vacia 
-     * 
-     * 
+     * Inicializa las relaciones entre los alumnos y las asignaturas.
+     *
+     * <p>
+     * Para cada alumno busca las asignaturas de su curso y crea la matricula si
+     * no existe ya.</p>
      */
     public void iniciarAlumnoAsignaturas() {
         List<Alumno> alumnos = alumnoRepository.findAll();
