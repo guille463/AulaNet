@@ -11,3 +11,9 @@ export const ESPECIALIDADES = [
     { valor: "RELIGION", etiqueta: "Religión" }
 ];
 
+export const REGEX = {
+    EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    SOLO_LETRAS: /^[a-zA-ZÀ-ÿ\s]+$/,
+    SOLO_NUMEROS: /^\d+$/
+};
+
