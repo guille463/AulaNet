@@ -83,4 +83,74 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   }
+
+  
+  export async function generarNotasAlumno(alumno) {
+
+  
+  const id  = alumno.id;
+
+  const respuestaMatriculas = await AlumnoAsignaturaAPI.obtenerPorAlumno(id);
+  const matriculas = respuestaMatriculas.datos;
+
+  let filas = "";
+
+  if (matriculas && matriculas.length > 0) {
+
+    for (const matricula of matriculas) {
+
+      filas += `
+        <tr>
+          <td>${matricula.asignatura.nombre}</td>
+          <td>${matricula.nota}</td>
+        </tr>
+      `;
+    }
+  }
+
+  return `
+    <h1>Detalle del Alumno</h1>
+
+    <div class="card--detalle">
+      <div class="card--detalle--body">
+
+        <h2>${alumno.codigo}</h2>
+
+        <hr>
+
+        <p><strong>Nombre:</strong> ${alumno.nombre} ${alumno.apellido}</p>
+
+        <p><strong>Fecha de Nacimiento:</strong> ${alumno.fechaNacimiento}</p>
+
+        <p><strong>Curso:</strong> ${aula.curso}</p>
+
+        <p><strong>Grupo:</strong> ${aula.grupo}</p>
+
+        <p><strong>Aula:</strong> ${aula.codigo}</p>
+
+        <p><strong>Tutor:</strong>
+          ${aula.tutor
+            ? aula.tutor.nombre + " " + aula.tutor.apellido
+            : "Sin tutor"}
+        </p>
+
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Asignatura</th>
+          <th>Nota</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        ${filas}
+      </tbody>
+    </table>
+  `;
+}
+
 });
+
