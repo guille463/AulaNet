@@ -3,6 +3,7 @@ import { AlumnoAPI } from "../api/alumnoApi.js";
 import { ProfesorAsignaturaAPI } from "../api/profesorAsignaturaApi.js";
 import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
+import { REGEX } from "../utils/constantes.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -11,12 +12,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    const respuestaAula = await AulaAPI.obtenerPorId(id);
-    const aula = respuestaAula.datos;
-
-    if (!aula) {
+    if (!id || !REGEX.SOLO_NUMEROS.test(id)) {
         root.innerHTML = `<p class="error">Aula no encontrada</p>`;
     } else {
+        const respuestaAula = await AulaAPI.obtenerPorId(id);
+        const aula = respuestaAula.datos;
+
+        if (!aula) {
+            root.innerHTML = `<p class="error">Aula no encontrada</p>`;
+        } else {
         const respuestaAlumnos = await AlumnoAPI.obtenerPorAula(id);
         const alumnos = respuestaAlumnos.datos;
         const totalAlumnos = alumnos ? alumnos.length : 0;
@@ -121,9 +125,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (resultado.datos) {
         window.location.reload();
     } else {
-        const errorAula = JSON.parse(resultado.error);
         const mensajeTutor = document.getElementById("mensajeTutor");
-        mensajeTutor.textContent = errorAula.mensaje;
+        mensajeTutor.textContent = resultado.error.mensaje;
         mensajeTutor.className = "mensaje--error";
     }
 });
@@ -138,5 +141,6 @@ document.getElementById("btnEliminarTutor").addEventListener("click", async func
         mensajeTutor.className = "mensaje--error";
     }
 });
+        }
     }
 });

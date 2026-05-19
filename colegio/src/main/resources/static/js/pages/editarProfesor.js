@@ -1,6 +1,7 @@
 import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
-import { ESPECIALIDADES, CURSOS, GRUPOS } from "../utils/constantes.js";
+import { REGEX } from "../utils/constantes.js";
+import { ESPECIALIDADES, CURSOS, GRUPOS, REGEX } from "../utils/constantes.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    if (!id) {
+    if (!id || !REGEX.SOLO_NUMEROS.test(id)) {
         root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
     } else {
         const respuestaProfesor = await ProfesorAPI.obtenerPorId(id);
@@ -85,14 +86,28 @@ document.addEventListener("DOMContentLoaded", async () => {
                     profesor.codigoAula = null;
                 }
 
-                const resultadoActualizar = await ProfesorAPI.actualizar(id, profesor);
+                if (!profesor.nombre || !profesor.apellido || !profesor.email) {
+                    mensaje.textContent = "Todos los campos son obligatorios";
+                    mensaje.className = "mensaje--error";
+                } else if (!REGEX.SOLO_LETRAS.test(profesor.nombre)) {
+                    mensaje.textContent = "El nombre solo puede contener letras";
+                    mensaje.className = "mensaje--error";
+                } else if (!REGEX.SOLO_LETRAS.test(profesor.apellido)) {
+                    mensaje.textContent = "El apellido solo puede contener letras";
+                    mensaje.className = "mensaje--error";
+                } else if (!REGEX.EMAIL.test(profesor.email)) {
+                    mensaje.textContent = "El formato del email no es válido";
+                    mensaje.className = "mensaje--error";
+                } else {
+                    const resultadoActualizar = await ProfesorAPI.actualizar(id, profesor);
 
-               if (resultadoActualizar.datos) {
-    window.location.href = "profesorMenu.html";
-} else {
-    mensaje.textContent = "Error al actualizar el profesor";
-    mensaje.className = "mensaje--error";
-}
+                    if (resultadoActualizar.datos) {
+                        window.location.href = "menuProfesor.html";
+                    } else {
+                        mensaje.textContent = resultadoActualizar.error.mensaje;
+                        mensaje.className = "mensaje--error";
+                    }
+                }
             });
         }
     }
