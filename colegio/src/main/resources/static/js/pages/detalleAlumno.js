@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <tr>
             <td><a href="detalleAsignatura.html?id=${matricula.asignatura.id}">${matricula.asignatura.nombre}</a></td>
               <td id="notaActual-${matricula.id}">${matricula.nota}</td>
-              <td>
+              <td class="cambiarNotas">
                   <input type="number" id="nota-${matricula.id}" value="${matricula.nota}" min="0" max="10" step="0.1">
                   <button class="btnEditarNota" data-id="${matricula.id}">Guardar</button>
               </td>
@@ -57,13 +57,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                   <tr>
                       <th>Asignatura</th>
                       <th>Nota actual</th>
-                      <th>Editar nota</th>
+                      <th class="editarNota">Editar nota</th>
                   </tr>
               </thead>
               <tbody>${asignaturasHtml}</tbody>
           </table>
+          <button class="imprimir">Imprimir boletin</button>
           <p id="mensaje"></p>
-          <a href="menuAlumno.html">Volver</a>
+          <a href="menuAlumno.html" class="volver">Volver</a>
       </div>
     `;
 
@@ -84,73 +85,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  
-  export async function generarNotasAlumno(alumno) {
-
-  
-  const id  = alumno.id;
-
-  const respuestaMatriculas = await AlumnoAsignaturaAPI.obtenerPorAlumno(id);
-  const matriculas = respuestaMatriculas.datos;
-
-  let filas = "";
-
-  if (matriculas && matriculas.length > 0) {
-
-    for (const matricula of matriculas) {
-
-      filas += `
-        <tr>
-          <td>${matricula.asignatura.nombre}</td>
-          <td>${matricula.nota}</td>
-        </tr>
-      `;
-    }
-  }
-
-  return `
-    <h1>Detalle del Alumno</h1>
-
-    <div class="card--detalle">
-      <div class="card--detalle--body">
-
-        <h2>${alumno.codigo}</h2>
-
-        <hr>
-
-        <p><strong>Nombre:</strong> ${alumno.nombre} ${alumno.apellido}</p>
-
-        <p><strong>Fecha de Nacimiento:</strong> ${alumno.fechaNacimiento}</p>
-
-        <p><strong>Curso:</strong> ${aula.curso}</p>
-
-        <p><strong>Grupo:</strong> ${aula.grupo}</p>
-
-        <p><strong>Aula:</strong> ${aula.codigo}</p>
-
-        <p><strong>Tutor:</strong>
-          ${aula.tutor
-            ? aula.tutor.nombre + " " + aula.tutor.apellido
-            : "Sin tutor"}
-        </p>
-
-      </div>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Asignatura</th>
-          <th>Nota</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        ${filas}
-      </tbody>
-    </table>
-  `;
-}
+  document.querySelector(".imprimir").addEventListener("click", function(){
+    window.print(); 
+});
 
 });
+
 

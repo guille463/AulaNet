@@ -79,13 +79,36 @@
 
 /* <a> volver */
 
-.containerDetalle > div > a {
+.containerDetalle>div>a {
     display: inline-block;
     font-size: 0.875rem;
     color: #64748b;
     margin-top: 1rem;
 }
 
-.containerDetalle > div > a:hover {
+.containerDetalle>div>a:hover {
     color: #1a3a5c;
+}
+
+@media print {
+
+    .imprimir,
+    .cambiarNotas,
+    .navbar,
+    .editarNota,
+    .volver {
+        display: none !important;
+    }
+
+    .containerDetalle {
+        display: block !important;
+        width: 100%;
+        height: 100%;
+        zoom: 90%;
+    }
+
+    h1{
+        font-size: 2rem;
+    }
+
 }
