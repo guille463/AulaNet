@@ -1,7 +1,7 @@
 import { AlumnoAPI } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
-import { CURSOS, GRUPOS } from "../utils/constantes.js";
+import { CURSOS, GRUPOS, REGEX } from "../utils/constantes.js";
 
 //VARIABLES
 let idAEliminar = null;
@@ -148,22 +148,28 @@ async function cargarTodos() {
 async function buscarPorId(id) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
-  if (id) {
+  if (!id) {
+    resultado.innerHTML = `<p class="mensaje--error">Introduce un ID</p>`;
+  } else if (!REGEX.SOLO_NUMEROS.test(id)) {
+    resultado.innerHTML = `<p class="mensaje--error">El ID solo puede contener números</p>`;
+  } else {
     const respuesta = await AlumnoAPI.obtenerPorId(id);
     if (respuesta.datos) {
       resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
     } else {
       resultado.innerHTML = `<p class="mensaje--error">Alumno con id: ${id} no encontrado</p>`;
     }
-  } else {
-    resultado.innerHTML = `<p class="mensaje--error">Introduce un ID</p>`;
   }
 }
 
 async function buscarPorNombre(nombre) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
-  if (nombre) {
+  if (!nombre) {
+    resultado.innerHTML = `<p class="mensaje--error">Introduce un nombre</p>`;
+  } else if (!REGEX.SOLO_LETRAS.test(nombre)) {
+    resultado.innerHTML = `<p class="mensaje--error">El nombre solo puede contener letras</p>`;
+  } else {
     const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
     if (respuesta.datos && respuesta.datos.length > 0) {
       let html = "";
@@ -174,8 +180,6 @@ async function buscarPorNombre(nombre) {
     } else {
       resultado.innerHTML = `<p class="mensaje--error">No se encontraron alumnos con nombre: ${nombre}</p>`;
     }
-  } else {
-    resultado.innerHTML = `<p class="mensaje--error">Introduce un nombre</p>`;
   }
 }
 

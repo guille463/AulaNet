@@ -1,7 +1,7 @@
 import { AlumnoAPI } from "../api/alumnoApi.js";
 import { AulaAPI } from "../api/aulaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
-import { CURSOS, GRUPOS } from "../utils/constantes.js";
+import { CURSOS, GRUPOS, REGEX } from "../utils/constantes.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -57,25 +57,47 @@ document.addEventListener("DOMContentLoaded", async () => {
             const grupo = document.getElementById("inputGrupo").value;
             const mensaje = document.getElementById("mensaje");
 
-            const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
+            const nombre = document.getElementById("inputNombre").value.trim();
+            const apellido = document.getElementById("inputApellido").value.trim();
+            const fecha = document.getElementById("inputFecha").value;
 
-            if (!respuestaAula.datos) {
-                mensaje.textContent = "Aula no encontrada";
+            const anioActual = new Date().getFullYear();
+            const fechaMin = `${anioActual - 14}-01-01`;
+            const fechaMax = `${anioActual - 5}-12-31`;
+
+            if (!nombre || !apellido || !fecha) {
+                mensaje.textContent = "Todos los campos son obligatorios";
+                mensaje.className = "mensaje--error";
+            } else if (fecha < fechaMin || fecha > fechaMax) {
+                mensaje.textContent = "La fecha de nacimiento debe estar entre " + fechaMin + " y " + fechaMax;
+                mensaje.className = "mensaje--error";
+            } else if (!REGEX.SOLO_LETRAS.test(nombre)) {
+                mensaje.textContent = "El nombre solo puede contener letras";
+                mensaje.className = "mensaje--error";
+            } else if (!REGEX.SOLO_LETRAS.test(apellido)) {
+                mensaje.textContent = "El apellido solo puede contener letras";
                 mensaje.className = "mensaje--error";
             } else {
-                alumno.nombre = document.getElementById("inputNombre").value.trim();
-                alumno.apellido = document.getElementById("inputApellido").value.trim();
-                alumno.fechaNacimiento = document.getElementById("inputFecha").value;
-                alumno.aula = {};
-                alumno.aula.id = respuestaAula.datos.id;
+                const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
 
-                const resultado = await AlumnoAPI.actualizar(id, alumno);
-
-                if (resultado.datos) {
-                    window.location.href = "alumnoMenu.html";
-                } else {
-                    mensaje.textContent = "Error al actualizar el alumno";
+                if (!respuestaAula.datos) {
+                    mensaje.textContent = "Aula no encontrada";
                     mensaje.className = "mensaje--error";
+                } else {
+                    alumno.nombre = nombre;
+                    alumno.apellido = apellido;
+                    alumno.fechaNacimiento = fecha;
+                    alumno.aula = {};
+                    alumno.aula.id = respuestaAula.datos.id;
+
+                    const resultado = await AlumnoAPI.actualizar(id, alumno);
+
+                    if (resultado.datos) {
+                        window.location.href = "alumnoMenu.html";
+                    } else {
+                        mensaje.textContent = resultado.error.mensaje;
+                        mensaje.className = "mensaje--error";
+                    }
                 }
             }
         });
