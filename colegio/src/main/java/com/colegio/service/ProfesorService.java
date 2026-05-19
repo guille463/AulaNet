@@ -20,8 +20,15 @@ import com.colegio.util.Constantes;
 /**
  * Servicio que gestiona la logica de negocio de los profesores.
  *
+ * <p>
+ * Coordina la creacion, consulta, actualizacion y borrado de {@link Profesor}.
+ * Al guardar asigna automaticamente las asignaturas segun la especialidad y, si
+ * es {@link Especialidad#GENERAL}, lo asigna como tutor del aula indicada.</p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 4.0
+ * @see Profesor
+ * @see ProfesorAsignatura
  */
 @Service
 public class ProfesorService {
@@ -41,28 +48,73 @@ public class ProfesorService {
     // ============================================================
     // METODOS CRUD
     // ============================================================
+    /**
+     * Devuelve todos los profesores registrados.
+     *
+     * @return lista de profesores
+     */
     public List<Profesor> listarProfesores() {
         return profesorRepository.findAll();
     }
 
+    /**
+     * Devuelve el profesor con el id indicado.
+     *
+     * @param id id del profesor
+     * @return profesor encontrado
+     * @throws RuntimeException si no existe un profesor con ese id
+     */
     public Profesor buscarProfesorPorId(Long id) {
         return profesorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Profesor con id " + id + " no encontrado"));
     }
 
+    /**
+     * Devuelve el profesor con el email indicado.
+     *
+     * @param email email del profesor
+     * @return profesor encontrado
+     * @throws RuntimeException si no existe un profesor con ese email
+     */
     public Profesor buscarProfesorPorEmail(String email) {
         return profesorRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Profesor con email " + email + " no encontrado"));
     }
 
+    /**
+     * Devuelve los profesores cuyo nombre contiene la cadena indicada, sin
+     * distinguir mayusculas.
+     *
+     * @param nombre fragmento del nombre a buscar
+     * @return lista de profesores que coinciden
+     */
     public List<Profesor> buscarPorNombre(String nombre) {
         return profesorRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
+    /**
+     * Devuelve los profesores con la especialidad indicada.
+     *
+     * @param especialidad especialidad por la que filtrar
+     * @return lista de profesores con esa especialidad
+     */
     public List<Profesor> buscarPorEspecialidad(Especialidad especialidad) {
         return profesorRepository.findByEspecialidad(especialidad);
     }
 
+    /**
+     * Guarda un nuevo profesor asignandole asignaturas segun su especialidad.
+     *
+     * <p>
+     * {@code PROF-<id>}. Si la especialidad es {@link Especialidad#GENERAL} y
+     * se indica un codigo de aula, el profesor se asigna como tutor de esa
+     * aula.</p>
+     *
+     * @param profesor datos del profesor a guardar
+     * @return profesor guardado con codigo y asignaturas asignadas
+     * @throws RuntimeException si ya existe un profesor con ese email o si el
+     * aula indicada no existe
+     */
     public Profesor guardarProfesor(Profesor profesor) {
         if (profesorRepository.existsByEmail(profesor.getEmail())) {
             throw new RuntimeException("Ya existe un profesor con el email: " + profesor.getEmail());
@@ -88,6 +140,19 @@ public class ProfesorService {
         return guardado;
     }
 
+    /**
+     * Actualiza los datos de un profesor existente.
+     *
+     * <p>
+     * Si cambia la especialidad o el aula, se eliminan las asignaturas
+     * anteriores y se reasignan segun los nuevos datos.</p>
+     *
+     * @param id id del profesor a actualizar
+     * @param profesor nuevos datos del profesor
+     * @return profesor actualizado
+     * @throws RuntimeException si el profesor no existe o si el nuevo email ya
+     * esta en uso
+     */
     public Profesor actualizarProfesor(Long id, Profesor profesor) {
         Profesor existente = buscarProfesorPorId(id);
 
@@ -123,6 +188,12 @@ public class ProfesorService {
         return profesorRepository.save(existente);
     }
 
+    /**
+     * Borra el profesor y todas sus relaciones con asignaturas.
+     *
+     * @param id id del profesor a borrar
+     * @throws RuntimeException si el profesor no existe
+     */
     public void borrarProfesor(Long id) {
         buscarProfesorPorId(id);
         profesorAsignaturaRepository.deleteAll(profesorAsignaturaRepository.findByProfesorId(id));
@@ -132,6 +203,15 @@ public class ProfesorService {
     // ============================================================
     // METODOS PRIVADOS
     // ============================================================
+    /**
+     * Asigna al profesor las asignaturas correspondientes a su especialidad.
+     *
+     * <p>
+     * Para {@link Especialidad#GENERAL} filtra ademas por el curso del aula
+     * indicada. Solo crea la relacion si no existe ya.</p>
+     *
+     * @param profesor profesor al que asignar las asignaturas
+     */
     private void asignarAsignaturas(Profesor profesor) {
         List<String> nombresAsignaturas = new ArrayList<>();
 
