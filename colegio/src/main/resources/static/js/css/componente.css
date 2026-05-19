@@ -69,12 +69,13 @@ button {
 
 /* <button id="btnBuscar"> */
 
-#btnBuscar {
+#btnBuscar, #btnImprimir {
     background-color: #4a90d9;
     color: #ffffff;
 }
 
-#btnBuscar:hover {
+
+#btnBuscar, #btnImprimir:hover {
     background-color: #3478c0;
 }
 

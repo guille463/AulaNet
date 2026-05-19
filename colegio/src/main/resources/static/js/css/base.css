@@ -87,6 +87,15 @@ strong {
     font-weight: 600;
 }
 
+/*MAPA*/
+
+.mapa{
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    margin-left: 35%;
+}
+
 /* =============================================
    MENSAJES DE ESTADO
    ============================================= */
@@ -119,38 +128,53 @@ strong {
 
 /*FOOTER*/
 .footer {
-  background-color: #1a3844;
-  padding: 3rem 0;
-  text-align: center;
-  border-top: 2px solid #000000;
-  margin-top: auto;
+    background-color: #1a3844;
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 2px solid #000000;
+    margin-top: auto;
 }
 
-.footer h3, p{
+.footer h3,
+p {
     color: #e2e8f0;
 }
 
-.footer__contenido{
+.footer__contenido {
     display: flex;
     justify-content: space-between;
 }
 
-.footer__info{
+.footer__info {
     display: flex;
+    font-size: 25px;
     flex-direction: column;
-    gap: 1rem; 
-    margin-left: 1rem;
+    gap: 1rem;
+    margin-left: 10rem;
 }
 
-.footer__contacto{
+.footer__contacto {
     display: flex;
+    font-size: 25px;
     flex-direction: column;
-    gap: 1rem; 
-    margin-right: 1rem;
+    gap: 1rem;
+    margin-right: 10rem;
 }
 
-.footer__copy{
+.footer__copy {
     margin-top: 3rem;
 }
 
+.iconoInsta{
+    width: 2.5rem; ;
+}
 
+.instagram{
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; 
+}
+
+.nombreRS{
+    margin-top: 0.6rem;
+}
