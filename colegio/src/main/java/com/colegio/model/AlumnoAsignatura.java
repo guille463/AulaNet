@@ -16,8 +16,8 @@ import jakarta.persistence.Transient;
  *
  * <p>
  * Actua como clase de asociacion entre {@link Alumno} y {@link Asignatura}.
- * Almacena la nota obtenida con prefijo {@code MTR-}. Se crea automaticamente
- * al guardar un alumno.</p>
+ * Almacena la nota obtenida y se identifica con un codigo de prefijo
+ * {@code MTR-}. Se crea automaticamente al guardar un alumno.</p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
@@ -95,8 +95,7 @@ public class AlumnoAsignatura {
     /**
      * Devuelve el codigo con prefijo {@code MTR-}.
      *
-     * @return codigo de la matricula, o {@code null} si aun no ha sido
-     * persistida
+     * @return codigo de la matricula, o {@code null}
      */
     public String getCodigo() {
         return codigo;

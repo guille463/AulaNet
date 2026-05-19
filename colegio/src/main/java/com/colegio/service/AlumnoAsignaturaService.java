@@ -14,14 +14,16 @@ import com.colegio.repository.AsignaturaRepository;
 import com.colegio.util.Constantes;
 
 /**
- * Servicio que gestiona la logica de negocio de las relaciones
- * alumno-asignatura.
- *<p>
- * Busqueda, consulta, actualizacion de {@link AlumnoSiganatura}. 
- * </p>
- * 
+ * Servicio que gestiona la logica de negocio de las matriculas.
+ *
+ * <p>
+ * Creacion, consulta, actualizacion y borrado de {@link AlumnoAsignatura}. Al
+ * guardar valida que el alumno y la asignatura pertenezcan al mismo curso y que
+ * la nota sea valida.</p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
+ * @see AlumnoAsignatura
  */
 @Service
 public class AlumnoAsignaturaService {
@@ -39,20 +41,20 @@ public class AlumnoAsignaturaService {
     // METODOS CRUD
     // ============================================================
     /**
-     * Devuelve la lista completa de relaciones alumno-asignatura.
-     * 
-     * @return lista de la lista de las asignaturas del alumno
+     * Devuelve todas las matriculas registradas.
+     *
+     * @return lista de matriculas
      */
     public List<AlumnoAsignatura> listar() {
         return alumnoAsignaturaRepository.findAll();
     }
 
     /**
-     * Busca una relacion alumno-asignatura por su identificador.
-     * 
-     * @param id id del alumno
-     * @return alumno encontrado
-     * @throws RuntimeException si no existe un alumno con ese id 
+     * Devuelve la matricula con el id indicado.
+     *
+     * @param id id de la matricula
+     * @return matricula encontrada
+     * @throws RuntimeException si no existe una matricula con ese id
      */
     public AlumnoAsignatura buscarPorId(Long id) {
         return alumnoAsignaturaRepository.findById(id)
@@ -60,30 +62,36 @@ public class AlumnoAsignaturaService {
     }
 
     /**
-     * Devuelve las asignaturas de un alumno concreto.
+     * Devuelve las matriculas del alumno con el id indicado.
+     *
      * @param alumnoId id del alumno
-     * @return las asignaturas del alumno encontrado
+     * @return lista de matriculas del alumno
      */
     public List<AlumnoAsignatura> buscarPorAlumno(Long alumnoId) {
         return alumnoAsignaturaRepository.findByAlumnoId(alumnoId);
     }
 
     /**
-     * Devuelve los alumnos de una asignatura concreta.
-     * @param id de la asignatura
-     *@return los alumnos matriculados a la asignatura encontrada
+     * Devuelve las matriculas de la asignatura con el id indicado.
+     *
+     * @param asignaturaId id de la asignatura
+     * @return lista de matriculas de la asignatura
      */
     public List<AlumnoAsignatura> buscarPorAsignatura(Long asignaturaId) {
         return alumnoAsignaturaRepository.findByAsignaturaId(asignaturaId);
     }
 
     /**
-     * Guarda una nueva relacion alumno-asignatura
-     * @param alumnoAsignatura el alumno que queremos matricular
-     * @return la matricula guardada
-     * @throws RuntimeException si el alumono, no ha sido encontrado, si la asignatura no ha sido encontrada,
-     * si el alumno ya estaba matriculado en la asignatura o si el curso del alumno o la asignautra no 
-     * coincide con el curso de la asignatura a la que se quiere matricular 
+     * Guarda una nueva matricula verificando curso, duplicados y nota.
+     *
+     * <p>
+     * Tras la primera persistencia asigna el codigo {@code MTR-<id>}.</p>
+     *
+     * @param alumnoAsignatura datos de la matricula a guardar
+     * @return matricula guardada con codigo asignado
+     * @throws RuntimeException si el alumno o la asignatura no existen, si el
+     * alumno ya esta matriculado, si el curso del alumno no coincide con el de
+     * la asignatura, o si la nota no esta entre 0 y 10
      */
     public AlumnoAsignatura guardar(AlumnoAsignatura alumnoAsignatura) {
         Alumno alumno = alumnoRepository.findById(alumnoAsignatura.getAlumno().getId())
@@ -112,10 +120,12 @@ public class AlumnoAsignaturaService {
     }
 
     /**
-     * Actualiza la nota de una relacion alumno-asignatura existente.
-     * @param id id del alumno
-     * @param alumnoAsignatura la asignatura del alumno 
-     * @return la nota actualizda de la asignatura del alumno 
+     * Actualiza la nota de una matricula existente.
+     *
+     * @param id id de la matricula a actualizar
+     * @param alumnoAsignatura nuevos datos de la matricula
+     * @return matricula con la nota actualizada
+     * @throws RuntimeException si la matricula no existe o la nota no es valida
      */
     public AlumnoAsignatura actualizar(Long id, AlumnoAsignatura alumnoAsignatura) {
         AlumnoAsignatura existente = buscarPorId(id);
@@ -125,8 +135,10 @@ public class AlumnoAsignaturaService {
     }
 
     /**
-     * Elimina una relacion alumno-asignatura por su identificador.
-     * @param id del alumno
+     * Borra la matricula con el id indicado.
+     *
+     * @param id id de la matricula a borrar
+     * @throws RuntimeException si la matricula no existe
      */
     public void borrar(Long id) {
         buscarPorId(id);
@@ -136,6 +148,12 @@ public class AlumnoAsignaturaService {
     // ============================================================
     // METODOS PRIVADOS
     // ============================================================
+    /**
+     * Valida que la nota este en el rango permitido.
+     *
+     * @param nota nota a validar
+     * @throws RuntimeException si la nota no esta entre 0 y 10
+     */
     private void validarNota(double nota) {
         if (nota < 0 || nota > 10) {
             throw new RuntimeException("La nota debe estar entre 0 y 10");

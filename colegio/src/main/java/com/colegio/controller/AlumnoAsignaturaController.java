@@ -16,10 +16,11 @@ import com.colegio.model.AlumnoAsignatura;
 import com.colegio.service.AlumnoAsignaturaService;
 
 /**
- * Controlador REST para la gestion de relaciones alumno-asignatura.
+ * Controlador REST para la gestion de matriculas.
+ *
  * <p>
- * Endpoints {@code /api/v1/alumno-asignatura} y delega toda la logica de negocio en
- * {@link AlumnoAsignaturaService}.</p>
+ * Endpoints{@code /api/v1/alumno-asignatura} y delega toda la logica de negocio
+ * en {@link AlumnoAsignaturaService}.</p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
@@ -36,9 +37,9 @@ public class AlumnoAsignaturaController {
     // ENDPOINTS
     // ============================================================
     /**
-     * Devuelve la lista completa de relaciones alumno-asignatura.
-     * 
-     * @return la lista completa de las asignaturas del alumno
+     * Devuelve todas las matriculas registradas.
+     *
+     * @return lista de matriculas
      */
     @GetMapping
     public List<AlumnoAsignatura> listar() {
@@ -46,9 +47,10 @@ public class AlumnoAsignaturaController {
     }
 
     /**
-     * Devuelve una relacion alumno-asignatura por su identificador.
-     * @param id id del alumno
-     * @return las asignatura del alumno buscado
+     * Devuelve la matricula con el id indicado.
+     *
+     * @param id id de la matricula
+     * @return matricula encontrada
      */
     @GetMapping("/{id}")
     public AlumnoAsignatura obtenerPorId(@PathVariable Long id) {
@@ -56,9 +58,10 @@ public class AlumnoAsignaturaController {
     }
 
     /**
-     * Devuelve todas las asignaturas de un alumno concreto.
+     * Devuelve las matriculas del alumno con el id indicado.
+     *
      * @param alumnoId id del alumno
-     * @return las asignaturas en las que esta matriculado el alumno
+     * @return lista de matriculas del alumno
      */
     @GetMapping("/alumno/{alumnoId}")
     public List<AlumnoAsignatura> obtenerPorAlumno(@PathVariable Long alumnoId) {
@@ -66,9 +69,10 @@ public class AlumnoAsignaturaController {
     }
 
     /**
-     * Devuelve todos los alumnos de una asignatura concreta.
-     * @param asignaturaId  id de la asignatura que vamos a 
-     * @return lista de alumnos que estan matriculados en esa asignatura
+     * Devuelve las matriculas de la asignatura con el id indicado.
+     *
+     * @param asignaturaId id de la asignatura
+     * @return lista de matriculas de la asignatura
      */
     @GetMapping("/asignatura/{asignaturaId}")
     public List<AlumnoAsignatura> obtenerPorAsignatura(@PathVariable Long asignaturaId) {
@@ -76,9 +80,10 @@ public class AlumnoAsignaturaController {
     }
 
     /**
-     * Crea una nueva relacion entre un alumno y una asignatura.
-     * @param alumnoAsignatura relacion entre alumno y asignatura
-     * @return la nueva relacion entre el alumno y l asignatura guardado
+     * Guarda una nueva matricula.
+     *
+     * @param alumnoAsignatura datos de la matricula a guardar
+     * @return matricula guardada con codigo asignado
      */
     @PostMapping
     public AlumnoAsignatura guardar(@RequestBody AlumnoAsignatura alumnoAsignatura) {
@@ -86,9 +91,11 @@ public class AlumnoAsignaturaController {
     }
 
     /**
-     * Actualiza la nota de una relacion alumno-asignatura existente.
-     * @param id el id de la asignatura que se va a actualizar
-     * @param alumnoAsignatura la relacion entre alumno y la asignatura
+     * Actualiza la nota de una matricula existente.
+     *
+     * @param id id de la matricula a actualizar
+     * @param alumnoAsignatura nuevos datos de la matricula
+     * @return matricula con la nota actualizada
      */
     @PutMapping("/{id}")
     public AlumnoAsignatura actualizar(@PathVariable Long id,
@@ -97,9 +104,9 @@ public class AlumnoAsignaturaController {
     }
 
     /**
-     * Elimina una relacion alumno-asignatura por su identificador.
-     * @param id 
-     * @return elimina el registro de la relacion entre alumno y la asignatura (matricula)
+     * Borra la matricula con el id indicado.
+     *
+     * @param id id de la matricula a borrar
      */
     @DeleteMapping("/{id}")
     public void borrar(@PathVariable Long id) {
