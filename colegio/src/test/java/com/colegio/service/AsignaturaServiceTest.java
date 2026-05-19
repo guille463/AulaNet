@@ -26,8 +26,13 @@ import com.colegio.repository.AsignaturaRepository;
 /**
  * Pruebas unitarias del servicio {@link AsignaturaService}.
  *
+ * <p>
+ * Usa Mockito para aislar el servicio de sus dependencias. Cubre los casos
+ * principales de listado, busqueda, guardado, actualizacion y borrado.</p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
+ * @see AsignaturaService
  */
 @ExtendWith(MockitoExtension.class)
 class AsignaturaServiceTest {
@@ -38,14 +43,29 @@ class AsignaturaServiceTest {
     @InjectMocks
     private AsignaturaService asignaturaService;
 
+    /**
+     * Asignatura de prueba reutilizada en todos los tests.
+     */
     private Asignatura asignatura;
 
+    // ============================================================
+    // CONFIGURACION
+    // ============================================================
+    /**
+     * Inicializa los objetos de prueba antes de cada test.
+     */
     @BeforeEach
     void setUp() {
         asignatura = new Asignatura("Matematicas", Curso.PRIMERO, 4, "Aritmetica basica");
         asignatura.setCodigo("ASG-1");
     }
 
+    // ============================================================
+    // TESTS
+    // ============================================================
+    /**
+     * Verifica que {@code listarAsignaturas} devuelve la lista completa.
+     */
     @Test
     @DisplayName("listarAsignaturas devuelve lista correcta")
     void listarAsignaturas_devuelveListaCorrecta() {
@@ -57,6 +77,10 @@ class AsignaturaServiceTest {
         assertEquals("Matematicas", resultado.get(0).getNombre());
     }
 
+    /**
+     * Verifica que {@code buscarAsignaturaPorId} devuelve la asignatura
+     * correcta cuando existe.
+     */
     @Test
     @DisplayName("buscarAsignaturaPorId devuelve la asignatura correcta")
     void buscarAsignaturaPorId_devuelveAsignaturaCorrecta() {
@@ -68,6 +92,10 @@ class AsignaturaServiceTest {
         assertEquals("Matematicas", resultado.getNombre());
     }
 
+    /**
+     * Verifica que {@code buscarAsignaturaPorId} lanza {@link RuntimeException}
+     * cuando la asignatura no existe.
+     */
     @Test
     @DisplayName("buscarAsignaturaPorId lanza excepcion si no existe")
     void buscarAsignaturaPorId_lanzaExcepcionSiNoExiste() {
@@ -78,6 +106,10 @@ class AsignaturaServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code buscarAsignaturasPorCurso} devuelve las asignaturas
+     * del curso indicado.
+     */
     @Test
     @DisplayName("buscarAsignaturasPorCurso devuelve lista correcta")
     void buscarAsignaturasPorCurso_devuelveListaCorrecta() {
@@ -89,6 +121,10 @@ class AsignaturaServiceTest {
         assertEquals(Curso.PRIMERO, resultado.get(0).getCurso());
     }
 
+    /**
+     * Verifica que {@code guardarAsignatura} lanza {@link RuntimeException}
+     * cuando ya existe una asignatura con el mismo nombre y curso.
+     */
     @Test
     @DisplayName("guardarAsignatura lanza excepcion si nombre y curso duplicados")
     void guardarAsignatura_lanzaExcepcionSiNombreYCursoDuplicados() {
@@ -100,6 +136,10 @@ class AsignaturaServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code guardarAsignatura} lanza {@link RuntimeException}
+     * cuando las horas semanales estan fuera del rango permitido.
+     */
     @Test
     @DisplayName("guardarAsignatura lanza excepcion si horas semanales invalidas")
     void guardarAsignatura_lanzaExcepcionSiHorasInvalidas() {
@@ -112,6 +152,10 @@ class AsignaturaServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code guardarAsignatura} invoca {@code save} dos veces para
+     * asignar el codigo.
+     */
     @Test
     @DisplayName("guardarAsignatura llama a save dos veces para asignar codigo")
     void guardarAsignatura_llamaSaveDosVeces() {
@@ -124,6 +168,10 @@ class AsignaturaServiceTest {
         verify(asignaturaRepository, times(2)).save(any(Asignatura.class));
     }
 
+    /**
+     * Verifica que {@code actualizarAsignatura} lanza {@link RuntimeException}
+     * cuando las horas semanales estan fuera del rango permitido.
+     */
     @Test
     @DisplayName("actualizarAsignatura lanza excepcion si horas semanales invalidas")
     void actualizarAsignatura_lanzaExcepcionSiHorasInvalidas() {
@@ -135,6 +183,10 @@ class AsignaturaServiceTest {
         });
     }
 
+    /**
+     * Verifica que {@code borrarAsignatura} invoca {@code deleteById}
+     * exactamente una vez.
+     */
     @Test
     @DisplayName("borrarAsignatura llama a deleteById una vez")
     void borrarAsignatura_llamaDeleteById() {
