@@ -1,22 +1,22 @@
 import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
-import { ESPECIALIDADES, CURSOS, GRUPOS } from "../utils/constantes.js";
+import { ESPECIALIDADES, CURSOS, GRUPOS, REGEX } from "../utils/constantes.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
     const root = document.getElementById("root");
 
-    let opcionesEspecialidad = "";
+    let opcionesEspecialidad = `<option value="">-- Selecciona especialidad --</option>`;
     for (const especialidad of ESPECIALIDADES) {
         opcionesEspecialidad += `<option value="${especialidad.valor}">${especialidad.etiqueta}</option>`;
     }
 
-    let opcionesCurso = "";
+    let opcionesCurso = `<option value="">-- Selecciona curso --</option>`;
     for (const curso of CURSOS) {
         opcionesCurso += `<option value="${curso}">${curso}</option>`;
     }
 
-    let opcionesGrupo = "";
+    let opcionesGrupo = `<option value="">-- Selecciona grupo --</option>`;
     for (const grupo of GRUPOS) {
         opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
     }
@@ -26,12 +26,18 @@ document.addEventListener("DOMContentLoaded", async () => {
             <h1>Crear Profesor</h1>
             <div class="card">
                 <div class="card-body">
-                    <input type="text" id="inputNombre" placeholder="Nombre">
-                    <input type="text" id="inputApellido" placeholder="Apellido">
-                    <input type="text" id="inputEmail" placeholder="Email">
+                    <label for="inputNombre">Nombre</label>
+                    <input type="text" id="inputNombre" placeholder="Ej: Carlos">
+                    <label for="inputApellido">Apellido</label>
+                    <input type="text" id="inputApellido" placeholder="Ej: Martínez Ruiz">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" id="inputEmail" placeholder="Ej: carlos.martinez@colegio.es">
+                    <label for="inputEspecialidad">Especialidad</label>
                     <select id="inputEspecialidad">${opcionesEspecialidad}</select>
-                    <div id="selectAula">
+                    <div id="selectAula" style="display:none;">
+                        <label for="inputCurso">Curso (tutor)</label>
                         <select id="inputCurso">${opcionesCurso}</select>
+                        <label for="inputGrupo">Grupo (tutor)</label>
                         <select id="inputGrupo">${opcionesGrupo}</select>
                     </div>
                     <button id="btnCrear">Crear</button>
@@ -44,11 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("inputEspecialidad").addEventListener("change", function () {
         const selectAula = document.getElementById("selectAula");
-        if (this.value === "GENERAL") {
-            selectAula.style.display = "block";
-        } else {
-            selectAula.style.display = "none";
-        }
+        selectAula.style.display = this.value === "GENERAL" ? "block" : "none";
     });
 
     document.getElementById("btnCrear").addEventListener("click", async function () {
@@ -58,35 +60,42 @@ document.addEventListener("DOMContentLoaded", async () => {
         const especialidad = document.getElementById("inputEspecialidad").value;
         const mensaje = document.getElementById("mensaje");
 
-       if (!nombre || !apellido || !email) {
-    mensaje.textContent = "Todos los campos son obligatorios";
-    mensaje.className = "mensaje--error";
-} else {
-    const profesor = {};
-    profesor.nombre = nombre;
-    profesor.apellido = apellido;
-    profesor.email = email;
-    profesor.especialidad = especialidad;
-
-    if (especialidad === "GENERAL") {
-        const curso = document.getElementById("inputCurso").value;
-        const grupo = document.getElementById("inputGrupo").value;
-        profesor.codigoAula = curso + grupo;
-    }
-
-    const resultado = await ProfesorAPI.crear(profesor);
-
-    if (resultado.datos) {
-        window.location.href = "profesorMenu.html";
-    } else {
-        const errorProfe = JSON.parse(resultado.error);
-        if (errorProfe.mensaje.includes("email")) {
-            mensaje.textContent = "Error: este email ya está registrado.";
+        if (!nombre || !apellido || !email || !especialidad) {
+            mensaje.textContent = "Todos los campos son obligatorios";
+            mensaje.className = "mensaje--error";
+        } else if (!REGEX.SOLO_LETRAS.test(nombre)) {
+            mensaje.textContent = "El nombre solo puede contener letras";
+            mensaje.className = "mensaje--error";
+        } else if (!REGEX.SOLO_LETRAS.test(apellido)) {
+            mensaje.textContent = "El apellido solo puede contener letras";
+            mensaje.className = "mensaje--error";
+        } else if (!REGEX.EMAIL.test(email)) {
+            mensaje.textContent = "El formato del email no es válido";
+            mensaje.className = "mensaje--error";
+        } else if (especialidad === "GENERAL" && (!document.getElementById("inputCurso").value || !document.getElementById("inputGrupo").value)) {
+            mensaje.textContent = "Selecciona el curso y grupo del aula que tutorizará";
+            mensaje.className = "mensaje--error";
         } else {
-            mensaje.textContent = "Error: " + errorProfe.mensaje;
+            const profesor = {};
+            profesor.nombre = nombre;
+            profesor.apellido = apellido;
+            profesor.email = email;
+            profesor.especialidad = especialidad;
+
+            if (especialidad === "GENERAL") {
+                const curso = document.getElementById("inputCurso").value;
+                const grupo = document.getElementById("inputGrupo").value;
+                profesor.codigoAula = curso + grupo;
+            }
+
+            const resultado = await ProfesorAPI.crear(profesor);
+
+            if (resultado.datos) {
+                window.location.href = "menuProfesor.html";
+            } else {
+                mensaje.textContent = resultado.error.mensaje;
+                mensaje.className = "mensaje--error";
+            }
         }
-        mensaje.className = "mensaje--error";
-    }
-}
     });
 });
