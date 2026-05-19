@@ -20,12 +20,13 @@ import com.colegio.service.ProfesorAsignaturaService;
  * Inicializador de relaciones profesor-asignatura del colegio.
  *
  * <p>
- * Asigna cada profesor GENERAL a las asignaturas de su curso correspondiente.
- * Los profesores especialistas imparten su asignatura en todos los cursos.
- * </p>
+ * Asigna cada profesor {@link Especialidad#GENERAL} a las asignaturas de su
+ * curso correspondiente. Los profesores especialistas se asignan a su
+ * asignatura en todos los cursos.</p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
+ * @see ProfesorAsignaturaService
  */
 @Component
 public class Profesorasignaturainitializater {
@@ -42,6 +43,17 @@ public class Profesorasignaturainitializater {
     @Autowired
     private ProfesorAsignaturaRepository profesorAsignaturaRepository;
 
+    // ============================================================
+    // METODOS PUBLICOS
+    // ============================================================
+    /**
+     * Inicializa las relaciones profesor-asignatura.
+     *
+     * <p>
+     * Asigna a cada profesor {@link Especialidad#GENERAL} las asignaturas del
+     * curso que le corresponde por posicion. Despues asigna los profesores
+     * especialistas a su asignatura en todos los cursos.</p>
+     */
     public void iniciarProfesorAsignaturas() {
         List<Profesor> profesoresGenerales = profesorRepository.findByEspecialidad(Especialidad.GENERAL);
         List<Curso> cursos = List.of(Curso.values());
@@ -77,6 +89,19 @@ public class Profesorasignaturainitializater {
         asignarPorEspecialidad(Especialidad.RELIGION, "Religion");
     }
 
+    // ============================================================
+    // METODOS PRIVADOS
+    // ============================================================
+    /**
+     * Asigna el primer profesor de la especialidad indicada a todas las
+     * asignaturas cuyo nombre coincide con el indicado.
+     *
+     * <p>
+     * Solo crea la relacion si no existe ya.</p>
+     *
+     * @param especialidad especialidad del profesor a buscar
+     * @param nombreAsignatura nombre de la asignatura a asignar
+     */
     private void asignarPorEspecialidad(Especialidad especialidad, String nombreAsignatura) {
         List<Profesor> profesores = profesorRepository.findByEspecialidad(especialidad);
         if (!profesores.isEmpty()) {

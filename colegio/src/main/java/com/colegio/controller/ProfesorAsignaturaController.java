@@ -18,8 +18,13 @@ import com.colegio.service.ProfesorAsignaturaService;
 /**
  * Controlador REST para la gestion de relaciones profesor-asignatura.
  *
+ * <p>
+ * Expone los endpoints bajo {@code /api/v1/profesor-asignatura} y delega toda
+ * la logica de negocio en {@link ProfesorAsignaturaService}.</p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
+ * @see ProfesorAsignaturaService
  */
 @RestController
 @RequestMapping("/api/v1/profesor-asignatura")
@@ -32,7 +37,9 @@ public class ProfesorAsignaturaController {
     // ENDPOINTS
     // ============================================================
     /**
-     * Devuelve la lista completa de relaciones profesor-asignatura.
+     * Devuelve todas las relaciones profesor-asignatura registradas.
+     *
+     * @return lista de relaciones
      */
     @GetMapping
     public List<ProfesorAsignatura> listar() {
@@ -40,7 +47,10 @@ public class ProfesorAsignaturaController {
     }
 
     /**
-     * Devuelve una relacion profesor-asignatura por su identificador.
+     * Devuelve la relacion con el id indicado.
+     *
+     * @param id id de la relacion
+     * @return relacion encontrada
      */
     @GetMapping("/{id}")
     public ProfesorAsignatura obtenerPorId(@PathVariable Long id) {
@@ -48,7 +58,10 @@ public class ProfesorAsignaturaController {
     }
 
     /**
-     * Devuelve todas las asignaturas que imparte un profesor concreto.
+     * Devuelve las relaciones del profesor con el id indicado.
+     *
+     * @param profesorId id del profesor
+     * @return lista de relaciones del profesor
      */
     @GetMapping("/profesor/{profesorId}")
     public List<ProfesorAsignatura> obtenerPorProfesor(@PathVariable Long profesorId) {
@@ -56,20 +69,33 @@ public class ProfesorAsignaturaController {
     }
 
     /**
-     * Devuelve todos los profesores que imparten una asignatura concreta.
+     * Devuelve las relaciones de la asignatura con el id indicado.
+     *
+     * @param asignaturaId id de la asignatura
+     * @return lista de relaciones de la asignatura
      */
     @GetMapping("/asignatura/{asignaturaId}")
     public List<ProfesorAsignatura> obtenerPorAsignatura(@PathVariable Long asignaturaId) {
         return profesorAsignaturaService.buscarPorAsignatura(asignaturaId);
     }
 
+    /**
+     * Devuelve las relaciones cuya asignatura pertenece al curso del aula
+     * indicada.
+     *
+     * @param aulaId id del aula
+     * @return lista de relaciones del curso del aula
+     */
     @GetMapping("/aula/{aulaId}")
     public List<ProfesorAsignatura> obtenerPorAula(@PathVariable Long aulaId) {
         return profesorAsignaturaService.buscarPorCursoAula(aulaId);
     }
 
     /**
-     * Crea una nueva relacion entre un profesor y una asignatura.
+     * Guarda una nueva relacion profesor-asignatura.
+     *
+     * @param profesorAsignatura datos de la relacion a guardar
+     * @return relacion guardada
      */
     @PostMapping
     public ProfesorAsignatura guardar(@RequestBody ProfesorAsignatura profesorAsignatura) {
@@ -78,6 +104,10 @@ public class ProfesorAsignaturaController {
 
     /**
      * Actualiza los datos de una relacion profesor-asignatura existente.
+     *
+     * @param id id de la relacion a actualizar
+     * @param profesorAsignatura nuevos datos de la relacion
+     * @return relacion actualizada
      */
     @PutMapping("/{id}")
     public ProfesorAsignatura actualizar(@PathVariable Long id,
@@ -86,7 +116,9 @@ public class ProfesorAsignaturaController {
     }
 
     /**
-     * Elimina una relacion profesor-asignatura por su identificador.
+     * Borra la relacion con el id indicado.
+     *
+     * @param id id de la relacion a borrar
      */
     @DeleteMapping("/{id}")
     public void borrar(@PathVariable Long id) {
