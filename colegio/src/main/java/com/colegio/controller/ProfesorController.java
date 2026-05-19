@@ -20,8 +20,8 @@ import com.colegio.service.ProfesorService;
  * Controlador REST para la gestion de profesores.
  *
  * <p>
- * Expone los endpoints bajo {@code /api/v1/profesores} y delega toda la logica
- * de negocio en {@link ProfesorService}.</p>
+ * endpoints {@code /api/v1/profesores} y delega toda la logica de negocio en
+ * {@link ProfesorService}.</p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -58,7 +58,7 @@ public class ProfesorController {
     /**
      * Devuelve los profesores cuyo nombre contiene la cadena indicada.
      *
-     * @param nombre fragmento del nombre a buscar
+     * @param nombre nombre a buscar
      * @return lista de profesores que coinciden
      */
     @GetMapping("/buscar/{nombre}")
