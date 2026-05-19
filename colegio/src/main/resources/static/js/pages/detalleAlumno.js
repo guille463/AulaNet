@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               </thead>
               <tbody>${asignaturasHtml}</tbody>
           </table>
-          <button class="imprimir">Imprimir boletin</button>
+          <button id="btnImprimir">Imprimir boletin</button>
           <p id="mensaje"></p>
           <a href="menuAlumno.html" class="volver">Volver</a>
       </div>

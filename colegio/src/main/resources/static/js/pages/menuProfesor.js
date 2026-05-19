@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("btnConfirmarNo").addEventListener("click", function () {
         document.getElementById("modalConfirmar").classList.remove("activo");
         idAEliminar = null;
-        document.getElementById("resultado").innerHTML = `<p>Operación cancelada</p>`;
+        document.getElementById("resultado").innerHTML = `<p class="mensaje--error">Operación cancelada</p>`;
     });
 
     document.getElementById("tipoBusqueda").addEventListener("change", function () {
