@@ -82,14 +82,13 @@ public class ProfesorService {
     }
 
     /**
-     * Devuelve los profesores cuyo nombre contiene la cadena indicada, sin
-     * distinguir mayusculas.
+     * Devuelve los profesores cuyo nombre empieza por la cadena indicada.
      *
-     * @param nombre fragmento del nombre a buscar
+     * @param nombre prefijo del nombre a buscar
      * @return lista de profesores que coinciden
      */
     public List<Profesor> buscarPorNombre(String nombre) {
-        return profesorRepository.findByNombreContainingIgnoreCase(nombre);
+        return profesorRepository.findByNombreStartingWithIgnoreCase(nombre);
     }
 
     /**

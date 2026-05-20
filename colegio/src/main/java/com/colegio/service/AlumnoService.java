@@ -89,13 +89,13 @@ public class AlumnoService {
     }
 
     /**
-     * Devuelve los alumnos cuyo nombre contiene la cadena d etexto indicada.
+     * Devuelve los alumnos cuyo nombre empieza por la cadena indicada.
      *
-     * @param nombre fragmento del nombre a buscar
+     * @param nombre prefijo del nombre a buscar
      * @return lista de alumnos que coinciden
      */
     public List<Alumno> buscarPorNombre(String nombre) {
-        return alumnoRepository.findByNombreContainingIgnoreCase(nombre);
+        return alumnoRepository.findByNombreStartingWithIgnoreCase(nombre);
     }
 
     /**

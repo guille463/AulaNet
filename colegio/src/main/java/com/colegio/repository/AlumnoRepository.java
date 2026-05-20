@@ -49,13 +49,13 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
     List<Alumno> findByAulaCurso(Curso curso);
 
     /**
-     * Devuelve los alumnos cuyo nombre contiene la cadena indicada, sin
+     * Devuelve los alumnos cuyo nombre empieza por la cadena indicada, sin
      * distinguir mayusculas.
      *
-     * @param nombre fragmento del nombre a buscar
+     * @param nombre prefijo del nombre a buscar
      * @return lista de alumnos que coinciden
      */
-    List<Alumno> findByNombreContainingIgnoreCase(String nombre);
+    List<Alumno> findByNombreStartingWithIgnoreCase(String nombre);
 
     /**
      * Devuelve los alumnos que coinciden exactamente con el nombre y apellido.

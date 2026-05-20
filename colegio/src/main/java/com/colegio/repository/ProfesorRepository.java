@@ -40,13 +40,13 @@ public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
     Optional<Profesor> findByCodigo(String codigo);
 
     /**
-     * Devuelve los profesores cuyo nombre contiene la cadena indicada, sin
+     * Devuelve los profesores cuyo nombre empieza por la cadena indicada, sin
      * distinguir mayusculas.
      *
-     * @param nombre fragmento del nombre a buscar
+     * @param nombre prefijo del nombre a buscar
      * @return lista de profesores que coinciden
      */
-    List<Profesor> findByNombreContainingIgnoreCase(String nombre);
+    List<Profesor> findByNombreStartingWithIgnoreCase(String nombre);
 
     /**
      * Comprueba si existe un profesor con el email indicado.
