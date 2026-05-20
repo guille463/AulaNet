@@ -74,7 +74,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="containerDetalle">
                 <h1>Detalle de la Asignatura</h1>
             <div class="card--detalle">
-                <div class="card--detalle--body">
+${añadirBodyCartaDetalleAsignatura(root)}
+            </div>
+            <h2>Profesores</h2>
+            ${añadirTablaProfesorAsignatura(root)}
+                <a href="menuAsignatura.html">Volver</a>
+        </div>
+        `;
+    }
+});
+
+function añadirBodyCartaDetalleAsignatura(root){
+
+    return `
+      <div class="card--detalle--body">
                     <h2>${asignatura.codigo}</h2>
                     <hr>
                     <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
@@ -82,9 +95,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
                     <p><strong>Descripcion:</strong> ${asignatura.descripcion}</p>
                 </div>
-            </div>
-            <h2>Profesores</h2>
-            <table>
+    
+    `
+}
+
+function añadirTablaProfesorAsignatura(html){
+return `
+<table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -105,8 +122,5 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </thead>
                     <tbody>${alumnosHtml}</tbody>
                 </table>
-                <a href="menuAsignatura.html">Volver</a>
-        </div>
-        `;
-    }
-});
+`
+}
