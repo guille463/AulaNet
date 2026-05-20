@@ -1,16 +1,29 @@
 /* =============================================
+   MAPA
+   ============================================= */
+
+/* <div class="mapa"> */
+
+.mapa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 35%;
+}
+
+/* =============================================
    CONTENEDOR GESTION
    ============================================= */
 
 /* <div class="containerGestion"> */
 
 .containerGestion {
-   max-width: 90%;
+    max-width: 90%;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
 
-/* <a href="crearAlumno.html"> enlace añadir */
+/* <a> enlace añadir */
 
 .containerGestion > a {
     display: inline-flex;
@@ -108,14 +121,6 @@
     font-size: 0.875rem;
     color: #64748b;
     text-align: center;
-}
-
-input[type="text"],
-input[type="email"],
-select {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    width: 100%;
 }
 
 /* =============================================
