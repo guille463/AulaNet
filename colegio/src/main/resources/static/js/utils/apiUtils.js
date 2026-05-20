@@ -1,4 +1,4 @@
-import {  BASE_URL } from "../config/config.js";
+import { BASE_URL } from "../config/config.js";
 
 export async function fetchApi(metodo, ruta, cuerpo = null) {
     let datos = null;

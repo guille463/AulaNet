@@ -140,18 +140,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
- /** Input de busqueda por nombre: lanza la busqueda en tiempo real al escribir. */
-document.getElementById("inputContainer").addEventListener("input", function (evento) {
+  /** Input de busqueda por nombre: lanza la busqueda en tiempo real al escribir. */
+  document.getElementById("inputContainer").addEventListener("input", function (evento) {
     if (document.getElementById("tipoBusqueda").value === "nombre") {
-        const valor = evento.target.value.trim();
-        if (valor.length === 0) {
-            // Si el campo se vacia limpia el resultado
-            document.getElementById("resultado").innerHTML = "";
-        } else if (valor.length >= 2) {
-            buscarPorNombre(valor);
-        }
+      const valor = evento.target.value.trim();
+      if (valor.length === 0) {
+        // Si el campo se vacia limpia el resultado
+        document.getElementById("resultado").innerHTML = "";
+      } else if (valor.length >= 2) {
+        buscarPorNombre(valor);
+      }
     }
-});
+  });
 
   /** Boton buscar: redirige al metodo de busqueda segun el tipo. */
   document.getElementById("btnBuscar").addEventListener("click", function () {

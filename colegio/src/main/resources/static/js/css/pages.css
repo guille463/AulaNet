@@ -25,7 +25,7 @@
 
 /* <a> enlace añadir */
 
-.containerGestion > a {
+.containerGestion>a {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
@@ -39,7 +39,7 @@
     transition: background-color 150ms ease;
 }
 
-.containerGestion > a:hover {
+.containerGestion>a:hover {
     background-color: #3478c0;
     color: #ffffff;
 }

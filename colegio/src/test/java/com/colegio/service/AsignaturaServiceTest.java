@@ -28,7 +28,8 @@ import com.colegio.repository.AsignaturaRepository;
  *
  * <p>
  * Usa Mockito para aislar el servicio de sus dependencias. Cubre los casos
- * principales de listado, busqueda, guardado, actualizacion y borrado.</p>
+ * principales de listado, busqueda, guardado, actualizacion y borrado.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0

@@ -23,7 +23,7 @@ import { AulaAPI } from "../api/aulaApi.js"
 let idAEliminar = null;
 
 /** @type {Map<string, string} Mapa de profesorId a codigo de aula para detectar tutores */
-const tutoresPorAula = new Map(); 
+const tutoresPorAula = new Map();
 
 
 
@@ -87,32 +87,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   cargarTodos();
 
   try {
-     const respuetsaAulas = await AulaAPI.obtenerTodos(); 
-  if(respuetsaAulas.datos){
-    for(const aula of respuetsaAulas.datos){
-      if(aula.tutor){
-        tutoresPorAula.set(String(aula.tutor.id), aula.codigo)
+    const respuetsaAulas = await AulaAPI.obtenerTodos();
+    if (respuetsaAulas.datos) {
+      for (const aula of respuetsaAulas.datos) {
+        if (aula.tutor) {
+          tutoresPorAula.set(String(aula.tutor.id), aula.codigo)
+        }
       }
     }
-  }
-    
+
   } catch (error) {
     console.error("Error al cargar el mapa");
-    
-    
+
+
   }
- 
+
 
   /** Detecta el boton eliminar de cada fila. */
   document.getElementById("root").addEventListener("click", function (evento) {
     if (evento.target.classList.contains("btnEliminar")) {
       idAEliminar = evento.target.getAttribute("data-id");
-      if(tutoresPorAula.has(idAEliminar)){
-        document.getElementById("resultado").innerHTML = `<p class="mensaje--error"> No se puede eliminar al profesor porque es tutor del aula ${tutoresPorAula.get(idAEliminar)}</p>`; 
-        idAEliminar=null
-      } else{
+      if (tutoresPorAula.has(idAEliminar)) {
+        document.getElementById("resultado").innerHTML = `<p class="mensaje--error"> No se puede eliminar al profesor porque es tutor del aula ${tutoresPorAula.get(idAEliminar)}</p>`;
+        idAEliminar = null
+      } else {
         document.getElementById("modalTexto").textContent = "¿Estas seguro de que quieres eliminar al profesor con id" + idAEliminar + " ?"
-        document.getElementById("modalConfirmar").classList.add("activo"); 
+        document.getElementById("modalConfirmar").classList.add("activo");
       }
     }
   });
@@ -156,18 +156,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
- /** Input de busqueda por nombre: lanza la busqueda en tiempo real al escribir. */
-document.getElementById("inputContainer").addEventListener("input", function (evento) {
+  /** Input de busqueda por nombre: lanza la busqueda en tiempo real al escribir. */
+  document.getElementById("inputContainer").addEventListener("input", function (evento) {
     if (document.getElementById("tipoBusqueda").value === "nombre") {
-        const valor = evento.target.value.trim();
-        if (valor.length === 0) {
-            // Si el campo se vacia limpia el resultado
-            document.getElementById("resultado").innerHTML = "";
-        } else if (valor.length >= 2) {
-            buscarPorNombre(valor);
-        }
+      const valor = evento.target.value.trim();
+      if (valor.length === 0) {
+        // Si el campo se vacia limpia el resultado
+        document.getElementById("resultado").innerHTML = "";
+      } else if (valor.length >= 2) {
+        buscarPorNombre(valor);
+      }
     }
-});
+  });
 
   /** Boton buscar: redirige al metodo de busqueda segun el tipo. */
   document.getElementById("btnBuscar").addEventListener("click", function () {

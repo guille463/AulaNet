@@ -2,7 +2,7 @@
    CONTENEDOR DETALLE
    ============================================= */
 
-   /* <div class="containerDetalle"> */
+/* <div class="containerDetalle"> */
 
 .containerDetalle {
     max-width: 90%;
@@ -13,7 +13,7 @@
 
 /* <div class="containerDetalle"> */
 
-.containerDetalle > div {
+.containerDetalle>div {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;

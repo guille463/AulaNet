@@ -171,7 +171,7 @@ button {
 
 /* contenedor interno del modal */
 
-#modalConfirmar > div {
+#modalConfirmar>div {
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 8px;
@@ -209,8 +209,8 @@ button {
 
 /* <div id="grupos-"> <div id="cursos-"> */
 
-.aulaItem > div,
-.asignaturaItem > div {
+.aulaItem>div,
+.asignaturaItem>div {
     margin-top: 0.5rem;
     display: flex;
     gap: 0.5rem;
