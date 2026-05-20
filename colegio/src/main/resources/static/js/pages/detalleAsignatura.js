@@ -1,7 +1,23 @@
+/**
+ * Pagina de detalle de una asignatura.
+ *
+ * <p>Muestra los datos de la asignatura, los profesores que la imparten
+ * y los alumnos matriculados con sus notas.</p>
+ *
+ * @module detalleAsignatura
+ * @see {@link AsignaturaAPI}
+ * @see {@link ProfesorAsignaturaAPI}
+ * @see {@link AlumnoAsignaturaAPI}
+ */
+
 import { AsignaturaAPI } from "../api/asignaturaApi.js";
 import { ProfesorAsignaturaAPI } from "../api/profesorAsignaturaApi.js";
 import { AlumnoAsignaturaAPI } from "../api/alumnoAsignaturaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
+
+// ============================================================
+// EVENTO PRINCIPAL
+// ============================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -19,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const respuestaProfesores = await ProfesorAsignaturaAPI.obtenerPorAsignatura(id);
         const profesores = respuestaProfesores.datos;
 
+        // Se genera una fila por cada profesor que imparte la asignatura.
         let profesoresHtml = "";
         if (profesores && profesores.length > 0) {
             for (const pa of profesores) {
@@ -37,6 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const respuestaAlumnos = await AlumnoAsignaturaAPI.obtenerPorAsignatura(id);
         const matriculas = respuestaAlumnos.datos;
 
+        // Se genera una fila por cada alumno matriculado en la asignatura.
         let alumnosHtml = "";
         if (matriculas && matriculas.length > 0) {
             for (const matricula of matriculas) {
@@ -62,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
         <p><strong>Curso:</strong> ${asignatura.curso}</p>
         <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
-        <p><strong>Descripción:</strong> ${asignatura.descripcion}</p>
+        <p><strong>Descripcion:</strong> ${asignatura.descripcion}</p>
     </div>
 </div>
                 <h2>Profesores</h2>
@@ -80,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>Código</th>
+                            <th>Codigo</th>
                             <th>Nombre</th>
                             <th>Nota</th>
                         </tr>
