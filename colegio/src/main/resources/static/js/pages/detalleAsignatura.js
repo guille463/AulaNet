@@ -71,29 +71,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         root.innerHTML = `
-            <div class="containerDetalle">
+        <div class="containerDetalle">
                 <h1>Detalle de la Asignatura</h1>
-               <div class="card--detalle">
-    <div class="card--detalle--body">
-        <h2>${asignatura.codigo}</h2>
-        <hr>
-        <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
-        <p><strong>Curso:</strong> ${asignatura.curso}</p>
-        <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
-        <p><strong>Descripcion:</strong> ${asignatura.descripcion}</p>
-    </div>
-</div>
-                <h2>Profesores</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
+            <div class="card--detalle">
+                <div class="card--detalle--body">
+                    <h2>${asignatura.codigo}</h2>
+                    <hr>
+                    <p><strong>Nombre:</strong> ${asignatura.nombre}</p>
+                    <p><strong>Curso:</strong> ${asignatura.curso}</p>
+                    <p><strong>Horas semanales:</strong> ${asignatura.horasSemana}</p>
+                    <p><strong>Descripcion:</strong> ${asignatura.descripcion}</p>
+                </div>
+            </div>
+            <h2>Profesores</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
                             <th>Especialidad</th>
                             <th>Horas semanales</th>
-                        </tr>
-                    </thead>
+                    </tr>
+                </thead>
                     <tbody>${profesoresHtml}</tbody>
-                </table>
+            </table>
                 <h2>Alumnos matriculados</h2>
                 <table>
                     <thead>
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <tbody>${alumnosHtml}</tbody>
                 </table>
                 <a href="menuAsignatura.html">Volver</a>
-            </div>
+        </div>
         `;
     }
 });

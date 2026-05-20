@@ -77,54 +77,79 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         profesoresHtml = `<tr><td colspan="3">Sin profesores asignados</td></tr>`;
       }
+      root.innerHTML = /* html */ `
+        <div class="containerDetalle">
+            <h1>Detalle del Aula</h1>
 
-      root.innerHTML = `
-           <div class="containerDetalle">
-                <h1>Detalle del Aula</h1>
-               <div class="card--detalle">
-    <div class="card--detalle--body">
-        <h2>${aula.codigo}</h2>
-        <hr>
-        <p><strong>Curso:</strong> ${aula.curso}</p>
-        <p><strong>Grupo:</strong> ${aula.grupo}</p>
-        <p><strong>Ocupacion:</strong> ${totalAlumnos}/${aula.capacidad}</p>
-        <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
-    </div>
-</div>
-                
-                <h2>Gestionar Tutor</h2>
-                <div id="gestionTutor">
-                    <select id="selectProfesor"></select>
-                    <button id="btnAsignarTutor">Asignar tutor</button>
-                    <button id="btnEliminarTutor">Eliminar tutor</button>
-                    <p id="mensajeTutor"></p>
+            <div class="card--detalle">
+                <div class="card--detalle--body">
+                    <h2>${aula.codigo}</h2>
+
+                    <hr>
+
+                    <p><strong>Curso:</strong> ${aula.curso}</p>
+                    <p><strong>Grupo:</strong> ${aula.grupo}</p>
+                    <p><strong>Ocupacion:</strong> ${totalAlumnos}/${aula.capacidad}</p>
+
+                    <p>
+                        <strong>Tutor:</strong>
+                        ${aula.tutor
+              ? aula.tutor.nombre + " " + aula.tutor.apellido
+              : "Sin tutor"
+            }
+                    </p>
                 </div>
-                <h2>Alumnos</h2>
-                <a href="crearAlumno.html">Añadir alumno</a>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Codigo</th>
-                            <th>Nombre</th>
-                            <th>Fecha Nacimiento</th>
-                        </tr>
-                    </thead>
-                    <tbody>${alumnosHtml}</tbody>
-                </table>
-                <h2>Profesores y asignaturas</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Profesor</th>
-                            <th>Asignatura</th>
-                            <th>Horas semanales</th>
-                        </tr>
-                    </thead>
-                    <tbody>${profesoresHtml}</tbody>
-                </table>
-                <a href="menuAula.html">Volver</a>
             </div>
-        `;
+
+            <h2>Gestionar Tutor</h2>
+
+            <div id="gestionTutor">
+                <select id="selectProfesor"></select>
+
+                <button id="btnAsignarTutor">Asignar tutor</button>
+
+                <button id="btnEliminarTutor">Eliminar tutor</button>
+
+                <p id="mensajeTutor"></p>
+            </div>
+
+            <h2>Alumnos</h2>
+
+            <a href="crearAlumno.html">Añadir alumno</a>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Fecha Nacimiento</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${alumnosHtml}
+                </tbody>
+            </table>
+
+            <h2>Profesores y asignaturas</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Profesor</th>
+                        <th>Asignatura</th>
+                        <th>Horas semanales</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${profesoresHtml}
+                </tbody>
+            </table>
+
+            <a href="menuAula.html">Volver</a>
+        </div>
+`;
 
       const respuestaTodosProfesores = await ProfesorAPI.obtenerTodos();
       const todosProfesores = respuestaTodosProfesores.datos;
@@ -146,25 +171,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       /** Boton asignar tutor: comprueba si ya hay tutor, si no envia el profesor seleccionado. */
-      document.getElementById("btnAsignarTutor").addEventListener("click", async function () {
-        const mensajeTutor = document.getElementById("mensajeTutor");
-        mensajeTutor.textContent = "";
-        mensajeTutor.className = "";
+      document
+        .getElementById("btnAsignarTutor")
+        .addEventListener("click", async function () {
+          const mensajeTutor = document.getElementById("mensajeTutor");
+          mensajeTutor.textContent = "";
+          mensajeTutor.className = "";
 
-        if (aula.tutor) {
-          mensajeTutor.textContent = "Ya hay un tutor asignado. Eliminalo primero.";
-          mensajeTutor.className = "mensaje--error";
-        } else {
-          const profesorId = selectProfesor.value;
-          const resultado = await AulaAPI.asignarTutor(id, profesorId);
-          if (resultado.datos) {
-            window.location.reload();
-          } else {
-            mensajeTutor.textContent = resultado.error.mensaje;
+          if (aula.tutor) {
+            mensajeTutor.textContent =
+              "Ya hay un tutor asignado. Eliminalo primero.";
             mensajeTutor.className = "mensaje--error";
+          } else {
+            const profesorId = selectProfesor.value;
+            const resultado = await AulaAPI.asignarTutor(id, profesorId);
+            if (resultado.datos) {
+              window.location.reload();
+            } else {
+              mensajeTutor.textContent = resultado.error.mensaje;
+              mensajeTutor.className = "mensaje--error";
+            }
           }
-        }
-      });
+        });
       /** Boton eliminar tutor: desvincula el tutor actual del aula y recarga. */
       document
         .getElementById("btnEliminarTutor")
