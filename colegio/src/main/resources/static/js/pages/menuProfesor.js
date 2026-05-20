@@ -48,18 +48,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   root.innerHTML = `
     <div class="containerGestion">
         <h1>Gestionar Profesores</h1>
-        <a href="crearProfesor.html">➕ Añadir Docente</a>
+        <a href="crearProfesor.html"> Añadir Docente</a>
         <div class="card card--buscador">
           <div class="card-body">
             <h2 class="card-title">Buscar Docente</h2>
-            <select id="tipoBusqueda" class="form-select">
-              <option value="id">Por ID</option>
-              <option value="nombre">Por Nombre</option>
-              <option value="email">Por Email</option>
-              <option value="especialidad">Por Especialidad</option>
-            </select>
+          ${AñadirselectsBusquedaProfesor (root)}
             <div id="inputContainer">
-              <input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">
+              <input type="text" id="inputBusqueda" class="form-control" placeholder="">
             </div>
             <button class="btn btn-Buscar" id="btnBuscar">Buscar</button>
           </div>
@@ -67,20 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div id="resultado"></div>
         <hr>
         <h2>Lista de Profesores</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Codigo</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Especialidad</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="listaProfesores"></tbody>
-        </table>
+        ${AñadirTablasDeProfesores(root)}   
     </div>
 `;
 
@@ -364,4 +346,34 @@ function crearTablaProfesores(filas) {
             <tbody>${filas}</tbody>
         </table>
     `;
+}
+
+function AñadirselectsBusquedaProfesor(html){
+  return `
+  <select id="tipoBusqueda" class="form-select">
+              <option value="id">Por ID</option>
+              <option value="nombre">Por Nombre</option>
+              <option value="email">Por Email</option>
+              <option value="especialidad">Por Especialidad</option>
+            </select>  
+  `
+}
+
+function AñadirTablasDeProfesores(html){
+  return`
+   <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Especialidad</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="listaProfesores"></tbody>
+        </table>
+  `
 }
