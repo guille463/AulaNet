@@ -13,6 +13,7 @@ import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaProfesor } from "../components/profesorComponente.js";
 import { ESPECIALIDADES, REGEX } from "../utils/constantes.js";
+import { AulaAPI } from "../api/aulaApi.js"
 
 // ============================================================
 // VARIABLES
@@ -20,6 +21,11 @@ import { ESPECIALIDADES, REGEX } from "../utils/constantes.js";
 
 /** @type {string|null} ID del profesor pendiente de eliminar. */
 let idAEliminar = null;
+
+/** @type {Map<string, string} Mapa de profesorId a codigo de aula para detectar tutores */
+const tutoresPorAula = new Map(); 
+
+
 
 // ============================================================
 // INICIALIZACION DE OPCIONES
@@ -80,15 +86,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   cargarTodos();
 
+  try {
+     const respuetsaAulas = await AulaAPI.obtenerTodos(); 
+  if(respuetsaAulas.datos){
+    for(const aula of respuetsaAulas.datos){
+      if(aula.tutor){
+        tutoresPorAula.set(String(aula.tutor.id), aula.codigo)
+      }
+    }
+  }
+    
+  } catch (error) {
+    console.error("Error al cargar el mapa");
+    
+    
+  }
+ 
+
   /** Detecta el boton eliminar de cada fila. */
   document.getElementById("root").addEventListener("click", function (evento) {
     if (evento.target.classList.contains("btnEliminar")) {
       idAEliminar = evento.target.getAttribute("data-id");
-      document.getElementById("modalTexto").textContent =
-        "¿Estas seguro de que quieres eliminar al profesor " +
-        idAEliminar +
-        "?";
-      document.getElementById("modalConfirmar").classList.add("activo");
+      if(tutoresPorAula.has(idAEliminar)){
+        document.getElementById("resultado").innerHTML = `<p class="mensaje--error"> No se puede eliminar al profesor porque es tutor del aula ${tutoresPorAula.get(idAEliminar)}</p>`; 
+        idAEliminar=null
+      } else{
+        document.getElementById("modalTexto").textContent = "¿Estas seguro de que quieres eliminar al profesor con id" + idAEliminar + " ?"
+        document.getElementById("modalConfirmar").classList.add("activo"); 
+      }
     }
   });
 
