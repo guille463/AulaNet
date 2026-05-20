@@ -1,25 +1,55 @@
+/**
+ * Pagina de creacion de un nuevo alumno.
+ *
+ * <p>Recoge los datos del formulario, valida los campos y llama a
+ * {@link AlumnoAPI} para persistir el registro.</p>
+ *
+ * @module crearAlumno
+ * @see {@link AlumnoAPI}
+ * @see {@link AulaAPI}
+ */
+
 import { AlumnoAPI } from "../api/alumnoApi.js";
 import { AulaAPI } from "../api/aulaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { CURSOS, GRUPOS, REGEX } from "../utils/constantes.js";
 
+// ============================================================
+// VARIABLES
+// ============================================================
+
+/** @type {number} Ano actual usado para calcular el rango de fechas validas. */
+const anioActual = new Date().getFullYear();
+
+/** @type {string} Fecha minima de nacimiento permitida (14 anos atras). */
+const fechaMin = `${anioActual - 14}-01-01`;
+
+/** @type {string} Fecha maxima de nacimiento permitida (5 anos atras). */
+const fechaMax = `${anioActual - 5}-12-31`;
+
+// ============================================================
+// INICIALIZACION DE OPCIONES
+// ============================================================
+
+/** @type {string} HTML de opciones para el selector de curso, con placeholder inicial. */
+let opcionesCurso = `<option value="">-- Selecciona curso --</option>`;
+for (const curso of CURSOS) {
+  opcionesCurso += `<option value="${curso}">${curso}</option>`;
+}
+
+/** @type {string} HTML de opciones para el selector de grupo, con placeholder inicial. */
+let opcionesGrupo = `<option value="">-- Selecciona grupo --</option>`;
+for (const grupo of GRUPOS) {
+  opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
+}
+
+// ============================================================
+// EVENTO PRINCIPAL
+// ============================================================
+
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
-
-  const anioActual = new Date().getFullYear();
-  const fechaMin = `${anioActual - 14}-01-01`;
-  const fechaMax = `${anioActual - 5}-12-31`;
-
-  let opcionesCurso = `<option value="">-- Selecciona curso --</option>`;
-  for (const curso of CURSOS) {
-    opcionesCurso += `<option value="${curso}">${curso}</option>`;
-  }
-
-  let opcionesGrupo = `<option value="">-- Selecciona grupo --</option>`;
-  for (const grupo of GRUPOS) {
-    opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
-  }
 
   root.innerHTML = `
         <div class="containerCrear">
@@ -29,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <label for="inputNombre">Nombre</label>
                     <input type="text" id="inputNombre" placeholder="Ej: Juan">
                     <label for="inputApellido">Apellido</label>
-                    <input type="text" id="inputApellido" placeholder="Ej: García López">
+                    <input type="text" id="inputApellido" placeholder="Ej: Garcia Lopez">
                     <label for="inputFecha">Fecha de Nacimiento</label>
                     <input type="date" id="inputFecha" min="${fechaMin}" max="${fechaMax}">
                     <label for="inputCurso">Curso</label>
@@ -44,6 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
     `;
 
+  /** Boton crear: valida el formulario, resuelve el aula por codigo y envia el alumno a la API. */
   document.getElementById("btnCrear").addEventListener("click", async function () {
     const nombre = document.getElementById("inputNombre").value.trim();
     const apellido = document.getElementById("inputApellido").value.trim();
@@ -65,16 +96,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       mensaje.textContent = "El apellido solo puede contener letras";
       mensaje.className = "mensaje--error";
     } else {
+      // El codigo del aula se forma concatenando curso y grupo, ej: "1º" + "A" = "1ºA"
       const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
 
       if (!respuestaAula.datos) {
-        mensaje.textContent = "No se encontró el aula para el curso y grupo seleccionados";
+        mensaje.textContent = "No se encontro el aula para el curso y grupo seleccionados";
         mensaje.className = "mensaje--error";
       } else {
         const alumno = {};
         alumno.nombre = nombre;
         alumno.apellido = apellido;
         alumno.fechaNacimiento = fecha;
+        // El backend solo necesita el ID del aula.
         alumno.aula = {};
         alumno.aula.id = respuestaAula.datos.id;
 
