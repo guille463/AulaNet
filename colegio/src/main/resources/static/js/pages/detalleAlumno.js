@@ -40,14 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (matriculas && matriculas.length > 0) {
       for (const matricula of matriculas) {
         asignaturasHtml += `
-          <tr>
-            <td><a href="detalleAsignatura.html?id=${matricula.asignatura.id}">${matricula.asignatura.nombre}</a></td>
-              <td id="notaActual-${matricula.id}">${matricula.nota}</td>
-              <td class="cambiarNotas">
-                  <input type="number" id="nota-${matricula.id}" value="${matricula.nota}" min="0" max="10" step="0.1">
-                  <button class="btnEditarNota" data-id="${matricula.id}">Guardar</button>
-              </td>
-          </tr>
+         ${crearTablaNotas(asignaturasHtml)}
         `;
       }
     }
@@ -56,28 +49,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div class="containerDetalle">
           <h1>Detalle del Alumno</h1>
           <div class="card--detalle">
-              <div class="card--detalle--body">
-                  <h2>${alumno.codigo}</h2>
-                  <hr>
-                  <p><strong>Nombre:</strong> ${alumno.nombre} ${alumno.apellido}</p>
-                  <p><strong>Fecha de Nacimiento:</strong> ${alumno.fechaNacimiento}</p>
-                  <p><strong>Curso:</strong> ${aula.curso}</p>
-                  <p><strong>Grupo:</strong> ${aula.grupo}</p>
-                 <p><strong>Aula:</strong> <a href="detalleAula.html?id=${aula.id}">${aula.codigo}</a></p>
-                  <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
-              </div>
+${añadirDetalleAlumno(root)}
           </div>
           <h2 id="Tab.Asig">Asignaturas</h2>
-          <table>
-              <thead>
-                  <tr>
-                      <th>Asignatura</th>
-                      <th>Nota actual</th>
-                      <th class="editarNota">Editar nota</th>
-                  </tr>
-              </thead>
-              <tbody>${asignaturasHtml}</tbody>
-          </table>
+         ${añadirDetalleAlumnoNotas(root)}
           <button class="imprimir" id="btnImprimir">Imprimir boletin</button>
           <p id="mensaje"></p>
           <a href="menuAlumno.html" class="volver">Volver</a>
@@ -107,3 +82,48 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
+
+function añadirDetalleAlumno(html) {
+  return `
+  <div class="card--detalle--body">
+                  <h2>${alumno.codigo}</h2>
+                  <hr>
+                  <p><strong>Nombre:</strong> ${alumno.nombre} ${alumno.apellido}</p>
+                  <p><strong>Fecha de Nacimiento:</strong> ${alumno.fechaNacimiento}</p>
+                  <p><strong>Curso:</strong> ${aula.curso}</p>
+                  <p><strong>Grupo:</strong> ${aula.grupo}</p>
+                 <p><strong>Aula:</strong> <a href="detalleAula.html?id=${aula.id}">${aula.codigo}</a></p>
+                  <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
+              </div>
+  `
+}
+
+function añadirDetalleAlumnoNotas(html) {
+  return `
+   <table>
+              <thead>
+                  <tr>
+                      <th>Asignatura</th>
+                      <th>Nota actual</th>
+                      <th class="editarNota">Editar nota</th>
+                  </tr>
+              </thead>
+              <tbody>${asignaturasHtml}</tbody>
+          </table>
+  
+  `
+}
+
+function crearTablaNotas(html) {
+  return `
+   <tr>
+            <td><a href="detalleAsignatura.html?id=${matricula.asignatura.id}">${matricula.asignatura.nombre}</a></td>
+              <td id="notaActual-${matricula.id}">${matricula.nota}</td>
+              <td class="cambiarNotas">
+                  <input type="number" id="nota-${matricula.id}" value="${matricula.nota}" min="0" max="10" step="0.1">
+                  <button class="btnEditarNota" data-id="${matricula.id}">Guardar</button>
+              </td>
+          </tr>
+  
+  `
+}

@@ -48,16 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   root.innerHTML = `
   <div class="containerGestion">
         <h1>Gestionar Alumnos</h1>
-        <a href="crearAlumno.html">➕ Añadir alumno</a>
+        <a href="crearAlumno.html">Añadir alumno</a>
       <div class="card card--buscador">
           <div class="card-body">
             <h2 class="card-title">Buscar Alumno</h2>
-            <select id="tipoBusqueda" class="form-select">
-              <option value="id">Por ID</option>
-              <option value="nombre">Por Nombre</option>
-              <option value="fecha">Por Fecha de Nacimiento</option>
-              <option value="curso">Por Curso y Grupo</option>
-            </select>
+           ${añadirSelectsBusquedaAlumno(root)}
             <div id="inputContainer">
               <input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">
             </div>
@@ -67,21 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div id="resultado"></div>
         <hr>
         <h2>Lista de Alumnos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Codigo</th>
-                    <th>Nombre</th>
-                    <th>Fecha Nacimiento</th>
-                    <th>Curso</th>
-                    <th>Grupo</th>
-                    <th>Tutor</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="listaAlumnos"></tbody>
+        ${añadirTablaAlumno(root)}
         </table>
       </div>
 `;
@@ -350,4 +331,37 @@ function crearTablaAlumnos(filas) {
             <tbody>${filas}</tbody>
         </table>
     `;
+}
+
+function añadirTablaAlumno(html){
+  return `
+   <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Curso</th>
+                    <th>Grupo</th>
+                    <th>Tutor</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="listaAlumnos"></tbody>
+  `
+}
+
+function añadirSelectsBusquedaAlumno (html){
+
+  return `
+   <select id="tipoBusqueda" class="form-select">
+              <option value="id">Por ID</option>
+              <option value="nombre">Por Nombre</option>
+              <option value="fecha">Por Fecha de Nacimiento</option>
+              <option value="curso">Por Curso y Grupo</option>
+            </select>
+  
+  `
 }

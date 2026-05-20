@@ -52,27 +52,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const root = document.getElementById("root");
 
   root.innerHTML = `
-        <div class="containerCrear">
-            <h1>Crear Alumno</h1>
-            <div class="card">
-                <div class="card-body">
-                    <label for="inputNombre">Nombre</label>
-                    <input type="text" id="inputNombre" placeholder="Ej: Juan">
-                    <label for="inputApellido">Apellido</label>
-                    <input type="text" id="inputApellido" placeholder="Ej: Garcia Lopez">
-                    <label for="inputFecha">Fecha de Nacimiento</label>
-                    <input type="date" id="inputFecha" min="${fechaMin}" max="${fechaMax}">
-                    <label for="inputCurso">Curso</label>
-                    <select id="inputCurso">${opcionesCurso}</select>
-                    <label for="inputGrupo">Grupo</label>
-                    <select id="inputGrupo">${opcionesGrupo}</select>
-                    <button id="btnCrear">Crear</button>
-                    <a href="menuAlumno.html">Cancelar</a>
-                    <p id="mensaje"></p>
-                </div>
-            </div>
-        </div>
-    `;
+  ${añadirContenedorCrearAlumno(root)}
+  `
+       
+    
 
   /** Boton crear: valida el formulario, resuelve el aula por codigo y envia el alumno a la API. */
   document.getElementById("btnCrear").addEventListener("click", async function () {
@@ -123,3 +106,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 });
+
+function añadirContenedorCrearAlumno (html){
+  return `
+   <div class="containerCrear">
+            <h1>Crear Alumno</h1>
+            <div class="card">
+                <div class="card-body">
+                    <label for="inputNombre">Nombre</label>
+                    <input type="text" id="inputNombre" placeholder="Ej: Juan">
+                    <label for="inputApellido">Apellido</label>
+                    <input type="text" id="inputApellido" placeholder="Ej: Garcia Lopez">
+                    <label for="inputFecha">Fecha de Nacimiento</label>
+                    <input type="date" id="inputFecha" min="${fechaMin}" max="${fechaMax}">
+                    <label for="inputCurso">Curso</label>
+                    <select id="inputCurso">${opcionesCurso}</select>
+                    <label for="inputGrupo">Grupo</label>
+                    <select id="inputGrupo">${opcionesGrupo}</select>
+                    <button id="btnCrear">Crear</button>
+                    <a href="menuAlumno.html">Cancelar</a>
+                    <p id="mensaje"></p>
+                </div>
+            </div>
+        </div>
+  `
+}

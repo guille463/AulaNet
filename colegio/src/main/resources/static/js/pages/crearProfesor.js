@@ -43,30 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const root = document.getElementById("root");
 
     root.innerHTML = `
-        <div class="containerCrear">
-            <h1>Crear Profesor</h1>
-            <div class="card">
-                <div class="card-body">
-                    <label for="inputNombre">Nombre</label>
-                    <input type="text" id="inputNombre" placeholder="Ej: Carlos">
-                    <label for="inputApellido">Apellido</label>
-                    <input type="text" id="inputApellido" placeholder="Ej: Martinez Ruiz">
-                    <label for="inputEmail">Email</label>
-                    <input type="email" id="inputEmail" placeholder="Ej: carlos.martinez@colegio.es">
-                    <label for="inputEspecialidad">Especialidad</label>
-                    <select id="inputEspecialidad">${opcionesEspecialidad}</select>
-                    <div id="selectAula" style="display:none;">
-                        <label for="inputCurso">Curso (tutor)</label>
-                        <select id="inputCurso">${opcionesCurso}</select>
-                        <label for="inputGrupo">Grupo (tutor)</label>
-                        <select id="inputGrupo">${opcionesGrupo}</select>
-                    </div>
-                    <button id="btnCrear">Crear</button>
-                    <a href="menuProfesor.html">Cancelar</a>
-                    <p id="mensaje"></p>
-                </div>
-            </div>
-        </div>
+       ${añadirContainerCrearProfesor(root)}
     `;
 
     /** Cambio de especialidad: muestra u oculta el selector de aula si es tutor GENERAL. */
@@ -123,3 +100,33 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 });
+
+function añadirContainerCrearProfesor(html){
+return`
+ <div class="containerCrear">
+            <h1>Crear Profesor</h1>
+            <div class="card">
+                <div class="card-body">
+                    <label for="inputNombre">Nombre</label>
+                    <input type="text" id="inputNombre" placeholder="Ej: Carlos">
+                    <label for="inputApellido">Apellido</label>
+                    <input type="text" id="inputApellido" placeholder="Ej: Martinez Ruiz">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" id="inputEmail" placeholder="Ej: carlos.martinez@colegio.es">
+                    <label for="inputEspecialidad">Especialidad</label>
+                    <select id="inputEspecialidad">${opcionesEspecialidad}</select>
+                    <div id="selectAula" style="display:none;">
+                        <label for="inputCurso">Curso (tutor)</label>
+                        <select id="inputCurso">${opcionesCurso}</select>
+                        <label for="inputGrupo">Grupo (tutor)</label>
+                        <select id="inputGrupo">${opcionesGrupo}</select>
+                    </div>
+                    <button id="btnCrear">Crear</button>
+                    <a href="menuProfesor.html">Cancelar</a>
+                    <p id="mensaje"></p>
+                </div>
+            </div>
+        </div>
+`
+
+}
