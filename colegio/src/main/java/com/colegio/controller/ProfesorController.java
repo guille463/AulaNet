@@ -78,6 +78,20 @@ public class ProfesorController {
     }
 
     /**
+     * Devuelve los profesores que coinciden con el nombre y apellido indicados.
+     *
+     * @param nombre nombre del profesor
+     * @param apellido apellido del profesor
+     * @return lista de profesores que coinciden
+     */
+    @GetMapping("/buscar/{nombre}/{apellido}")
+    public List<Profesor> buscarPorNombreYApellido(
+            @PathVariable String nombre,
+            @PathVariable String apellido) {
+        return profesorService.buscarPorNombreYApellido(nombre, apellido);
+    }
+
+    /**
      * Guarda un nuevo profesor.
      *
      * @param profesor datos del profesor a guardar

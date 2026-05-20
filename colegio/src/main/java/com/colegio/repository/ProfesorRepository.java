@@ -49,6 +49,16 @@ public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
     List<Profesor> findByNombreStartingWithIgnoreCase(String nombre);
 
     /**
+     * Devuelve los profesores que coinciden con el nombre y apellido indicados,
+     * sin distinguir mayusculas.
+     *
+     * @param nombre nombre del profesor
+     * @param apellido apellido del profesor
+     * @return lista de profesores que coinciden
+     */
+    List<Profesor> findByNombreIgnoreCaseAndApellidoIgnoreCase(String nombre, String apellido);
+
+    /**
      * Comprueba si existe un profesor con el email indicado.
      *
      * @param email email a comprobar

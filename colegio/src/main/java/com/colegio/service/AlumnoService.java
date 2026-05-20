@@ -98,15 +98,8 @@ public class AlumnoService {
         return alumnoRepository.findByNombreStartingWithIgnoreCase(nombre);
     }
 
-    /**
-     * Devuelve los alumnos que coinciden exactamente con el nombre y apellido.
-     *
-     * @param nombre nombre del alumno
-     * @param apellido apellido del alumno
-     * @return lista de alumnos que coinciden
-     */
     public List<Alumno> buscarPorNombreYApellido(String nombre, String apellido) {
-        return alumnoRepository.findByNombreAndApellido(nombre, apellido);
+        return alumnoRepository.findByNombreIgnoreCaseAndApellidoIgnoreCase(nombre, apellido);
     }
 
     /**
