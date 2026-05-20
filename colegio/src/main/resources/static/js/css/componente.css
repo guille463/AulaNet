@@ -1,4 +1,8 @@
-/* TABLAS */
+/* =============================================
+   TABLAS
+   ============================================= */
+
+/* <table> */
 
 table {
     width: 100%;
@@ -7,22 +11,32 @@ table {
     margin-bottom: 2rem;
 }
 
+/* <thead> */
+
 thead {
     background-color: #1a3a5c;
     color: #ffffff;
 }
+
+/* <th> */
 
 th {
     padding: 1rem;
     text-align: left;
 }
 
+/* <td> */
+
 td {
     padding: 1rem;
     border-bottom: 1px solid #e2e8f0;
 }
 
-/* CARDS */
+/* =============================================
+   CARDS
+   ============================================= */
+
+/* <div class="card"> */
 
 .card {
     background-color: #ffffff;
@@ -32,12 +46,16 @@ td {
     padding: 1.5rem;
 }
 
+/* <h2 class="card-title"> */
+
 .card-title {
     font-size: 1.125rem;
     font-weight: 600;
     color: #1a3a5c;
     margin-bottom: 1rem;
 }
+
+/* <select> e <input> dentro del buscador */
 
 .card--buscador select,
 .card--buscador input {
@@ -47,12 +65,30 @@ td {
     margin-bottom: 0.5rem;
 }
 
+/* <button> dentro del buscador */
+
 .card--buscador button {
     padding: 0.5rem 1.5rem;
     font-size: 1rem;
 }
 
-/* BOTONES */
+/* =============================================
+   FORMULARIOS
+   ============================================= */
+
+/* <input type="text">, <input type="email">, <select> */
+
+input[type="text"],
+input[type="email"],
+select {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    width: 100%;
+}
+
+/* =============================================
+   BOTONES
+   ============================================= */
 
 /* <button> base */
 
@@ -67,15 +103,16 @@ button {
     transition: background-color 150ms ease;
 }
 
-/* <button id="btnBuscar"> */
+/* <button id="btnBuscar"> <button id="btnImprimir"> */
 
-#btnBuscar, #btnImprimir {
+#btnBuscar,
+#btnImprimir {
     background-color: #4a90d9;
     color: #ffffff;
 }
 
-
-#btnBuscar, #btnImprimir:hover {
+#btnBuscar:hover,
+#btnImprimir:hover {
     background-color: #3478c0;
 }
 
@@ -93,49 +130,7 @@ button {
     color: #ffffff;
 }
 
-/* MODAL */
-
-#modalConfirmar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-#modalConfirmar.activo {
-    display: flex;
-}
-
-#modalConfirmar > div {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 400px;
-}
-
-#btnConfirmarSi {
-    background-color: #dc2626;
-    color: #ffffff;
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-#btnConfirmarNo {
-    background-color: #f4f6f9;
-    color: #64748b;
-    width: 100%;
-    padding: 0.5rem;
-}
-
-#modalTexto{
-    color:rgba(0, 0, 0, 0.4)
-}
+/* <button class="btnCurso"> <button class="btnNombreAsignatura"> */
 
 .btnCurso,
 .btnNombreAsignatura {
@@ -150,8 +145,69 @@ button {
     border-color: #1a3a5c;
 }
 
-/*DESPLEGABLES CURSOS Y ASIGNATURAS*/
-/* <div id="grupos-"> y <div id="cursos-"> */
+/* =============================================
+   MODAL
+   ============================================= */
+
+/* <div id="modalConfirmar"> */
+
+#modalConfirmar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* <div id="modalConfirmar" class="activo"> */
+
+#modalConfirmar.activo {
+    display: flex;
+}
+
+/* contenedor interno del modal */
+
+#modalConfirmar > div {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 400px;
+}
+
+/* <p id="modalTexto"> */
+
+#modalTexto {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+/* <button id="btnConfirmarSi"> */
+
+#btnConfirmarSi {
+    background-color: #dc2626;
+    color: #ffffff;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* <button id="btnConfirmarNo"> */
+
+#btnConfirmarNo {
+    background-color: #f4f6f9;
+    color: #64748b;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+/* =============================================
+   DESPLEGABLES
+   ============================================= */
+
+/* <div id="grupos-"> <div id="cursos-"> */
 
 .aulaItem > div,
 .asignaturaItem > div {
@@ -159,4 +215,78 @@ button {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+
+/* <footer class="footer"> */
+
+.footer {
+    background-color: #1a3844;
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 2px solid #000000;
+    margin-top: auto;
+}
+
+/* <h3> y <p> dentro del footer */
+
+.footer h3,
+.footer p {
+    color: #e2e8f0;
+}
+
+/* <div class="footer__contenido"> */
+
+.footer__contenido {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* <div class="footer__info"> */
+
+.footer__info {
+    display: flex;
+    font-size: 25px;
+    flex-direction: column;
+    gap: 1rem;
+    margin-left: 10rem;
+}
+
+/* <div class="footer__contacto"> */
+
+.footer__contacto {
+    display: flex;
+    font-size: 25px;
+    flex-direction: column;
+    gap: 1rem;
+    margin-right: 10rem;
+}
+
+/* <div class="footer__copy"> */
+
+.footer__copy {
+    margin-top: 3rem;
+}
+
+/* <img class="iconoInsta"> */
+
+.iconoInsta {
+    width: 2.5rem;
+}
+
+/* <div class="instagram"> */
+
+.instagram {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* <span class="nombreRS"> */
+
+.nombreRS {
+    margin-top: 0.6rem;
 }
