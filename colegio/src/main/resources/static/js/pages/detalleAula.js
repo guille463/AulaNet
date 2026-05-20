@@ -145,30 +145,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       }
 
-      /** Boton asignar tutor: comprueba si ya hay tutor, si no envia el profesor seleccionado. */
-      document
-        .getElementById("btnAsignarTutor")
-        .addEventListener("click", async function () {
-          const mensajeTutor = document.getElementById("mensajeTutor");
-          mensajeTutor.textContent = "";
-          mensajeTutor.className = "";
+   /** Boton asignar tutor: comprueba si ya hay tutor, si no envia el profesor seleccionado. */
+document.getElementById("btnAsignarTutor").addEventListener("click", async function () {
+    const mensajeTutor = document.getElementById("mensajeTutor");
+    mensajeTutor.textContent = "";
+    mensajeTutor.className = "";
 
-          if (aula.tutor) {
-            mensajeTutor.textContent =
-              "Ya hay un tutor asignado. Eliminalo primero.";
-            mensajeTutor.className = "mensaje--error";
-            return;
-          }
-
-          const profesorId = selectProfesor.value;
-          const resultado = await AulaAPI.asignarTutor(id, profesorId);
-          if (resultado.datos) {
+    if (aula.tutor) {
+        mensajeTutor.textContent = "Ya hay un tutor asignado. Eliminalo primero.";
+        mensajeTutor.className = "mensaje--error";
+    } else {
+        const profesorId = selectProfesor.value;
+        const resultado = await AulaAPI.asignarTutor(id, profesorId);
+        if (resultado.datos) {
             window.location.reload();
-          } else {
+        } else {
             mensajeTutor.textContent = resultado.error.mensaje;
             mensajeTutor.className = "mensaje--error";
-          }
-        });
+        }
+    }
+});
       /** Boton eliminar tutor: desvincula el tutor actual del aula y recarga. */
       document
         .getElementById("btnEliminarTutor")
