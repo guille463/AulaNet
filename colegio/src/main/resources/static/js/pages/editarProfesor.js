@@ -1,7 +1,36 @@
+/**
+ * Pagina de edicion de un profesor existente.
+ *
+ * <p>Carga los datos actuales del profesor, permite modificarlos
+ * y los envia a {@link ProfesorAPI} para actualizarlos.</p>
+ *
+ * @module editarProfesor
+ * @see {@link ProfesorAPI}
+ */
+
 import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
-import { REGEX } from "../utils/constantes.js";
 import { ESPECIALIDADES, CURSOS, GRUPOS, REGEX } from "../utils/constantes.js";
+
+// ============================================================
+// INICIALIZACION DE OPCIONES
+// ============================================================
+
+/** @type {string} HTML de opciones para el selector de curso. */
+let opcionesCurso = "";
+for (const curso of CURSOS) {
+    opcionesCurso += `<option value="${curso}">${curso}</option>`;
+}
+
+/** @type {string} HTML de opciones para el selector de grupo. */
+let opcionesGrupo = "";
+for (const grupo of GRUPOS) {
+    opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
+}
+
+// ============================================================
+// EVENTO PRINCIPAL
+// ============================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -19,20 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!profesor) {
             root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
         } else {
+            // Las opciones con "selected" dependen del profesor cargado.
             let opcionesEspecialidad = "";
             for (const especialidad of ESPECIALIDADES) {
                 const seleccionado = profesor.especialidad === especialidad.valor ? "selected" : "";
                 opcionesEspecialidad += `<option value="${especialidad.valor}" ${seleccionado}>${especialidad.etiqueta}</option>`;
-            }
-
-            let opcionesCurso = "";
-            for (const curso of CURSOS) {
-                opcionesCurso += `<option value="${curso}">${curso}</option>`;
-            }
-
-            let opcionesGrupo = "";
-            for (const grupo of GRUPOS) {
-                opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
             }
 
             root.innerHTML = `
@@ -40,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <h1>Editar Profesor</h1>
                     <div class="card">
                         <div class="card-body">
-                            <p><strong>Código:</strong> ${profesor.codigo}</p>
+                            <p><strong>Codigo:</strong> ${profesor.codigo}</p>
                             <label>Nombre</label>
                             <input type="text" id="inputNombre" value="${profesor.nombre}">
                             <label>Apellido</label>
@@ -61,6 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
             `;
 
+            /** Cambio de especialidad: muestra u oculta el selector de aula si es tutor GENERAL. */
             document.getElementById("inputEspecialidad").addEventListener("change", function () {
                 const selectAula = document.getElementById("selectAula");
                 if (this.value === "GENERAL") {
@@ -70,6 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             });
 
+            /** Boton guardar: valida los campos y envia los cambios a la API. */
             document.getElementById("btnGuardar").addEventListener("click", async function () {
                 const mensaje = document.getElementById("mensaje");
 
@@ -81,6 +103,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (profesor.especialidad === "GENERAL") {
                     const curso = document.getElementById("inputCurso").value;
                     const grupo = document.getElementById("inputGrupo").value;
+                    // El codigo del aula se forma concatenando curso y grupo, ej: "1º" + "A" = "1ºA"
                     profesor.codigoAula = curso + grupo;
                 } else {
                     profesor.codigoAula = null;
@@ -96,7 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     mensaje.textContent = "El apellido solo puede contener letras";
                     mensaje.className = "mensaje--error";
                 } else if (!REGEX.EMAIL.test(profesor.email)) {
-                    mensaje.textContent = "El formato del email no es válido";
+                    mensaje.textContent = "El formato del email no es valido";
                     mensaje.className = "mensaje--error";
                 } else {
                     const resultadoActualizar = await ProfesorAPI.actualizar(id, profesor);

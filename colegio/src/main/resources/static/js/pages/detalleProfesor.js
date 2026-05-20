@@ -1,6 +1,20 @@
+/**
+ * Pagina de detalle de un profesor.
+ *
+ * <p>Muestra los datos del profesor y las asignaturas que imparte.</p>
+ *
+ * @module detalleProfesor
+ * @see {@link ProfesorAPI}
+ * @see {@link ProfesorAsignaturaAPI}
+ */
+
 import { ProfesorAPI } from "../api/profesorApi.js";
 import { ProfesorAsignaturaAPI } from "../api/profesorAsignaturaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
+
+// ============================================================
+// EVENTO PRINCIPAL
+// ============================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -21,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const respuestaAsignaturas = await ProfesorAsignaturaAPI.obtenerPorProfesor(id);
             const asignaturas = respuestaAsignaturas.datos;
 
+            // Se genera una fila por cada asignatura que imparte el profesor.
             let asignaturasHtml = "";
             if (asignaturas && asignaturas.length > 0) {
                 for (const pa of asignaturas) {
