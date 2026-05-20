@@ -99,7 +99,7 @@ public class AlumnoService {
     }
 
     public List<Alumno> buscarPorNombreYApellido(String nombre, String apellido) {
-        return alumnoRepository.findByNombreIgnoreCaseAndApellidoIgnoreCase(nombre, apellido);
+        return alumnoRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
     }
 
     /**

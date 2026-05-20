@@ -91,15 +91,8 @@ public class ProfesorService {
         return profesorRepository.findByNombreStartingWithIgnoreCase(nombre);
     }
 
-    /**
-     * Devuelve los profesores que coinciden con el nombre y apellido indicados.
-     *
-     * @param nombre nombre del profesor
-     * @param apellido apellido del profesor
-     * @return lista de profesores que coinciden
-     */
     public List<Profesor> buscarPorNombreYApellido(String nombre, String apellido) {
-        return profesorRepository.findByNombreIgnoreCaseAndApellidoIgnoreCase(nombre, apellido);
+        return profesorRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
     }
 
     /**

@@ -140,6 +140,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
+  /** Input de busqueda por nombre: lanza la busqueda en tiempo real al escribir. */
+  document
+    .getElementById("inputContainer")
+    .addEventListener("input", function (evento) {
+      if (document.getElementById("tipoBusqueda").value === "nombre") {
+        const valor = evento.target.value.trim();
+        if (valor.length >= 2) {
+          buscarPorNombre(valor);
+        }
+      }
+    });
+
   /** Boton buscar: redirige al metodo de busqueda segun el tipo. */
   document.getElementById("btnBuscar").addEventListener("click", function () {
     const tipo = document.getElementById("tipoBusqueda").value;
@@ -211,9 +223,9 @@ async function buscarPorId(id) {
 }
 
 /**
- * Busca alumnos por nombre y muestra los resultados.
+ * Busca alumnos por nombre, o por nombre y apellido si se escriben dos palabras.
  *
- * @param {string} nombre - Nombre a buscar.
+ * @param {string} nombre - Nombre o nombre y apellido separados por espacio.
  * @returns {Promise<void>}
  */
 async function buscarPorNombre(nombre) {
@@ -224,7 +236,20 @@ async function buscarPorNombre(nombre) {
   } else if (!REGEX.SOLO_LETRAS.test(nombre)) {
     resultado.innerHTML = `<p class="mensaje--error">El nombre solo puede contener letras</p>`;
   } else {
-    const respuesta = await AlumnoAPI.obtenerPorNombre(nombre);
+    const partes = nombre.trim().split(/\s+/);
+    let respuesta;
+
+    if (partes.length >= 2) {
+      // Si hay dos palabras busca por nombre y apellido
+      respuesta = await AlumnoAPI.obtenerPorNombreYApellido(
+        partes[0],
+        partes.slice(1).join(" "),
+      );
+    } else {
+      // Con una sola palabra busca solo por nombre
+      respuesta = await AlumnoAPI.obtenerPorNombre(partes[0]);
+    }
+
     if (respuesta.datos && respuesta.datos.length > 0) {
       let html = "";
       for (const alumno of respuesta.datos) {
