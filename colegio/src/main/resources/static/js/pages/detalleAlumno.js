@@ -1,6 +1,21 @@
+/**
+ * Pagina de detalle de un alumno.
+ *
+ * <p>Muestra los datos del alumno, sus asignaturas matriculadas
+ * y permite editar las notas de cada una.</p>
+ *
+ * @module detalleAlumno
+ * @see {@link AlumnoAPI}
+ * @see {@link AlumnoAsignaturaAPI}
+ */
+
 import { AlumnoAPI } from "../api/alumnoApi.js";
 import { AlumnoAsignaturaAPI } from "../api/alumnoAsignaturaApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
+
+// ============================================================
+// EVENTO PRINCIPAL
+// ============================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -20,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const respuestaMatriculas = await AlumnoAsignaturaAPI.obtenerPorAlumno(id);
     const matriculas = respuestaMatriculas.datos;
 
+    // Se genera una fila por cada matricula con un input de nota editable
     let asignaturasHtml = "";
     if (matriculas && matriculas.length > 0) {
       for (const matricula of matriculas) {
@@ -68,6 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>
     `;
 
+    /** Delegacion de eventos: detecta el boton guardar nota de cada fila y actualiza via API. */
     document.getElementById("root").addEventListener("click", async function (evento) {
       if (evento.target.classList.contains("btnEditarNota")) {
         const matriculaId = evento.target.getAttribute("data-id");
@@ -83,12 +100,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       }
     });
+
+    /** Boton imprimir: lanza el dialogo de impresion del navegador. */
+    document.querySelector(".imprimir").addEventListener("click", function () {
+      window.print();
+    });
   }
-
-  document.querySelector(".imprimir").addEventListener("click", function(){
-    window.print(); 
 });
-
-});
-
-
