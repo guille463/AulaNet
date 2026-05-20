@@ -7,6 +7,8 @@ export const AlumnoAPI = {
 
     obtenerPorNombre: (nombre) => fetchApi('GET', `/alumnos/buscar/${nombre}`),
 
+    obtenerPorNombreYApellido: (nombre, apellido) => fetchApi('GET', `/alumnos/buscar/${nombre}/${apellido}`),
+
     obtenerPorFecha: (fecha) => fetchApi('GET', `/alumnos/fecha/${fecha}`),
 
     obtenerPorCodigoAula: (codigo) => fetchApi('GET', `/alumnos/aula/codigo/${encodeURIComponent(codigo)}`),

@@ -8,6 +8,8 @@ export const ProfesorAPI = {
     obtenerPorId: (id) => fetchApi('GET', `/profesores/${id}`),
 
     obtenerPorNombre: (nombre) => fetchApi('GET', `/profesores/buscar/${nombre}`), 
+    
+    obtenerPorNombreYApellido: (nombre, apellido) => fetchApi('GET', `/profesores/buscar/${nombre}/${apellido}`),
 
     obtenerPorEmail: (email) => fetchApi ('GET', `/profesores/email/${email}`), 
 
