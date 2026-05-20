@@ -16,7 +16,8 @@ import com.colegio.util.Constantes;
  * <p>
  * Coordina la creacion, consulta, actualizacion y borrado de
  * {@link Asignatura}. Al guardar valida que no exista duplicado en el mismo
- * curso y que las horas semanales esten en el rango permitido.</p>
+ * curso y que las horas semanales esten en el rango permitido.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -67,12 +68,13 @@ public class AsignaturaService {
      * mismo curso.
      *
      * <p>
-     * Tras la primera persistencia asigna el codigo {@code ASG-<id>}.</p>
+     * Tras la primera persistencia asigna el codigo {@code ASG-<id>}.
+     * </p>
      *
      * @param asignatura datos de la asignatura a guardar
      * @return asignatura guardada con codigo asignado
      * @throws RuntimeException si ya existe la asignatura en ese curso o si las
-     * horas semanales no estan entre 1 y 6
+     *                          horas semanales no estan entre 1 y 6
      */
     public Asignatura guardarAsignatura(Asignatura asignatura) {
         if (asignaturaRepository.existsByNombreAndCurso(
@@ -89,11 +91,11 @@ public class AsignaturaService {
     /**
      * Actualiza los datos de una asignatura existente.
      *
-     * @param id id de la asignatura a actualizar
+     * @param id         id de la asignatura a actualizar
      * @param asignatura nuevos datos de la asignatura
      * @return asignatura actualizada
      * @throws RuntimeException si la asignatura no existe o si las horas
-     * semanales no estan entre 1 y 6
+     *                          semanales no estan entre 1 y 6
      */
     public Asignatura actualizarAsignatura(Long id, Asignatura asignatura) {
         Asignatura existente = buscarAsignaturaPorId(id);

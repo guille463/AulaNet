@@ -21,7 +21,8 @@ import com.colegio.service.ProfesorService;
  *
  * <p>
  * endpoints {@code /api/v1/profesores} y delega toda la logica de negocio en
- * {@link ProfesorService}.</p>
+ * {@link ProfesorService}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -80,7 +81,7 @@ public class ProfesorController {
     /**
      * Devuelve los profesores que coinciden con el nombre y apellido indicados.
      *
-     * @param nombre nombre del profesor
+     * @param nombre   nombre del profesor
      * @param apellido apellido del profesor
      * @return lista de profesores que coinciden
      */
@@ -105,7 +106,7 @@ public class ProfesorController {
     /**
      * Actualiza los datos de un profesor existente.
      *
-     * @param id id del profesor a actualizar
+     * @param id       id del profesor a actualizar
      * @param profesor nuevos datos del profesor
      * @return profesor actualizado
      */

@@ -21,7 +21,8 @@ import com.colegio.repository.ProfesorRepository;
  * <p>
  * Creacion, consulta, actualizacion y borrado de {@link ProfesorAsignatura}. Al
  * guardar valida que no exista duplicado y que las horas semanales esten en el
- * rango permitido.</p>
+ * rango permitido.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -106,7 +107,8 @@ public class ProfesorAsignaturaService {
      * @param profesorAsignatura datos de la relacion a guardar
      * @return relacion guardada
      * @throws RuntimeException si el profesor o la asignatura no existen, si la
-     * relacion ya existe, o si las horas semanales no estan entre 1 y 6
+     *                          relacion ya existe, o si las horas semanales no
+     *                          estan entre 1 y 6
      */
     public ProfesorAsignatura guardar(ProfesorAsignatura profesorAsignatura) {
         Profesor profesor = profesorRepository.findById(profesorAsignatura.getProfesor().getId())
@@ -132,14 +134,16 @@ public class ProfesorAsignaturaService {
      *
      * <p>
      * Si cambia el profesor o la asignatura, verifica que la nueva combinacion
-     * no este duplicada.</p>
+     * no este duplicada.
+     * </p>
      *
-     * @param id id de la relacion a actualizar
+     * @param id                 id de la relacion a actualizar
      * @param profesorAsignatura nuevos datos de la relacion
      * @return relacion actualizada
      * @throws RuntimeException si la relacion, el profesor o la asignatura no
-     * existen, si la nueva combinacion ya existe, o si las horas semanales no
-     * estan entre 1 y 6
+     *                          existen, si la nueva combinacion ya existe, o si las
+     *                          horas semanales no
+     *                          estan entre 1 y 6
      */
     public ProfesorAsignatura actualizar(Long id, ProfesorAsignatura profesorAsignatura) {
         ProfesorAsignatura existente = buscarPorId(id);

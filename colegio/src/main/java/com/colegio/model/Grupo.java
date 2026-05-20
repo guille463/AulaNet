@@ -5,7 +5,8 @@ package com.colegio.model;
  *
  * <p>
  * Cada constante tiene una etiqueta usada para generar el codigo del
- * {@link Aula}.</p>
+ * {@link Aula}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0

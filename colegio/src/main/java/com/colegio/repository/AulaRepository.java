@@ -17,7 +17,8 @@ import com.colegio.model.Profesor;
  *
  * <p>
  * Extiende {@link JpaRepository} y define consultas derivadas y JPQL para
- * filtrar aulas por curso, grupo, tutor y disponibilidad de plazas.</p>
+ * filtrar aulas por curso, grupo, tutor y disponibilidad de plazas.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0

@@ -19,7 +19,8 @@ import com.colegio.util.Constantes;
  * <p>
  * Creacion, consulta, actualizacion y borrado de {@link AlumnoAsignatura}. Al
  * guardar valida que el alumno y la asignatura pertenezcan al mismo curso y que
- * la nota sea valida.</p>
+ * la nota sea valida.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
@@ -85,13 +86,15 @@ public class AlumnoAsignaturaService {
      * Guarda una nueva matricula verificando curso, duplicados y nota.
      *
      * <p>
-     * Tras la primera persistencia asigna el codigo {@code MTR-<id>}.</p>
+     * Tras la primera persistencia asigna el codigo {@code MTR-<id>}.
+     * </p>
      *
      * @param alumnoAsignatura datos de la matricula a guardar
      * @return matricula guardada con codigo asignado
      * @throws RuntimeException si el alumno o la asignatura no existen, si el
-     * alumno ya esta matriculado, si el curso del alumno no coincide con el de
-     * la asignatura, o si la nota no esta entre 0 y 10
+     *                          alumno ya esta matriculado, si el curso del alumno
+     *                          no coincide con el de
+     *                          la asignatura, o si la nota no esta entre 0 y 10
      */
     public AlumnoAsignatura guardar(AlumnoAsignatura alumnoAsignatura) {
         Alumno alumno = alumnoRepository.findById(alumnoAsignatura.getAlumno().getId())
@@ -122,7 +125,7 @@ public class AlumnoAsignaturaService {
     /**
      * Actualiza la nota de una matricula existente.
      *
-     * @param id id de la matricula a actualizar
+     * @param id               id de la matricula a actualizar
      * @param alumnoAsignatura nuevos datos de la matricula
      * @return matricula con la nota actualizada
      * @throws RuntimeException si la matricula no existe o la nota no es valida

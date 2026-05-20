@@ -20,7 +20,8 @@ import com.colegio.service.ProfesorAsignaturaService;
  *
  * <p>
  * Expone los endpoints bajo {@code /api/v1/profesor-asignatura} y delega toda
- * la logica de negocio en {@link ProfesorAsignaturaService}.</p>
+ * la logica de negocio en {@link ProfesorAsignaturaService}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -105,7 +106,7 @@ public class ProfesorAsignaturaController {
     /**
      * Actualiza los datos de una relacion profesor-asignatura existente.
      *
-     * @param id id de la relacion a actualizar
+     * @param id                 id de la relacion a actualizar
      * @param profesorAsignatura nuevos datos de la relacion
      * @return relacion actualizada
      */

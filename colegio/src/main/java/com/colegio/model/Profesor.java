@@ -16,7 +16,8 @@ import jakarta.persistence.Transient;
  * <p>
  * Cada profesor tiene una {@link Especialidad} asignada y se identifica con un
  * codigo de prefijo {@code PROF-}. Las asignaturas que imparte se gestionan a
- * traves de {@link ProfesorAsignatura}.</p>
+ * traves de {@link ProfesorAsignatura}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -81,9 +82,9 @@ public class Profesor {
     /**
      * Crea un profesor con sus datos basicos.
      *
-     * @param nombre nombre del profesor
-     * @param apellido apellido del profesor
-     * @param email email del profesor
+     * @param nombre       nombre del profesor
+     * @param apellido     apellido del profesor
+     * @param email        email del profesor
      * @param especialidad especialidad del profesor
      */
     public Profesor(String nombre, String apellido, String email, Especialidad especialidad) {
@@ -200,7 +201,8 @@ public class Profesor {
      *
      * <p>
      * ({@code @Transient}). Si el profesor no es tutor de ninguna aula,
-     * devuelve {@code null}.</p>
+     * devuelve {@code null}.
+     * </p>
      *
      * @return codigo del aula, o {@code null} si no es tutor de ninguna
      */

@@ -20,7 +20,8 @@ import com.colegio.service.AlumnoAsignaturaService;
  *
  * <p>
  * Endpoints{@code /api/v1/alumno-asignatura} y delega toda la logica de negocio
- * en {@link AlumnoAsignaturaService}.</p>
+ * en {@link AlumnoAsignaturaService}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
@@ -93,7 +94,7 @@ public class AlumnoAsignaturaController {
     /**
      * Actualiza la nota de una matricula existente.
      *
-     * @param id id de la matricula a actualizar
+     * @param id               id de la matricula a actualizar
      * @param alumnoAsignatura nuevos datos de la matricula
      * @return matricula con la nota actualizada
      */

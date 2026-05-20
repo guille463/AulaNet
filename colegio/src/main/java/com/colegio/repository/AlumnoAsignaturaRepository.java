@@ -15,7 +15,8 @@ import com.colegio.model.Curso;
  *
  * <p>
  * Extiende {@link JpaRepository} y filtra matriculas por alumno, asignatura y
- * curso.</p>
+ * curso.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
@@ -60,10 +61,10 @@ public interface AlumnoAsignaturaRepository extends JpaRepository<AlumnoAsignatu
      * Comprueba si ya existe una matricula para el alumno y asignatura
      * indicados.
      *
-     * @param alumno alumno a comprobar
+     * @param alumno     alumno a comprobar
      * @param asignatura asignatura a comprobar
      * @return {@code true} si la matricula ya existe, {@code false} en caso
-     * contrario
+     *         contrario
      */
     boolean existsByAlumnoAndAsignatura(Alumno alumno, Asignatura asignatura);
 

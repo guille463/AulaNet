@@ -19,7 +19,8 @@ import com.colegio.service.AlumnoAsignaturaService;
  * <p>
  * Recorre todos los alumnos y los matricula en las asignaturas de su curso a
  * traves de {@link AlumnoAsignaturaService}. Solo crea la matricula si no
- * existe ya.</p>
+ * existe ya.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
@@ -48,7 +49,8 @@ public class Alumnoasignaturainitializater {
      *
      * <p>
      * Para cada alumno busca las asignaturas de su curso y crea la matricula si
-     * no existe ya.</p>
+     * no existe ya.
+     * </p>
      */
     public void iniciarAlumnoAsignaturas() {
         List<Alumno> alumnos = alumnoRepository.findAll();

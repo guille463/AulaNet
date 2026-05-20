@@ -16,7 +16,8 @@ import jakarta.persistence.Transient;
  *
  * <p>
  * Actua como clase de asociacion entre {@link Profesor} y {@link Asignatura}.
- * Almacena las horas semanales que el profesor dedica a la asignatura.</p>
+ * Almacena las horas semanales que el profesor dedica a la asignatura.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -64,8 +65,8 @@ public class ProfesorAsignatura {
      * Crea una relacion profesor-asignatura con sus datos basicos.
      *
      * @param horasSemanales horas semanales dedicadas a la asignatura
-     * @param profesor profesor que imparte la asignatura
-     * @param asignatura asignatura impartida
+     * @param profesor       profesor que imparte la asignatura
+     * @param asignatura     asignatura impartida
      */
     public ProfesorAsignatura(int horasSemanales, Profesor profesor, Asignatura asignatura) {
         this.horasSemanales = horasSemanales;
@@ -144,7 +145,8 @@ public class ProfesorAsignatura {
      *
      * <p>
      * ({@code @Transient}). Si la asignatura no esta asignada, devuelve
-     * {@code null}.</p>
+     * {@code null}.
+     * </p>
      *
      * @return curso de la asignatura, o {@code null} si no tiene asignatura
      */

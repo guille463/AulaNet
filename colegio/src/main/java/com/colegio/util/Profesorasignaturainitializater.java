@@ -22,7 +22,8 @@ import com.colegio.service.ProfesorAsignaturaService;
  * <p>
  * Asigna cada profesor {@link Especialidad#GENERAL} a las asignaturas de su
  * curso correspondiente. Los profesores especialistas se asignan a su
- * asignatura en todos los cursos.</p>
+ * asignatura en todos los cursos.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -52,7 +53,8 @@ public class Profesorasignaturainitializater {
      * <p>
      * Asigna a cada profesor {@link Especialidad#GENERAL} las asignaturas del
      * curso que le corresponde por posicion. Despues asigna los profesores
-     * especialistas a su asignatura en todos los cursos.</p>
+     * especialistas a su asignatura en todos los cursos.
+     * </p>
      */
     public void iniciarProfesorAsignaturas() {
         List<Profesor> profesoresGenerales = profesorRepository.findByEspecialidad(Especialidad.GENERAL);
@@ -97,9 +99,10 @@ public class Profesorasignaturainitializater {
      * asignaturas cuyo nombre coincide con el indicado.
      *
      * <p>
-     * Solo crea la relacion si no existe ya.</p>
+     * Solo crea la relacion si no existe ya.
+     * </p>
      *
-     * @param especialidad especialidad del profesor a buscar
+     * @param especialidad     especialidad del profesor a buscar
      * @param nombreAsignatura nombre de la asignatura a asignar
      */
     private void asignarPorEspecialidad(Especialidad especialidad, String nombreAsignatura) {

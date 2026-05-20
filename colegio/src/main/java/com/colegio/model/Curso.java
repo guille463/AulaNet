@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
  *
  * <p>
  * Cada constante tiene una etiqueta usada en la serializacion JSON mediante
- * {@code @JsonValue} y {@code @JsonCreator}.</p>
+ * {@code @JsonValue} y {@code @JsonCreator}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0

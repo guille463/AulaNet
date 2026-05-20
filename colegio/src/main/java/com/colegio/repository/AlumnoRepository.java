@@ -15,7 +15,8 @@ import com.colegio.model.Curso;
  *
  * <p>
  * Extiende {@link JpaRepository} y las diferentes consultas para filtrar
- * alumnos por aula, curso, nombre y fecha de nacimiento.</p>
+ * alumnos por aula, curso, nombre y fecha de nacimiento.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -61,7 +62,7 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
      * Devuelve los alumnos cuyo nombre y apellido empiezan por las cadenas
      * indicadas, sin distinguir mayusculas.
      *
-     * @param nombre prefijo del nombre
+     * @param nombre   prefijo del nombre
      * @param apellido prefijo del apellido
      * @return lista de alumnos que coinciden
      */

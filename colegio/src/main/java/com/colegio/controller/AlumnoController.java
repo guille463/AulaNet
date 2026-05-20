@@ -22,7 +22,8 @@ import com.colegio.service.AlumnoService;
  *
  * <p>
  * Endpoints {@code /api/v1/alumnos} y delega toda la logica de negocio en
- * {@link AlumnoService}.</p>
+ * {@link AlumnoService}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -103,7 +104,7 @@ public class AlumnoController {
     /**
      * Devuelve los alumnos que coinciden con el nombre y apellido indicados.
      *
-     * @param nombre nombre del alumno
+     * @param nombre   nombre del alumno
      * @param apellido apellido del alumno
      * @return lista de alumnos que coinciden
      */
@@ -138,7 +139,7 @@ public class AlumnoController {
     /**
      * Actualiza los datos de un alumno existente.
      *
-     * @param id id del alumno a actualizar
+     * @param id     id del alumno a actualizar
      * @param alumno nuevos datos del alumno
      * @return alumno actualizado
      */

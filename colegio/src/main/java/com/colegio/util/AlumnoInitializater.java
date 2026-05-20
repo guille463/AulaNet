@@ -23,7 +23,8 @@ import com.github.javafaker.Faker;
  * <p>
  * Genera alumnos aleatorios con datos ficticios usando {@link Faker} y los
  * guarda a traves de {@link AlumnoService}. Solo se ejecuta si no hay alumnos
- * en la base de datos.</p>
+ * en la base de datos.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 4.0
@@ -57,7 +58,8 @@ public class AlumnoInitializater {
      * Genera tantos alumnos como indica
      * {@link InicializadorConfig#getNumeroAlumnos()}. Si un alumno no puede
      * crearse (aula llena, curso sin plazas) se registra el error y se continua
-     * con el siguiente.</p>
+     * con el siguiente.
+     * </p>
      */
     public void iniciarAlumnos() {
         if (alumnoService.count() == 0) {
@@ -80,11 +82,12 @@ public class AlumnoInitializater {
      *
      * <p>
      * La edad del alumno determina el curso y se busca un aula con plazas
-     * libres en ese curso.</p>
+     * libres en ese curso.
+     * </p>
      *
      * @return alumno generado
      * @throws RuntimeException si no hay plazas disponibles en el curso
-     * correspondiente
+     *                          correspondiente
      */
     private Alumno crearAlumnoAleatorio() {
         Date fechaDate = faker.date().birthday(6, 12);
@@ -119,7 +122,8 @@ public class AlumnoInitializater {
      * <p>
      * Mapea edades de 6 a 11 años a
      * {@link Curso#PRIMERO} - {@link Curso#SEXTO}. Cualquier edad fuera de ese
-     * rango va a {@link Curso#SEXTO}.</p>
+     * rango va a {@link Curso#SEXTO}.
+     * </p>
      *
      * @param edad edad del alumno en años
      * @return curso correspondiente

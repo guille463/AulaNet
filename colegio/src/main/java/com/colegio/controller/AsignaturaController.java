@@ -21,7 +21,8 @@ import com.colegio.service.AsignaturaService;
  *
  * <p>
  * Expone los endpoints bajo {@code /api/v1/asignaturas} y delega toda la logica
- * de negocio en {@link AsignaturaService}.</p>
+ * de negocio en {@link AsignaturaService}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -80,7 +81,7 @@ public class AsignaturaController {
     /**
      * Actualiza los datos de una asignatura existente.
      *
-     * @param id id de la asignatura a actualizar
+     * @param id         id de la asignatura a actualizar
      * @param asignatura nuevos datos de la asignatura
      * @return asignatura actualizada
      */

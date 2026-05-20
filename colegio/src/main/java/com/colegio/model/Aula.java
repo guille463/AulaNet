@@ -18,7 +18,8 @@ import jakarta.persistence.Table;
  * <p>
  * Cada aula pertenece a un {@link Curso} y un {@link Grupo}, y puede tener un
  * {@link Profesor} asignado como tutor. Su codigo se genera automaticamente
- * combinando la etiqueta del curso y la del grupo.</p>
+ * combinando la etiqueta del curso y la del grupo.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -81,10 +82,11 @@ public class Aula {
      *
      * <p>
      * El codigo se genera automaticamente combinando las etiquetas de
-     * {@code curso} y {@code grupo}. La capacidad se fija en 30.</p>
+     * {@code curso} y {@code grupo}. La capacidad se fija en 30.
+     * </p>
      *
-     * @param curso curso academico del aula
-     * @param grupo grupo dentro del curso
+     * @param curso     curso academico del aula
+     * @param grupo     grupo dentro del curso
      * @param capacidad capacidad maxima de alumnos
      */
     public Aula(Curso curso, Grupo grupo, int capacidad) {

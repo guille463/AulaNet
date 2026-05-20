@@ -23,7 +23,8 @@ import com.colegio.util.Constantes;
  * <p>
  * Creacion, consulta, actualizacion y borrado de {@link Alumno}. Al guardar un
  * alumno verifica la capacidad del aula y lo matricula en las asignaturas de su
- * curso.</p>
+ * curso.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 4.0
@@ -118,7 +119,8 @@ public class AlumnoService {
      *
      * <p>
      * Asigna el codigo {@code ALUM-<id>} y matricula al alumno en todas las
-     * asignaturas de su curso.</p>
+     * asignaturas de su curso.
+     * </p>
      *
      * @param alumno datos del alumno a guardar
      * @return alumno guardado con codigo y matriculas asignadas
@@ -144,7 +146,7 @@ public class AlumnoService {
     /**
      * Actualiza los datos de un alumno existente.
      *
-     * @param id id del alumno a actualizar
+     * @param id     id del alumno a actualizar
      * @param alumno nuevos datos del alumno
      * @return alumno actualizado
      * @throws RuntimeException si el alumno o el aula no existen
@@ -202,7 +204,8 @@ public class AlumnoService {
      *
      * <p>
      * Solo crea la matricula si no existe ya. Asigna el codigo {@code MTR-<id>}
-     * tras cada persistencia.</p>
+     * tras cada persistencia.
+     * </p>
      *
      * @param alumno alumno a matricular
      */

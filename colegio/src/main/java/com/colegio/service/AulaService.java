@@ -17,7 +17,8 @@ import com.colegio.repository.ProfesorRepository;
  * <p>
  * Coordina la creacion, consulta, actualizacion y borrado de {@link Aula}. Al
  * guardar valida que la capacidad este en el rango permitido y que el codigo no
- * este duplicado. Gestiona tambien la asignacion de tutores.</p>
+ * este duplicado. Gestiona tambien la asignacion de tutores.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -104,12 +105,13 @@ public class AulaService {
      *
      * <p>
      * El codigo se genera automaticamente como la etiqueta del curso mas la
-     * etiqueta del grupo.</p>
+     * etiqueta del grupo.
+     * </p>
      *
      * @param aula datos del aula a guardar
      * @return aula guardada
      * @throws RuntimeException si ya existe un aula con ese codigo o si la
-     * capacidad no esta entre 15 y 30
+     *                          capacidad no esta entre 15 y 30
      */
     public Aula guardarAula(Aula aula) {
         validarCapacidad(aula.getCapacidad());
@@ -123,11 +125,11 @@ public class AulaService {
     /**
      * Actualiza los datos de un aula existente.
      *
-     * @param id id del aula a actualizar
+     * @param id   id del aula a actualizar
      * @param aula nuevos datos del aula
      * @return aula actualizada
      * @throws RuntimeException si el aula no existe o si la capacidad no esta
-     * entre 15 y 30
+     *                          entre 15 y 30
      */
     public Aula actualizarAula(Long id, Aula aula) {
         Aula existente = buscarAulaPorId(id);
@@ -157,13 +159,14 @@ public class AulaService {
      * Asigna un tutor a un aula.
      *
      * <p>
-     * Un profesor solo puede ser tutor de un aula a la vez.</p>
+     * Un profesor solo puede ser tutor de un aula a la vez.
+     * </p>
      *
-     * @param aulaId id del aula
+     * @param aulaId     id del aula
      * @param profesorId id del profesor a asignar como tutor
      * @return aula con el tutor asignado
      * @throws RuntimeException si el aula o el profesor no existen, o si el
-     * profesor ya es tutor de otra aula
+     *                          profesor ya es tutor de otra aula
      */
     public Aula asignarTutor(Long aulaId, Long profesorId) {
         Aula aula = buscarAulaPorId(aulaId);

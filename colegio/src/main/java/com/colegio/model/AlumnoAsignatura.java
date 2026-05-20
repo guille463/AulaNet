@@ -17,7 +17,8 @@ import jakarta.persistence.Transient;
  * <p>
  * Actua como clase de asociacion entre {@link Alumno} y {@link Asignatura}.
  * Almacena la nota obtenida y se identifica con un codigo de prefijo
- * {@code MTR-}. Se crea automaticamente al guardar un alumno.</p>
+ * {@code MTR-}. Se crea automaticamente al guardar un alumno.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
@@ -70,8 +71,8 @@ public class AlumnoAsignatura {
     /**
      * Crea una matricula con sus datos basicos.
      *
-     * @param nota nota inicial del alumno en la asignatura
-     * @param alumno alumno matriculado
+     * @param nota       nota inicial del alumno en la asignatura
+     * @param alumno     alumno matriculado
      * @param asignatura asignatura en la que se matricula
      */
     public AlumnoAsignatura(double nota, Alumno alumno, Asignatura asignatura) {
@@ -169,7 +170,8 @@ public class AlumnoAsignatura {
      *
      * <p>
      * ({@code @Transient}). Si la asignatura no esta asignada, devuelve
-     * {@code null}.</p>
+     * {@code null}.
+     * </p>
      *
      * @return curso de la asignatura, o {@code null} si no tiene asignatura
      */

@@ -5,7 +5,8 @@ package com.colegio.model;
  *
  * <p>
  * Determina las asignaturas que se asignan automaticamente a cada
- * {@link Profesor} al ser creado.</p>
+ * {@link Profesor} al ser creado.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0

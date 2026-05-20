@@ -20,7 +20,8 @@ import jakarta.persistence.Transient;
  * Cada alumno pertenece a un {@link Aula} y a traves de ella a un
  * {@link Curso}. Al ser creado, se le asigna automaticamente un codigo con
  * prefijo {@code ALUM-} y se matricula en todas las asignaturas
- * correspondientes a su curso.</p>
+ * correspondientes a su curso.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -79,10 +80,10 @@ public class Alumno {
     /**
      * Crea un alumno con sus datos basicos.
      *
-     * @param nombre nombre del alumno
-     * @param apellido apellido del alumno
+     * @param nombre          nombre del alumno
+     * @param apellido        apellido del alumno
      * @param fechaNacimiento fecha de nacimiento del alumno
-     * @param aula aula del alumno
+     * @param aula            aula del alumno
      */
     public Alumno(String nombre, String apellido, LocalDate fechaNacimiento, Aula aula) {
         this.nombre = nombre;
@@ -198,7 +199,8 @@ public class Alumno {
      *
      * <p>
      * ({@code @Transient}).Si el alumno no tiene aula asignada, devuelve
-     * {@code null}.</p>
+     * {@code null}.
+     * </p>
      *
      * @return curso del alumno, o {@code null} si no tiene aula asignada
      */

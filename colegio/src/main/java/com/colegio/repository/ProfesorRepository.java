@@ -14,7 +14,8 @@ import com.colegio.model.Profesor;
  *
  * <p>
  * Extiende {@link JpaRepository} y define consultas para filtrar profesores por
- * email, codigo, nombre y especialidad.</p>
+ * email, codigo, nombre y especialidad.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -52,7 +53,7 @@ public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
      * Devuelve los profesores cuyo nombre y apellido empiezan por las cadenas
      * indicadas, sin distinguir mayusculas.
      *
-     * @param nombre prefijo del nombre
+     * @param nombre   prefijo del nombre
      * @param apellido prefijo del apellido
      * @return lista de profesores que coinciden
      */

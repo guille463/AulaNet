@@ -15,7 +15,8 @@ import com.colegio.model.ProfesorAsignatura;
  *
  * <p>
  * Extiende {@link JpaRepository} y define consultas derivadas para filtrar
- * relaciones por profesor, asignatura y curso.</p>
+ * relaciones por profesor, asignatura y curso.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 2.0
@@ -67,7 +68,7 @@ public interface ProfesorAsignaturaRepository extends JpaRepository<ProfesorAsig
     /**
      * Comprueba si existe una relacion para el profesor y asignatura indicados.
      *
-     * @param profesor profesor a comprobar
+     * @param profesor   profesor a comprobar
      * @param asignatura asignatura a comprobar
      * @return {@code true} si existe, {@code false} en caso contrario
      */

@@ -15,7 +15,8 @@ import jakarta.persistence.Table;
  * <p>
  * Cada asignatura pertenece a un {@link Curso} y tiene un numero de horas
  * semanales asignadas. Los profesores que la imparten se gestionan a traves de
- * {@link ProfesorAsignatura}.</p>
+ * {@link ProfesorAsignatura}.
+ * </p>
  *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 3.0
@@ -72,8 +73,8 @@ public class Asignatura {
     /**
      * Crea una asignatura con sus datos basicos.
      *
-     * @param nombre nombre de la asignatura
-     * @param curso curso al que pertenece
+     * @param nombre      nombre de la asignatura
+     * @param curso       curso al que pertenece
      * @param horasSemana horas semanales de la asignatura
      * @param descripcion descripcion de la asignatura
      */
