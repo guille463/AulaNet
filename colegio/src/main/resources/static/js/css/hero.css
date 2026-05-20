@@ -21,7 +21,7 @@
     display: block;
 }
 
-/* capa oscura de la imagen */
+/* capa oscura sobre la imagen */
 
 .hero::after {
     content: '';
@@ -33,6 +33,10 @@
         rgba(26, 58, 92, 0.6) 100%
     );
 }
+
+/* =============================================
+   CONTENIDO DEL HERO
+   ============================================= */
 
 /* <div class="hero__contenido"> */
 
@@ -66,4 +70,3 @@
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.85);
 }
-
