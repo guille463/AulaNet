@@ -1,14 +1,27 @@
 /* =============================================
-   DETALLE
+   CONTENEDOR DETALLE
    ============================================= */
 
-/* <div class="containerDetalle"> */
+   /* <div class="containerDetalle"> */
 
 .containerDetalle {
     max-width: 90%;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 4rem 1rem;
 }
+
+
+/* <div class="containerDetalle"> */
+
+.containerDetalle > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* =============================================
+   CARD DETALLE
+   ============================================= */
 
 /* <div class="card--detalle"> */
 
@@ -28,7 +41,7 @@
     gap: 0.5rem;
 }
 
-/* <h2> codigo del alumno */
+/* <h2> codigo del registro */
 
 .card--detalle--body h2 {
     font-size: 1.25rem;
@@ -37,7 +50,7 @@
     margin: 0;
 }
 
-/* <p> datos del alumno */
+/* <p> datos del registro */
 
 .card--detalle--body p {
     font-size: 0.875rem;
@@ -51,6 +64,10 @@
     font-weight: 600;
     color: #64748b;
 }
+
+/* =============================================
+   BOTONES DE DETALLE
+   ============================================= */
 
 /* <button class="btnEditarNota"> */
 
@@ -69,6 +86,34 @@
     color: #ffffff;
 }
 
+/* <button id="btnAsignarTutor"> */
+
+#btnAsignarTutor {
+    background-color: #4a90d9;
+    color: #ffffff;
+}
+
+#btnAsignarTutor:hover {
+    background-color: #3478c0;
+}
+
+/* <button id="btnEliminarTutor"> */
+
+#btnEliminarTutor {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+#btnEliminarTutor:hover {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+/* =============================================
+   FORMULARIO DE DETALLE
+   ============================================= */
+
 /* <input type="number"> nota */
 
 .containerDetalle input[type="number"] {
@@ -77,18 +122,26 @@
     margin-bottom: 0;
 }
 
-/* <a> volver */
+/* =============================================
+   NAVEGACION DE DETALLE
+   ============================================= */
 
-.containerDetalle>div>a {
+/* <a class="volver"> */
+
+.volver {
     display: inline-block;
     font-size: 0.875rem;
     color: #64748b;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
-.containerDetalle>div>a:hover {
+.volver:hover {
     color: #1a3a5c;
 }
+
+/* =============================================
+   IMPRESION
+   ============================================= */
 
 @media print {
 
@@ -107,8 +160,7 @@
         zoom: 90%;
     }
 
-    h1{
+    h1 {
         font-size: 2rem;
     }
-
 }

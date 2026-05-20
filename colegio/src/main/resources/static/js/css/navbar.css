@@ -23,13 +23,6 @@
     gap: 70%;
 }
 
-/* <img class="navbar__logo"> */
-
-.navbar__logo {
-    height: 80px;
-    width: auto;
-}
-
 /* <a class="navbar__brand"> */
 
 .navbar__brand {
@@ -44,6 +37,13 @@
     color: #e2e8f0;
 }
 
+/* <img class="navbar__logo"> */
+
+.navbar__logo {
+    height: 80px;
+    width: auto;
+}
+
 /* <ul class="navbar__menu"> */
 
 .navbar__menu {
@@ -52,7 +52,6 @@
     gap: 0.5rem;
     margin: 0;
     padding: 0;
-    
 }
 
 /* <li class="navbar__item"> */
@@ -79,6 +78,10 @@
     color: #ffffff;
 }
 
+/* =============================================
+   DROPDOWN
+   ============================================= */
+
 /* <ul class="navbar__dropdown"> */
 
 .navbar__dropdown {
@@ -95,9 +98,13 @@
     z-index: 200;
 }
 
+/* muestra el dropdown al hacer hover sobre el item */
+
 .navbar__item:hover .navbar__dropdown {
     display: block;
 }
+
+/* <li> <a> dentro del dropdown */
 
 .navbar__dropdown li a {
     display: block;
@@ -116,6 +123,8 @@
 /* =============================================
    NAVBAR TRANSPARENTE
    ============================================= */
+
+/* variante para la pagina de inicio sobre el hero */
 
 .body--inicio .navbar {
     position: absolute;
