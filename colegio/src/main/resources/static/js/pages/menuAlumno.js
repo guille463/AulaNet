@@ -1,22 +1,45 @@
+/**
+ * Pagina de gestion del listado de alumnos.
+ *
+ * <p>Permite buscar alumnos por ID, nombre, fecha de nacimiento o aula,
+ * asi como eliminar registros mediante una confirmacion.</p>
+ *
+ * @module menuAlumno
+ * @see {@link AlumnoAPI}
+ * @see {@link crearTarjetaAlumno}
+ */
+
 import { AlumnoAPI } from "../api/alumnoApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaAlumno } from "../components/alumnoComponente.js";
 import { CURSOS, GRUPOS, REGEX } from "../utils/constantes.js";
 
-//VARIABLES
-let idAEliminar = null;
-let opcionesCurso = "";
-let opcionesGrupo = "";
+// ============================================================
+// VARIABLES
+// ============================================================
 
+/** @type {string|null} ID del alumno pendiente de eliminar. */
+let idAEliminar = null;
+
+// ============================================================
+// INICIALIZACION DE OPCIONES
+// ============================================================
+
+/** @type {string} HTML de opciones para el selector de curso. */
+let opcionesCurso = "";
 for (const curso of CURSOS) {
   opcionesCurso += `<option value="${curso}">${curso}</option>`;
 }
 
-
-
+/** @type {string} HTML de opciones para el selector de grupo. */
+let opcionesGrupo = "";
 for (const grupo of GRUPOS) {
   opcionesGrupo += `<option value="${grupo}">Grupo ${grupo}</option>`;
 }
+
+// ============================================================
+// EVENTO PRINCIPAL
+// ============================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
@@ -47,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <table>
             <thead>
                 <tr>
-                    <th>Código</th>
+                    <th>Codigo</th>
                     <th>Nombre</th>
                     <th>Fecha Nacimiento</th>
                     <th>Curso</th>
@@ -65,35 +88,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   cargarTodos();
 
+  /** Delegacion de eventos sobre el root: detecta el boton eliminar de cada fila. */
   document.getElementById("root").addEventListener("click", function (evento) {
     if (evento.target.classList.contains("btnEliminar")) {
       idAEliminar = evento.target.getAttribute("data-id");
       document.getElementById("modalTexto").textContent =
-        "¿Estás seguro de que quieres eliminar al alumno " + idAEliminar + "?";
+        "¿Estas seguro de que quieres eliminar al alumno " + idAEliminar + "?";
       document.getElementById("modalConfirmar").classList.add("activo");
     }
   });
 
+  /** Confirmacion del modal: ejecuta la eliminacion y muestra el mensaje de exito. */
   document
     .getElementById("btnConfirmarSi")
     .addEventListener("click", async function () {
       document.getElementById("modalConfirmar").classList.remove("activo");
       await eliminarAlumno(idAEliminar);
-      const eliminado = idAEliminar; 
+      const eliminado = idAEliminar;
       idAEliminar = null;
       document.getElementById("resultado").innerHTML =
-        `<p class="mensaje--exito">Alumno con id ${eliminado} eliminado con éxito</p>`;
+        `<p class="mensaje--exito">Alumno con id ${eliminado} eliminado con exito</p>`;
     });
 
+  /** Confirmacion negativa del modal: cancela la operacion y muestra el mensaje de cancelacion. */
   document
     .getElementById("btnConfirmarNo")
     .addEventListener("click", function () {
       document.getElementById("modalConfirmar").classList.remove("activo");
       idAEliminar = null;
       document.getElementById("resultado").innerHTML =
-        `<p class="mensaje--error">Operación cancelada</p>`;
+        `<p class="mensaje--error">Operacion cancelada</p>`;
     });
 
+  /** Cambio de tipo de busqueda: reemplaza el input segun la seleccion. */
   document
     .getElementById("tipoBusqueda")
     .addEventListener("change", function () {
@@ -106,12 +133,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else if (tipo === "fecha") {
         container.innerHTML = `<input type="date" id="inputBusqueda" class="form-control">`;
       } else if (tipo === "curso") {
+        // Curso+grupo permite construir el codigo de aula, ej: "1ºA"
         container.innerHTML = `
           <select id="inputCurso" class="form-select">${opcionesCurso}</select>
           <select id="inputGrupo" class="form-select">${opcionesGrupo}</select>`;
       }
     });
 
+  /** Boton buscar: redirige al metodo de busqueda segun el tipo. */
   document.getElementById("btnBuscar").addEventListener("click", function () {
     const tipo = document.getElementById("tipoBusqueda").value;
     if (tipo === "id") {
@@ -126,11 +155,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else if (tipo === "curso") {
       const curso = document.getElementById("inputCurso").value;
       const grupo = document.getElementById("inputGrupo").value;
+      // El codigo del aula se forma concatenando curso y grupo, ej: "1º" + "A" = "1ºA"
       buscarPorCodigoAula(curso + grupo);
     }
   });
 });
 
+// ============================================================
+// FUNCIONES
+// ============================================================
+
+/**
+ * Carga todos los alumnos y los muestra en la tabla principal.
+ *
+ * @returns {Promise<void>}
+ */
 async function cargarTodos() {
   const listaAlumnos = document.getElementById("listaAlumnos");
   listaAlumnos.innerHTML = "";
@@ -146,23 +185,37 @@ async function cargarTodos() {
   }
 }
 
+/**
+ * Busca un alumno por su ID y muestra el resultado.
+ *
+ * @param {string} id - ID numerico del alumno.
+ * @returns {Promise<void>}
+ */
 async function buscarPorId(id) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
   if (!id) {
     resultado.innerHTML = `<p class="mensaje--error">Introduce un ID</p>`;
   } else if (!REGEX.SOLO_NUMEROS.test(id)) {
-    resultado.innerHTML = `<p class="mensaje--error">El ID solo puede contener números</p>`;
+    resultado.innerHTML = `<p class="mensaje--error">El ID solo puede contener numeros</p>`;
   } else {
     const respuesta = await AlumnoAPI.obtenerPorId(id);
     if (respuesta.datos) {
-      resultado.innerHTML = crearTablaAlumnos(crearTarjetaAlumno(respuesta.datos));
+      resultado.innerHTML = crearTablaAlumnos(
+        crearTarjetaAlumno(respuesta.datos),
+      );
     } else {
       resultado.innerHTML = `<p class="mensaje--error">Alumno con id: ${id} no encontrado</p>`;
     }
   }
 }
 
+/**
+ * Busca alumnos por nombre y muestra los resultados.
+ *
+ * @param {string} nombre - Nombre a buscar.
+ * @returns {Promise<void>}
+ */
 async function buscarPorNombre(nombre) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -184,7 +237,12 @@ async function buscarPorNombre(nombre) {
   }
 }
 
-
+/**
+ * Busca alumnos por fecha de nacimiento y muestra los resultados.
+ *
+ * @param {string} fecha - Fecha en formato YYYY-MM-DD.
+ * @returns {Promise<void>}
+ */
 async function buscarPorFecha(fecha) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -204,6 +262,12 @@ async function buscarPorFecha(fecha) {
   }
 }
 
+/**
+ * Busca alumnos por el codigo de aula y muestra los resultados.
+ *
+ * @param {string} codigoAula - Codigo del aula, ej {@code "1ºA"}.
+ * @returns {Promise<void>}
+ */
 async function buscarPorCodigoAula(codigoAula) {
   const resultado = document.getElementById("resultado");
   resultado.innerHTML = "";
@@ -219,6 +283,12 @@ async function buscarPorCodigoAula(codigoAula) {
   }
 }
 
+/**
+ * Elimina un alumno por ID y recarga la lista principal.
+ *
+ * @param {string} id - ID del alumno a eliminar.
+ * @returns {Promise<void>}
+ */
 async function eliminarAlumno(id) {
   const respuesta = await AlumnoAPI.eliminar(id);
   if (respuesta.datos) {
@@ -229,12 +299,18 @@ async function eliminarAlumno(id) {
   }
 }
 
+/**
+ * Genera el HTML de una tabla de alumnos con las filas proporcionadas.
+ *
+ * @param {string} filas - HTML de las filas {@code <tr>} a insertar.
+ * @returns {string} HTML completo de la tabla.
+ */
 function crearTablaAlumnos(filas) {
   return `
         <table>
             <thead>
                 <tr>
-                    <th>Código</th>
+                    <th>Codigo</th>
                     <th>Nombre</th>
                     <th>Fecha Nacimiento</th>
                     <th>Curso</th>
