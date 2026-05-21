@@ -45,26 +45,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
 
-  root.innerHTML = `
+ root.innerHTML = `
   <div class="containerGestion">
-        <h1>Gestionar Alumnos</h1>
-        <a href="crearAlumno.html">Añadir alumno</a>
-      <div class="card card--buscador">
-          <div class="card-body">
-            <h2 class="card-title">Buscar Alumno</h2>
-           ${añadirSelectsBusquedaAlumno(root)}
-            <div id="inputContainer">
-              <input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">
-            </div>
-            <button class="btn btn-Buscar" id="btnBuscar">Buscar</button>
-          </div>
+    <h1>Gestionar Alumnos</h1>
+    <a href="crearAlumno.html">Añadir alumno</a>
+    <div class="card card--buscador">
+      <div class="card-body">
+        <h2 class="card-title">Buscar Alumno</h2>
+        ${añadirSelectsBusquedaAlumno()}
+        <div id="inputContainer">
+          <input type="text" id="inputBusqueda" class="form-control" placeholder="Introduce el ID">
         </div>
-        <div id="resultado"></div>
-        <hr>
-        <h2>Lista de Alumnos</h2>
-        ${añadirTablaAlumno(root)}
-        </table>
+        <button class="btn btn-Buscar" id="btnBuscar">Buscar</button>
       </div>
+    </div>
+    <div id="resultado"></div>
+    <hr>
+    <h2>Lista de Alumnos</h2>
+    ${añadirTablaAlumno()}
+  </div>
 `;
 
   cargarTodos();
@@ -333,7 +332,7 @@ function crearTablaAlumnos(filas) {
     `;
 }
 
-function añadirTablaAlumno(html){
+function añadirTablaAlumno(){
   return `
    <table>
             <thead>
@@ -353,7 +352,7 @@ function añadirTablaAlumno(html){
   `
 }
 
-function añadirSelectsBusquedaAlumno (html){
+function añadirSelectsBusquedaAlumno (){
 
   return `
    <select id="tipoBusqueda" class="form-select">
