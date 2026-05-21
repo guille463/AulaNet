@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="card card--buscador">
           <div class="card-body">
             <h2 class="card-title">Buscar Docente</h2>
-          ${AñadirselectsBusquedaProfesor (root)}
+          ${AñadirselectsBusquedaProfesor ()}
             <div id="inputContainer">
               <input type="text" id="inputBusqueda" class="form-control" placeholder="">
             </div>
@@ -62,28 +62,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div id="resultado"></div>
         <hr>
         <h2>Lista de Profesores</h2>
-        ${AñadirTablasDeProfesores(root)}   
+        ${AñadirTablasDeProfesores()}   
     </div>
 `;
 
   cargarTodos();
 
-  try {
-    const respuetsaAulas = await AulaAPI.obtenerTodos();
-    if (respuetsaAulas.datos) {
-      for (const aula of respuetsaAulas.datos) {
-        if (aula.tutor) {
-          tutoresPorAula.set(String(aula.tutor.id), aula.codigo)
-        }
-      }
-    }
+ await cargarMapaTutores();
 
-  } catch (error) {
-    console.error("Error al cargar el mapa");
-
-
-  }
-
+// ============================================================
+// LITENER
+// ============================================================
 
   /** Detecta el boton eliminar de cada fila. */
   document.getElementById("root").addEventListener("click", function (evento) {
@@ -171,7 +160,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // ============================================================
-// FUNCIONES
+// FUNCIONES ASYNC
 // ============================================================
 
 /**
@@ -323,6 +312,25 @@ async function eliminarProfesor(id) {
   }
 }
 
+async function cargarMapaTutores() {
+  try {
+    const respuesta = await AulaAPI.obtenerTodos();
+    if (respuesta.datos) {
+      for (const aula of respuesta.datos) {
+        if (aula.tutor) {
+          tutoresPorAula.set(String(aula.tutor.id), aula.codigo);
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error al cargar el mapa de tutores");
+  }
+}
+
+
+// ============================================================
+// FINCIONES
+// ============================================================
 /**
  * Genera el HTML de una tabla de profesores con las filas proporcionadas.
  *
@@ -348,7 +356,7 @@ function crearTablaProfesores(filas) {
     `;
 }
 
-function AñadirselectsBusquedaProfesor(html){
+function AñadirselectsBusquedaProfesor(){
   return `
   <select id="tipoBusqueda" class="form-select">
               <option value="id">Por ID</option>
@@ -359,7 +367,7 @@ function AñadirselectsBusquedaProfesor(html){
   `
 }
 
-function AñadirTablasDeProfesores(html){
+function AñadirTablasDeProfesores(){
   return`
    <table>
             <thead>
@@ -376,4 +384,12 @@ function AñadirTablasDeProfesores(html){
             <tbody id="listaProfesores"></tbody>
         </table>
   `
+}
+
+function mostrarResultados(datos) {
+  let html = "";
+  for (const profesor of datos) {
+    html += crearTarjetaProfesor(profesor);
+  }
+  document.getElementById("resultado").innerHTML = crearTablaProfesores(html);
 }

@@ -60,29 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 opcionesGrupo += `<option value="${grupo}" ${seleccionado}>Grupo ${grupo}</option>`;
             }
 
-            root.innerHTML = `
-            <div class="containerEditar">
-                <h1>Editar Alumno</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <p><strong>Codigo:</strong> ${alumno.codigo}</p>
-                        <label>Nombre</label>
-                        <input type="text" id="inputNombre" value="${alumno.nombre}">
-                        <label>Apellido</label>
-                        <input type="text" id="inputApellido" value="${alumno.apellido}">
-                        <label>Fecha de Nacimiento</label>
-                        <input type="date" id="inputFecha" value="${alumno.fechaNacimiento}">
-                        <label>Curso</label>
-                        <select id="inputCurso">${opcionesCurso}</select>
-                        <label>Grupo</label>
-                        <select id="inputGrupo">${opcionesGrupo}</select>
-                        <p id="mensaje"></p>
-                        <button id="btnGuardar">Guardar</button>
-                        <a href="menuAlumno.html">Cancelar</a>
-                    </div>
-                </div>
-            </div>
-        `;
+         root.innerHTML = añadirFormularioEditarAlumno(alumno, opcionesCurso, opcionesGrupo);
 
             /** Boton guardar: valida los campos y envia los cambios a la API. */
             document.getElementById("btnGuardar").addEventListener("click", async function () {
@@ -135,3 +113,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 });
+
+function añadirFormularioEditarAlumno(alumno, opcionesCurso, opcionesGrupo) {
+  return `
+    <div class="containerEditar">
+      <h1>Editar Alumno</h1>
+      <div class="card">
+        <div class="card-body">
+          <p><strong>Codigo:</strong> ${alumno.codigo}</p>
+          <label>Nombre</label>
+          <input type="text" id="inputNombre" value="${alumno.nombre}">
+          <label>Apellido</label>
+          <input type="text" id="inputApellido" value="${alumno.apellido}">
+          <label>Fecha de Nacimiento</label>
+          <input type="date" id="inputFecha" value="${alumno.fechaNacimiento}">
+          <label>Curso</label>
+          <select id="inputCurso">${opcionesCurso}</select>
+          <label>Grupo</label>
+          <select id="inputGrupo">${opcionesGrupo}</select>
+          <p id="mensaje"></p>
+          <button id="btnGuardar">Guardar</button>
+          <a href="menuAlumno.html">Cancelar</a>
+        </div>
+      </div>
+    </div>
+  `;
+}

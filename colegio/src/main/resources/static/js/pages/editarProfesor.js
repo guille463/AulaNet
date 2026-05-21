@@ -55,31 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 opcionesEspecialidad += `<option value="${especialidad.valor}" ${seleccionado}>${especialidad.etiqueta}</option>`;
             }
 
-            root.innerHTML = `
-                <div class="containerEditar">
-                    <h1>Editar Profesor</h1>
-                    <div class="card">
-                        <div class="card-body">
-                            <p><strong>Codigo:</strong> ${profesor.codigo}</p>
-                            <label>Nombre</label>
-                            <input type="text" id="inputNombre" value="${profesor.nombre}">
-                            <label>Apellido</label>
-                            <input type="text" id="inputApellido" value="${profesor.apellido}">
-                            <label>Email</label>
-                            <input type="text" id="inputEmail" value="${profesor.email}">
-                            <label>Especialidad</label>
-                            <select id="inputEspecialidad">${opcionesEspecialidad}</select>
-                            <div id="selectAula" style="display:${profesor.especialidad === "GENERAL" ? "block" : "none"};">
-                                <select id="inputCurso">${opcionesCurso}</select>
-                                <select id="inputGrupo">${opcionesGrupo}</select>
-                            </div>
-                            <p id="mensaje"></p>
-                            <button id="btnGuardar">Guardar</button>
-                            <a href="menuProfesor.html">Cancelar</a>
-                        </div>
-                    </div>
-                </div>
-            `;
+           root.innerHTML = añadirFormularioEditarProfesor(profesor, opcionesEspecialidad, opcionesCurso, opcionesGrupo);
 
             /** Cambio de especialidad: muestra u oculta el selector de aula si es tutor GENERAL. */
             document.getElementById("inputEspecialidad").addEventListener("change", function () {
@@ -135,3 +111,31 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 });
+
+function añadirFormularioEditarProfesor(profesor, opcionesEspecialidad, opcionesCurso, opcionesGrupo) {
+  return `
+    <div class="containerEditar">
+      <h1>Editar Profesor</h1>
+      <div class="card">
+        <div class="card-body">
+          <p><strong>Codigo:</strong> ${profesor.codigo}</p>
+          <label>Nombre</label>
+          <input type="text" id="inputNombre" value="${profesor.nombre}">
+          <label>Apellido</label>
+          <input type="text" id="inputApellido" value="${profesor.apellido}">
+          <label>Email</label>
+          <input type="text" id="inputEmail" value="${profesor.email}">
+          <label>Especialidad</label>
+          <select id="inputEspecialidad">${opcionesEspecialidad}</select>
+          <div id="selectAula" style="display:${profesor.especialidad === "GENERAL" ? "block" : "none"};">
+            <select id="inputCurso">${opcionesCurso}</select>
+            <select id="inputGrupo">${opcionesGrupo}</select>
+          </div>
+          <p id="mensaje"></p>
+          <button id="btnGuardar">Guardar</button>
+          <a href="menuProfesor.html">Cancelar</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
