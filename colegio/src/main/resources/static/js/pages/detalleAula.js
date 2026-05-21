@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         profesoresHtml = `<tr><td colspan="3">Sin profesores asignados</td></tr>`;
       }
-     root.innerHTML = `
+      root.innerHTML = `
   <div class="containerDetalle">
     <h1>Detalle del Aula</h1>
     <div class="card--detalle">
@@ -117,6 +117,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           selectProfesor.appendChild(opcion);
         }
       }
+
+      // ============================================================
+      // LISTENER
+      // ============================================================
 
       /** Boton asignar tutor: comprueba si ya hay tutor, si no envia el profesor seleccionado. */
       document

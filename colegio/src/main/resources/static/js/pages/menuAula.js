@@ -38,16 +38,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await cargarTodos();
 
+  // ============================================================
+  // LISTENER
+  // ============================================================
+
   /** gestiona clicks en curso y grupo. */
   document
     .getElementById("listaAulas")
     .addEventListener("click", async function (evento) {
-
       // Click en un curso: muestra u oculta sus grupos.
       if (evento.target.classList.contains("btnCurso")) {
         const cursoSeleccionado = evento.target.getAttribute("data-curso");
-        const divGrupos = document.getElementById("grupos-" + cursoSeleccionado);
-        const divTarjeta = document.getElementById("tarjeta-" + cursoSeleccionado);
+        const divGrupos = document.getElementById(
+          "grupos-" + cursoSeleccionado,
+        );
+        const divTarjeta = document.getElementById(
+          "tarjeta-" + cursoSeleccionado,
+        );
 
         if (divGrupos.style.display === "none") {
           divGrupos.style.display = "flex";
@@ -61,7 +68,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (evento.target.classList.contains("btnGrupo")) {
         const cursoSeleccionado = evento.target.getAttribute("data-curso");
         const grupoSeleccionado = evento.target.getAttribute("data-grupo");
-        const divTarjeta = document.getElementById("tarjeta-" + cursoSeleccionado);
+        const divTarjeta = document.getElementById(
+          "tarjeta-" + cursoSeleccionado,
+        );
 
         let aulaEncontrada = null;
 
@@ -124,7 +133,7 @@ async function cargarTodos() {
 
 /**
  * Busca un aula por su ID y muestra el resultado.
- * 
+ *
  * @param {string} id - ID numerico del aula.
  * @returns {Promise<void>}
  * @todo Funcion declarada pero no utilizada en el flujo actual.

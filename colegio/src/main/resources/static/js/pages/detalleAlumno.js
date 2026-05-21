@@ -59,22 +59,34 @@ ${añadirDetalleAlumno(alumno, aula)}
       </div>
     `;
 
+    // ============================================================
+    // LISTENER
+    // ============================================================
+
     /** Delegacion de eventos: detecta el boton guardar nota de cada fila y actualiza via API. */
-    document.getElementById("root").addEventListener("click", async function (evento) {
-      if (evento.target.classList.contains("btnEditarNota")) {
-        const matriculaId = evento.target.getAttribute("data-id");
-        const nota = document.getElementById("nota-" + matriculaId).value;
-        const resultado = await AlumnoAsignaturaAPI.actualizarNota(matriculaId, nota);
-        if (resultado.datos) {
-          document.getElementById("notaActual-" + matriculaId).textContent = nota;
-          document.getElementById("mensaje").textContent = "Nota actualizada correctamente";
-          document.getElementById("mensaje").className = "mensaje--exito";
-        } else {
-          document.getElementById("mensaje").textContent = "Error al actualizar la nota";
-          document.getElementById("mensaje").className = "mensaje--error";
+    document
+      .getElementById("root")
+      .addEventListener("click", async function (evento) {
+        if (evento.target.classList.contains("btnEditarNota")) {
+          const matriculaId = evento.target.getAttribute("data-id");
+          const nota = document.getElementById("nota-" + matriculaId).value;
+          const resultado = await AlumnoAsignaturaAPI.actualizarNota(
+            matriculaId,
+            nota,
+          );
+          if (resultado.datos) {
+            document.getElementById("notaActual-" + matriculaId).textContent =
+              nota;
+            document.getElementById("mensaje").textContent =
+              "Nota actualizada correctamente";
+            document.getElementById("mensaje").className = "mensaje--exito";
+          } else {
+            document.getElementById("mensaje").textContent =
+              "Error al actualizar la nota";
+            document.getElementById("mensaje").className = "mensaje--error";
+          }
         }
-      }
-    });
+      });
 
     /** Boton imprimir: lanza el dialogo de impresion del navegador. */
     document.querySelector(".imprimir").addEventListener("click", function () {
@@ -99,7 +111,7 @@ function añadirDetalleAlumno(alumno, aula) {
                  <p><strong>Aula:</strong> <a href="detalleAula.html?id=${aula.id}">${aula.codigo}</a></p>
                   <p><strong>Tutor:</strong> ${aula.tutor ? aula.tutor.nombre + " " + aula.tutor.apellido : "Sin tutor"}</p>
               </div>
-  `
+  `;
 }
 
 function añadirDetalleAlumnoNotas(asignaturasHtml) {
@@ -115,7 +127,7 @@ function añadirDetalleAlumnoNotas(asignaturasHtml) {
               <tbody>${asignaturasHtml}</tbody>
           </table>
   
-  `
+  `;
 }
 
 function crearTablaNotas(matricula) {
@@ -129,5 +141,5 @@ function crearTablaNotas(matricula) {
               </td>
           </tr>
   
-  `
+  `;
 }

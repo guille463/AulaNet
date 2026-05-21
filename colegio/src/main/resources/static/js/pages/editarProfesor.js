@@ -67,6 +67,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             });
 
+// ============================================================
+// LISTENER
+// ============================================================    
+
             /** Boton guardar: valida los campos y envia los cambios a la API. */
             document.getElementById("btnGuardar").addEventListener("click", async function () {
                 const mensaje = document.getElementById("mensaje");

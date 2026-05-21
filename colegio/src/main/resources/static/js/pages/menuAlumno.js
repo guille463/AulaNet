@@ -120,6 +120,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
+
+// ============================================================
+// LISTENER
+// ============================================================    
+
   /** Input de busqueda por nombre: lanza la busqueda en tiempo real al escribir. */
   document.getElementById("inputContainer").addEventListener("input", function (evento) {
     if (document.getElementById("tipoBusqueda").value === "nombre") {

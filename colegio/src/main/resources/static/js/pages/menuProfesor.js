@@ -13,7 +13,7 @@ import { ProfesorAPI } from "../api/profesorApi.js";
 import { crearBarraNavegacion } from "../components/navbar.js";
 import { crearTarjetaProfesor } from "../components/profesorComponente.js";
 import { ESPECIALIDADES, REGEX } from "../utils/constantes.js";
-import { AulaAPI } from "../api/aulaApi.js"
+import { AulaAPI } from "../api/aulaApi.js";
 
 // ============================================================
 // VARIABLES
@@ -24,8 +24,6 @@ let idAEliminar = null;
 
 /** @type {Map<string, string} Mapa de profesorId a codigo de aula para detectar tutores */
 const tutoresPorAula = new Map();
-
-
 
 // ============================================================
 // INICIALIZACION DE OPCIONES
@@ -52,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="card card--buscador">
           <div class="card-body">
             <h2 class="card-title">Buscar Docente</h2>
-          ${AñadirselectsBusquedaProfesor ()}
+          ${AñadirselectsBusquedaProfesor()}
             <div id="inputContainer">
               <input type="text" id="inputBusqueda" class="form-control" placeholder="">
             </div>
@@ -68,25 +66,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   cargarTodos();
 
- await cargarMapaTutores();
+  await cargarMapaTutores();
 
-// ============================================================
-// LITENER
-// ============================================================
+  // ============================================================
+  // LITENER
+  // ============================================================
 
   /** Detecta el boton eliminar de cada fila. */
   document.getElementById("root").addEventListener("click", function (evento) {
     if (evento.target.classList.contains("btnEliminar")) {
       idAEliminar = evento.target.getAttribute("data-id");
       if (tutoresPorAula.has(idAEliminar)) {
-        document.getElementById("resultado").innerHTML = `<p class="mensaje--error"> No se puede eliminar al profesor porque es tutor del aula ${tutoresPorAula.get(idAEliminar)}</p>`;
-        idAEliminar = null
+        document.getElementById("resultado").innerHTML =
+          `<p class="mensaje--error"> No se puede eliminar al profesor porque es tutor del aula ${tutoresPorAula.get(idAEliminar)}</p>`;
+        idAEliminar = null;
       } else {
-        document.getElementById("modalTexto").textContent = "¿Estas seguro de que quieres eliminar al profesor con id" + idAEliminar + " ?"
+        document.getElementById("modalTexto").textContent =
+          "¿Estas seguro de que quieres eliminar al profesor con id" +
+          idAEliminar +
+          " ?";
         document.getElementById("modalConfirmar").classList.add("activo");
       }
     }
   });
+
+  // ============================================================
+  // LISTENER
+  // ============================================================
 
   /** Confirmacion del modal, ejecuta la eliminacion y muestra el mensaje de exito. */
   document
@@ -128,17 +134,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
   /** Input de busqueda por nombre: lanza la busqueda en tiempo real al escribir. */
-  document.getElementById("inputContainer").addEventListener("input", function (evento) {
-    if (document.getElementById("tipoBusqueda").value === "nombre") {
-      const valor = evento.target.value.trim();
-      if (valor.length === 0) {
-        // Si el campo se vacia limpia el resultado
-        document.getElementById("resultado").innerHTML = "";
-      } else if (valor.length >= 2) {
-        buscarPorNombre(valor);
+  document
+    .getElementById("inputContainer")
+    .addEventListener("input", function (evento) {
+      if (document.getElementById("tipoBusqueda").value === "nombre") {
+        const valor = evento.target.value.trim();
+        if (valor.length === 0) {
+          // Si el campo se vacia limpia el resultado
+          document.getElementById("resultado").innerHTML = "";
+        } else if (valor.length >= 2) {
+          buscarPorNombre(valor);
+        }
       }
-    }
-  });
+    });
 
   /** Boton buscar: redirige al metodo de busqueda segun el tipo. */
   document.getElementById("btnBuscar").addEventListener("click", function () {
@@ -327,7 +335,6 @@ async function cargarMapaTutores() {
   }
 }
 
-
 // ============================================================
 // FINCIONES
 // ============================================================
@@ -356,7 +363,7 @@ function crearTablaProfesores(filas) {
     `;
 }
 
-function AñadirselectsBusquedaProfesor(){
+function AñadirselectsBusquedaProfesor() {
   return `
   <select id="tipoBusqueda" class="form-select">
               <option value="id">Por ID</option>
@@ -364,11 +371,11 @@ function AñadirselectsBusquedaProfesor(){
               <option value="email">Por Email</option>
               <option value="especialidad">Por Especialidad</option>
             </select>  
-  `
+  `;
 }
 
-function AñadirTablasDeProfesores(){
-  return`
+function AñadirTablasDeProfesores() {
+  return `
    <table>
             <thead>
                 <tr>
@@ -383,7 +390,7 @@ function AñadirTablasDeProfesores(){
             </thead>
             <tbody id="listaProfesores"></tbody>
         </table>
-  `
+  `;
 }
 
 function mostrarResultados(datos) {

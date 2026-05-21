@@ -17,42 +17,42 @@ import { crearBarraNavegacion } from "../components/navbar.js";
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
-    document.getElementById("navbar").innerHTML = crearBarraNavegacion();
-    const root = document.getElementById("root");
+  document.getElementById("navbar").innerHTML = crearBarraNavegacion();
+  const root = document.getElementById("root");
 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
 
-    if (!id) {
-        root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
+  if (!id) {
+    root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
+  } else {
+    const respuestaProfesor = await ProfesorAPI.obtenerPorId(id);
+    const profesor = respuestaProfesor.datos;
+
+    if (!profesor) {
+      root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
     } else {
-        const respuestaProfesor = await ProfesorAPI.obtenerPorId(id);
-        const profesor = respuestaProfesor.datos;
+      const respuestaAsignaturas =
+        await ProfesorAsignaturaAPI.obtenerPorProfesor(id);
+      const asignaturas = respuestaAsignaturas.datos;
 
-        if (!profesor) {
-            root.innerHTML = `<p class="error">Profesor no encontrado</p>`;
-        } else {
-            const respuestaAsignaturas = await ProfesorAsignaturaAPI.obtenerPorProfesor(id);
-            const asignaturas = respuestaAsignaturas.datos;
-
-            // Se genera una fila por cada asignatura que imparte el profesor.
-            let asignaturasHtml = "";
-            if (asignaturas && asignaturas.length > 0) {
-                for (const pa of asignaturas) {
-                    asignaturasHtml += `
+      // Se genera una fila por cada asignatura que imparte el profesor.
+      let asignaturasHtml = "";
+      if (asignaturas && asignaturas.length > 0) {
+        for (const pa of asignaturas) {
+          asignaturasHtml += `
                         <tr>
                            <td><a href="detalleAsignatura.html?id=${pa.asignatura.id}">${pa.asignatura.nombre}</a></td>
                             <td>${pa.asignatura.curso}</td>
                             <td>${pa.horasSemanales}</td>
                         </tr>
                     `;
-                }
-            } else {
-                asignaturasHtml = `<tr><td colspan="3">Sin asignaturas</td></tr>`;
-            }
-            
+        }
+      } else {
+        asignaturasHtml = `<tr><td colspan="3">Sin asignaturas</td></tr>`;
+      }
 
-          root.innerHTML = `
+      root.innerHTML = `
   <div class="containerDetalle">
     <h1>Detalle del Profesor</h1>
     <div class="card--detalle">
@@ -63,15 +63,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     <a href="menuProfesor.html">Volver</a>
   </div>
 `;
-        }
     }
+  }
 });
-
 
 // ============================================================
 // FUNCIONES
 // ============================================================
-
 
 function añadirCardProfesor(profesor) {
   return `

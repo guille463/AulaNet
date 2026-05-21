@@ -51,66 +51,74 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
 
-  root.innerHTML = añadirContenedorCrearAlumno()
-  
-       
-    
+  root.innerHTML = añadirContenedorCrearAlumno();
+
+  // ============================================================
+  // LISTENER
+  // ============================================================
 
   /** Boton crear: valida el formulario, resuelve el aula por codigo y envia el alumno a la API. */
-  document.getElementById("btnCrear").addEventListener("click", async function () {
-    const nombre = document.getElementById("inputNombre").value.trim();
-    const apellido = document.getElementById("inputApellido").value.trim();
-    const fecha = document.getElementById("inputFecha").value;
-    const curso = document.getElementById("inputCurso").value;
-    const grupo = document.getElementById("inputGrupo").value;
-    const mensaje = document.getElementById("mensaje");
+  document
+    .getElementById("btnCrear")
+    .addEventListener("click", async function () {
+      const nombre = document.getElementById("inputNombre").value.trim();
+      const apellido = document.getElementById("inputApellido").value.trim();
+      const fecha = document.getElementById("inputFecha").value;
+      const curso = document.getElementById("inputCurso").value;
+      const grupo = document.getElementById("inputGrupo").value;
+      const mensaje = document.getElementById("mensaje");
 
-    if (!nombre || !apellido || !fecha || !curso || !grupo) {
-      mensaje.textContent = "Todos los campos son obligatorios";
-      mensaje.className = "mensaje--error";
-    } else if (fecha < fechaMin || fecha > fechaMax) {
-      mensaje.textContent = "La fecha de nacimiento debe estar entre " + fechaMin + " y " + fechaMax;
-      mensaje.className = "mensaje--error";
-    } else if (!REGEX.SOLO_LETRAS.test(nombre)) {
-      mensaje.textContent = "El nombre solo puede contener letras";
-      mensaje.className = "mensaje--error";
-    } else if (!REGEX.SOLO_LETRAS.test(apellido)) {
-      mensaje.textContent = "El apellido solo puede contener letras";
-      mensaje.className = "mensaje--error";
-    } else {
-      // El codigo del aula se forma concatenando curso y grupo, ej: "1º" + "A" = "1ºA"
-      const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
-
-      if (!respuestaAula.datos) {
-        mensaje.textContent = "No se encontro el aula para el curso y grupo seleccionados";
+      if (!nombre || !apellido || !fecha || !curso || !grupo) {
+        mensaje.textContent = "Todos los campos son obligatorios";
+        mensaje.className = "mensaje--error";
+      } else if (fecha < fechaMin || fecha > fechaMax) {
+        mensaje.textContent =
+          "La fecha de nacimiento debe estar entre " +
+          fechaMin +
+          " y " +
+          fechaMax;
+        mensaje.className = "mensaje--error";
+      } else if (!REGEX.SOLO_LETRAS.test(nombre)) {
+        mensaje.textContent = "El nombre solo puede contener letras";
+        mensaje.className = "mensaje--error";
+      } else if (!REGEX.SOLO_LETRAS.test(apellido)) {
+        mensaje.textContent = "El apellido solo puede contener letras";
         mensaje.className = "mensaje--error";
       } else {
-        const alumno = {};
-        alumno.nombre = nombre;
-        alumno.apellido = apellido;
-        alumno.fechaNacimiento = fecha;
-        // El backend solo necesita el ID del aula.
-        alumno.aula = {};
-        alumno.aula.id = respuestaAula.datos.id;
+        // El codigo del aula se forma concatenando curso y grupo, ej: "1º" + "A" = "1ºA"
+        const respuestaAula = await AulaAPI.obtenerPorCodigo(curso + grupo);
 
-        const resultado = await AlumnoAPI.crear(alumno);
-
-        if (resultado.datos) {
-          window.location.href = "menuAlumno.html";
-        } else {
-          mensaje.textContent = resultado.error.mensaje;
+        if (!respuestaAula.datos) {
+          mensaje.textContent =
+            "No se encontro el aula para el curso y grupo seleccionados";
           mensaje.className = "mensaje--error";
+        } else {
+          const alumno = {};
+          alumno.nombre = nombre;
+          alumno.apellido = apellido;
+          alumno.fechaNacimiento = fecha;
+          // El backend solo necesita el ID del aula.
+          alumno.aula = {};
+          alumno.aula.id = respuestaAula.datos.id;
+
+          const resultado = await AlumnoAPI.crear(alumno);
+
+          if (resultado.datos) {
+            window.location.href = "menuAlumno.html";
+          } else {
+            mensaje.textContent = resultado.error.mensaje;
+            mensaje.className = "mensaje--error";
+          }
         }
       }
-    }
-  });
+    });
 });
 
 // ============================================================
 // FUNCIONES
 // ============================================================
 
-function añadirContenedorCrearAlumno (){
+function añadirContenedorCrearAlumno() {
   return `
    <div class="containerCrear">
             <h1>Crear Alumno</h1>
@@ -132,5 +140,5 @@ function añadirContenedorCrearAlumno (){
                 </div>
             </div>
         </div>
-  `
+  `;
 }

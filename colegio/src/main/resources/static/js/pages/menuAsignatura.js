@@ -38,16 +38,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await cargarTodos();
 
+  // ============================================================
+  // LISTENER
+  // ============================================================
+
   /** Gestiona clicks en nombre y curso. */
   document
     .getElementById("listaAsignaturas")
     .addEventListener("click", function (evento) {
-
       // Click en el nombre: muestra u oculta los cursos de esa asignatura.
       if (evento.target.classList.contains("btnNombreAsignatura")) {
         const nombreAsignatura = evento.target.getAttribute("data-nombre");
         const divCursos = document.getElementById("cursos-" + nombreAsignatura);
-        const divTarjeta = document.getElementById("tarjeta-" + nombreAsignatura);
+        const divTarjeta = document.getElementById(
+          "tarjeta-" + nombreAsignatura,
+        );
 
         if (divCursos.style.display === "none") {
           divCursos.style.display = "flex";
@@ -61,7 +66,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (evento.target.classList.contains("btnCurso")) {
         const nombreAsignatura = evento.target.getAttribute("data-nombre");
         const cursoSeleccionado = evento.target.getAttribute("data-curso");
-        const divTarjeta = document.getElementById("tarjeta-" + nombreAsignatura);
+        const divTarjeta = document.getElementById(
+          "tarjeta-" + nombreAsignatura,
+        );
 
         let asignaturaEncontrada = null;
 
