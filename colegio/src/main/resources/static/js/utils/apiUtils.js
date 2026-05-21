@@ -20,7 +20,7 @@ export async function fetchApi(metodo, ruta, cuerpo = null) {
                 datos = await respuesta.json();
             }
         } else {
-            error = await respuesta.text();
+             error = await respuesta.json();
         }
     } catch (e) {
         console.error(e);
