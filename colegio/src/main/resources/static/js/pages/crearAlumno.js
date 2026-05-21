@@ -51,9 +51,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("navbar").innerHTML = crearBarraNavegacion();
   const root = document.getElementById("root");
 
-  root.innerHTML = `
-  ${añadirContenedorCrearAlumno(root)}
-  `
+  root.innerHTML = añadirContenedorCrearAlumno()
+  
        
     
 
@@ -107,7 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-function añadirContenedorCrearAlumno (html){
+function añadirContenedorCrearAlumno (){
   return `
    <div class="containerCrear">
             <h1>Crear Alumno</h1>

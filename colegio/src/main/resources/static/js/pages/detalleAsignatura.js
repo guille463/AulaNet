@@ -74,17 +74,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="containerDetalle">
                 <h1>Detalle de la Asignatura</h1>
             <div class="card--detalle">
-${añadirBodyCartaDetalleAsignatura(root)}
+${añadirBodyCartaDetalleAsignatura(asignatura)}
             </div>
             <h2>Profesores</h2>
-            ${añadirTablaProfesorAsignatura(root)}
+            ${añadirTablaProfesorAsignatura(profesoresHtml, alumnosHtml)}
                 <a href="menuAsignatura.html">Volver</a>
         </div>
         `;
     }
 });
 
-function añadirBodyCartaDetalleAsignatura(root){
+function añadirBodyCartaDetalleAsignatura(asignatura){
 
     return `
       <div class="card--detalle--body">
@@ -99,7 +99,7 @@ function añadirBodyCartaDetalleAsignatura(root){
     `
 }
 
-function añadirTablaProfesorAsignatura(html){
+function añadirTablaProfesorAsignatura(profesoresHtml, alumnosHtml){
 return `
 <table>
                 <thead>

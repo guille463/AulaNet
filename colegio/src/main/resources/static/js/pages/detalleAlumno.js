@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (matriculas && matriculas.length > 0) {
       for (const matricula of matriculas) {
         asignaturasHtml += `
-         ${crearTablaNotas(asignaturasHtml)}
+         ${crearTablaNotas(matricula)}
         `;
       }
     }
@@ -49,10 +49,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div class="containerDetalle">
           <h1>Detalle del Alumno</h1>
           <div class="card--detalle">
-${añadirDetalleAlumno(root)}
+${añadirDetalleAlumno(alumno, aula)}
           </div>
           <h2 id="Tab.Asig">Asignaturas</h2>
-         ${añadirDetalleAlumnoNotas(root)}
+         ${añadirDetalleAlumnoNotas(asignaturasHtml)}
           <button class="imprimir" id="btnImprimir">Imprimir boletin</button>
           <p id="mensaje"></p>
           <a href="menuAlumno.html" class="volver">Volver</a>
@@ -83,7 +83,7 @@ ${añadirDetalleAlumno(root)}
   }
 });
 
-function añadirDetalleAlumno(html) {
+function añadirDetalleAlumno(alumno, aula) {
   return `
   <div class="card--detalle--body">
                   <h2>${alumno.codigo}</h2>
@@ -98,7 +98,7 @@ function añadirDetalleAlumno(html) {
   `
 }
 
-function añadirDetalleAlumnoNotas(html) {
+function añadirDetalleAlumnoNotas(asignaturasHtml) {
   return `
    <table>
               <thead>
@@ -114,7 +114,7 @@ function añadirDetalleAlumnoNotas(html) {
   `
 }
 
-function crearTablaNotas(html) {
+function crearTablaNotas(matricula) {
   return `
    <tr>
             <td><a href="detalleAsignatura.html?id=${matricula.asignatura.id}">${matricula.asignatura.nombre}</a></td>

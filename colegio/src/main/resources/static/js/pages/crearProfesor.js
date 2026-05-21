@@ -42,9 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("navbar").innerHTML = crearBarraNavegacion();
     const root = document.getElementById("root");
 
-    root.innerHTML = `
-       ${añadirContainerCrearProfesor(root)}
-    `;
+    root.innerHTML = añadirContainerCrearProfesor(); 
 
     /** Cambio de especialidad: muestra u oculta el selector de aula si es tutor GENERAL. */
     document.getElementById("inputEspecialidad").addEventListener("change", function () {
@@ -101,7 +99,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-function añadirContainerCrearProfesor(html){
+function añadirContainerCrearProfesor(){
 return`
  <div class="containerCrear">
             <h1>Crear Profesor</h1>
