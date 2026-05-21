@@ -160,6 +160,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// ============================================================
+// FUNCIONES
+// ============================================================
+
 function añadirCardAula(aula, totalAlumnos) {
   return `
     <div class="card--detalle--body">

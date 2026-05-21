@@ -83,6 +83,10 @@ ${añadirDetalleAlumno(alumno, aula)}
   }
 });
 
+// ============================================================
+// FUNCIONES
+// ============================================================
+
 function añadirDetalleAlumno(alumno, aula) {
   return `
   <div class="card--detalle--body">

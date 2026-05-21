@@ -112,6 +112,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+// ============================================================
+// FUNCIONES
+// ============================================================
+
 function añadirFormularioEditarProfesor(profesor, opcionesEspecialidad, opcionesCurso, opcionesGrupo) {
   return `
     <div class="containerEditar">

@@ -114,6 +114,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+
+// ============================================================
+// FUNCIONES
+// ============================================================
+
 function añadirFormularioEditarAlumno(alumno, opcionesCurso, opcionesGrupo) {
   return `
     <div class="containerEditar">

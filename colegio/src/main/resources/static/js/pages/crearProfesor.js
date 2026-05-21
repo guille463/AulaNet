@@ -99,6 +99,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
+// ============================================================
+// FUNCIONES
+// ============================================================
 function añadirContainerCrearProfesor(){
 return`
  <div class="containerCrear">

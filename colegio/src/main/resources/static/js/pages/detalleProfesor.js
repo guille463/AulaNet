@@ -50,33 +50,52 @@ document.addEventListener("DOMContentLoaded", async () => {
             } else {
                 asignaturasHtml = `<tr><td colspan="3">Sin asignaturas</td></tr>`;
             }
+            
 
-            root.innerHTML = `
-                <div class="containerDetalle">
-                    <h1>Detalle del Profesor</h1>
-                    <div class="card--detalle">
-                        <div class="card--detalle--body">
-                            <h2>${profesor.codigo}</h2>
-                            <hr>
-                            <p><strong>Nombre:</strong> ${profesor.nombre} ${profesor.apellido}</p>
-                            <p><strong>Email:</strong> ${profesor.email}</p>
-                            <p><strong>Especialidad:</strong> ${profesor.especialidad}</p>
-                        </div>
-                    </div>
-                    <h2>Asignaturas que imparte</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Asignatura</th>
-                                <th>Curso</th>
-                                <th>Horas semanales</th>
-                            </tr>
-                        </thead>
-                        <tbody>${asignaturasHtml}</tbody>
-                    </table>
-                    <a href="menuProfesor.html">Volver</a>
-                </div>
-            `;
+          root.innerHTML = `
+  <div class="containerDetalle">
+    <h1>Detalle del Profesor</h1>
+    <div class="card--detalle">
+      ${añadirCardProfesor(profesor)}
+    </div>
+    <h2>Asignaturas que imparte</h2>
+    ${añadirTablaAsignaturasProfesor(asignaturasHtml)}
+    <a href="menuProfesor.html">Volver</a>
+  </div>
+`;
         }
     }
 });
+
+
+// ============================================================
+// FUNCIONES
+// ============================================================
+
+
+function añadirCardProfesor(profesor) {
+  return `
+    <div class="card--detalle--body">
+      <h2>${profesor.codigo}</h2>
+      <hr>
+      <p><strong>Nombre:</strong> ${profesor.nombre} ${profesor.apellido}</p>
+      <p><strong>Email:</strong> ${profesor.email}</p>
+      <p><strong>Especialidad:</strong> ${profesor.especialidad}</p>
+    </div>
+  `;
+}
+
+function añadirTablaAsignaturasProfesor(asignaturasHtml) {
+  return `
+    <table>
+      <thead>
+        <tr>
+          <th>Asignatura</th>
+          <th>Curso</th>
+          <th>Horas semanales</th>
+        </tr>
+      </thead>
+      <tbody>${asignaturasHtml}</tbody>
+    </table>
+  `;
+}

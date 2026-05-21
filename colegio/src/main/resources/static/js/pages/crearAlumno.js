@@ -106,6 +106,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
+// ============================================================
+// FUNCIONES
+// ============================================================
+
 function añadirContenedorCrearAlumno (){
   return `
    <div class="containerCrear">

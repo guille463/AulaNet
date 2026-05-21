@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // ============================================================
-// FUNCIONES
+// FUNCIONES ASYNC
 // ============================================================
 
 /**
@@ -304,6 +304,12 @@ async function eliminarAlumno(id) {
       `<p class="mensaje--error">Error al eliminar</p>`;
   }
 }
+
+
+// ============================================================
+// FUNCIONES
+// ============================================================
+
 
 /**
  * Genera el HTML de una tabla de alumnos con las filas proporcionadas.

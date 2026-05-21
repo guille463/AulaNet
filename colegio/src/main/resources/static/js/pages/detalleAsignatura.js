@@ -84,6 +84,12 @@ ${añadirBodyCartaDetalleAsignatura(asignatura)}
     }
 });
 
+
+// ============================================================
+// FUNCIONES
+// ============================================================
+
+
 function añadirBodyCartaDetalleAsignatura(asignatura){
 
     return `
