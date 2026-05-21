@@ -54,6 +54,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   root.innerHTML = añadirContenedorCrearAlumno();
 
   // ============================================================
+  // SELECCION AULA PARA AÑADIR ALUMNO DESDE AULA 
+  // ============================================================
+  const params = new URLSearchParams(window.location.search);
+  const codigoAula = params.get("aula");
+  if (codigoAula) {
+    const curso = codigoAula.slice(0, -1);
+    const grupo = codigoAula.slice(-1);
+    document.getElementById("inputCurso").value = curso;
+    document.getElementById("inputGrupo").value = grupo;
+  }
+
+  // ============================================================
   // LISTENER
   // ============================================================
 

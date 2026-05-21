@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       <p id="mensajeTutor"></p>
     </div>
     <h2>Alumnos</h2>
-    <a href="crearAlumno.html">Añadir alumno</a>
+    <a href="crearAlumno.html?aula=${aula.codigo}">Añadir alumno</a>
     ${añadirTablaAlumnos(alumnosHtml)}
     <h2>Profesores y asignaturas</h2>
     ${añadirTablaProfesores(profesoresHtml)}
