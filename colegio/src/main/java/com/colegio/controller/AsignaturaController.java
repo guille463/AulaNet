@@ -63,8 +63,8 @@ public class AsignaturaController {
      * @return lista de asignaturas del curso
      */
     @GetMapping("/curso/{curso}")
-    public List<Asignatura> obtenerPorCurso(@PathVariable Curso curso) {
-        return asignaturaService.buscarAsignaturasPorCurso(curso);
+    public List<Asignatura> obtenerPorCurso(@PathVariable String curso) {
+        return asignaturaService.buscarAsignaturasPorCurso(Curso.fromEtiqueta(curso));
     }
 
     /**
@@ -81,7 +81,7 @@ public class AsignaturaController {
     /**
      * Actualiza los datos de una asignatura existente.
      *
-     * @param id         id de la asignatura a actualizar
+     * @param id id de la asignatura a actualizar
      * @param asignatura nuevos datos de la asignatura
      * @return asignatura actualizada
      */
