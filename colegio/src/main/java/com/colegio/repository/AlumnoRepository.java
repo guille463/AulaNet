@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Alumno;
@@ -59,10 +61,21 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
     List<Alumno> findByNombreStartingWithIgnoreCase(String nombre);
 
     /**
+     * Devuelve los alumnos cuyo nombre completo empieza por la cadena indicada,
+     * sin distinguir mayusculas. Concatena nombre y apellido para la
+     * comparacion.
+     *
+     * @param texto prefijo a buscar sobre el nombre completo
+     * @return lista de alumnos que coinciden
+     */
+    @Query("SELECT a FROM Alumno a WHERE LOWER(CONCAT(a.nombre, ' ', a.apellido)) LIKE LOWER(CONCAT(:texto, '%'))")
+    List<Alumno> findByNombreCompletoStartingWithIgnoreCase(@Param("texto") String texto);
+
+    /**
      * Devuelve los alumnos cuyo nombre y apellido empiezan por las cadenas
      * indicadas, sin distinguir mayusculas.
      *
-     * @param nombre   prefijo del nombre
+     * @param nombre prefijo del nombre
      * @param apellido prefijo del apellido
      * @return lista de alumnos que coinciden
      */

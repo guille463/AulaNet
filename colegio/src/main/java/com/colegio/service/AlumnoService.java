@@ -96,7 +96,7 @@ public class AlumnoService {
      * @return lista de alumnos que coinciden
      */
     public List<Alumno> buscarPorNombre(String nombre) {
-        return alumnoRepository.findByNombreStartingWithIgnoreCase(nombre);
+        return alumnoRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
     }
 
     public List<Alumno> buscarPorNombreYApellido(String nombre, String apellido) {
@@ -146,7 +146,7 @@ public class AlumnoService {
     /**
      * Actualiza los datos de un alumno existente.
      *
-     * @param id     id del alumno a actualizar
+     * @param id id del alumno a actualizar
      * @param alumno nuevos datos del alumno
      * @return alumno actualizado
      * @throws RuntimeException si el alumno o el aula no existen
