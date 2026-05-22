@@ -5,31 +5,40 @@
 /* <table> */
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    margin-bottom: 2rem;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* <thead> */
 
 thead {
-    background-color: #1a3a5c;
-    color: #ffffff;
+  background-color: #1a3a5c;
+  color: #ffffff;
 }
 
 /* <th> */
 
 th {
-    padding: 1rem;
-    text-align: left;
+  padding: 1rem;
+  text-align: left;
 }
 
 /* <td> */
 
 td {
-    padding: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* <tbody tr> hover */
+
+tbody tr:hover {
+  background-color: #f8fafc;
 }
 
 /* =============================================
@@ -39,37 +48,37 @@ td {
 /* <div class="card"> */
 
 .card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
 }
 
 /* <h2 class="card-title"> */
 
 .card-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1a3a5c;
-    margin-bottom: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a3a5c;
+  margin-bottom: 1rem;
 }
 
 /* <select> e <input> dentro del buscador */
 
 .card--buscador select,
 .card--buscador input {
-    width: 300px;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+  width: 300px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 /* <button> dentro del buscador */
 
 .card--buscador button {
-    padding: 0.5rem 1.5rem;
-    font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
 }
 
 /* =============================================
@@ -81,9 +90,9 @@ td {
 input[type="text"],
 input[type="email"],
 select {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  width: 100%;
 }
 
 /* =============================================
@@ -93,56 +102,56 @@ select {
 /* <button> base */
 
 button {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 150ms ease;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease;
 }
 
 /* <button id="btnBuscar"> <button id="btnImprimir"> */
 
 #btnBuscar,
 #btnImprimir {
-    background-color: #4a90d9;
-    color: #ffffff;
+  background-color: #4a90d9;
+  color: #ffffff;
 }
 
 #btnBuscar:hover,
 #btnImprimir:hover {
-    background-color: #3478c0;
+  background-color: #3478c0;
 }
 
 /* <button class="btnEliminar"> */
 
 .btnEliminar {
-    background-color: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fecaca;
-    padding: 0.25rem 0.5rem;
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 0.25rem 0.5rem;
 }
 
 .btnEliminar:hover {
-    background-color: #dc2626;
-    color: #ffffff;
+  background-color: #dc2626;
+  color: #ffffff;
 }
 
 /* <button class="btnCurso"> <button class="btnNombreAsignatura"> */
 
 .btnCurso,
 .btnNombreAsignatura {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .btnCurso:hover,
 .btnGrupo:hover,
 .btnNombreAsignatura:hover {
-    background-color: #1a3a5c;
-    color: #ffffff;
-    border-color: #1a3a5c;
+  background-color: #1a3a5c;
+  color: #ffffff;
+  border-color: #1a3a5c;
 }
 
 /* =============================================
@@ -152,55 +161,57 @@ button {
 /* <div id="modalConfirmar"> */
 
 #modalConfirmar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: none;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 /* <div id="modalConfirmar" class="activo"> */
 
 #modalConfirmar.activo {
-    display: flex;
+  display: flex;
 }
 
 /* contenedor interno del modal */
 
-#modalConfirmar>div {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 400px;
+#modalConfirmar > div {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
 }
 
 /* <p id="modalTexto"> */
 
 #modalTexto {
-    color: rgba(0, 0, 0, 0.4);
+  color: #1e293b;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
 /* <button id="btnConfirmarSi"> */
 
 #btnConfirmarSi {
-    background-color: #dc2626;
-    color: #ffffff;
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+  background-color: #dc2626;
+  color: #ffffff;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* <button id="btnConfirmarNo"> */
 
 #btnConfirmarNo {
-    background-color: #f4f6f9;
-    color: #64748b;
-    width: 100%;
-    padding: 0.5rem;
+  background-color: #f4f6f9;
+  color: #64748b;
+  width: 100%;
+  padding: 0.5rem;
 }
 
 /* =============================================
@@ -209,12 +220,12 @@ button {
 
 /* <div id="grupos-"> <div id="cursos-"> */
 
-.aulaItem>div,
-.asignaturaItem>div {
-    margin-top: 0.5rem;
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+.aulaItem > div,
+.asignaturaItem > div {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 /* =============================================
@@ -224,69 +235,69 @@ button {
 /* <footer class="footer"> */
 
 .footer {
-    background-color: #1a3844;
-    padding: 3rem 0;
-    text-align: center;
-    border-top: 2px solid #000000;
-    margin-top: auto;
+  background-color: #1a3844;
+  padding: 3rem 0;
+  text-align: center;
+  border-top: 2px solid #000000;
+  margin-top: auto;
 }
 
 /* <h3> y <p> dentro del footer */
 
 .footer h3,
 .footer p {
-    color: #e2e8f0;
+  color: #e2e8f0;
 }
 
 /* <div class="footer__contenido"> */
 
 .footer__contenido {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* <div class="footer__info"> */
 
 .footer__info {
-    display: flex;
-    font-size: 25px;
-    flex-direction: column;
-    gap: 1rem;
-    margin-left: 10rem;
+  display: flex;
+  font-size: 1rem;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 10rem;
 }
 
 /* <div class="footer__contacto"> */
 
 .footer__contacto {
-    display: flex;
-    font-size: 25px;
-    flex-direction: column;
-    gap: 1rem;
-    margin-right: 10rem;
+  display: flex;
+  font-size: 1rem;
+  flex-direction: column;
+  gap: 1rem;
+  margin-right: 10rem;
 }
 
 /* <div class="footer__copy"> */
 
 .footer__copy {
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 /* <img class="iconoInsta"> */
 
 .iconoInsta {
-    width: 2.5rem;
+  width: 2.5rem;
 }
 
 /* <div class="instagram"> */
 
 .instagram {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 /* <span class="nombreRS"> */
 
 .nombreRS {
-    margin-top: 0.6rem;
+  margin-top: 0.6rem;
 }

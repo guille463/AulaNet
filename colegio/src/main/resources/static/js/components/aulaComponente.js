@@ -1,9 +1,9 @@
-import { AulaAPI } from "../api/aulaApi.js"
+import { AulaAPI } from "../api/aulaApi.js";
 
 export async function crearTarjetaAula(aula) {
-    const numeroDeAlumnos = (await AulaAPI.calcularAlumnos(aula.id)).datos;
+  const numeroDeAlumnos = (await AulaAPI.calcularAlumnos(aula.id)).datos;
 
-    return `
+  return `
         <div class="card">
             <div class="card-body">
                 <strong>${aula.codigo}</strong>
@@ -14,7 +14,3 @@ export async function crearTarjetaAula(aula) {
         </div>
     `;
 }
-
-
-
-

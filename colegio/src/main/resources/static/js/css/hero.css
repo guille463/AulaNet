@@ -5,31 +5,33 @@
 /* <div class="hero"> */
 
 .hero {
-    position: relative;
-    width: 100%;
-    height: 55vh;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 55vh;
+  overflow: hidden;
 }
 
 /* <img id="imagenInicio"> */
 
 #imagenInicio {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 80%;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 80%;
+  display: block;
 }
 
 /* capa oscura sobre la imagen */
 
 .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom,
-            rgba(26, 58, 92, 0.3) 0%,
-            rgba(26, 58, 92, 0.6) 100%);
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 58, 92, 0.3) 0%,
+    rgba(26, 58, 92, 0.6) 100%
+  );
 }
 
 /* =============================================
@@ -39,32 +41,32 @@
 /* <div class="hero__contenido"> */
 
 .hero__contenido {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    text-align: center;
-    padding: 2rem;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
 }
 
 /* <h1 class="hero__titulo"> */
 
 .hero__titulo {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    margin-bottom: 0.5rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0.5rem;
 }
 
 /* <p class="hero__subtitulo"> */
 
 .hero__subtitulo {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
 }

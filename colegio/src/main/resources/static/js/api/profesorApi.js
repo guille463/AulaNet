@@ -1,25 +1,27 @@
 import { BASE_URL } from "../config/config.js";
 import { fetchApi } from "../utils/apiUtils.js";
 
-
 export const ProfesorAPI = {
-    obtenerTodos: () => fetchApi('GET', '/profesores'),
+  obtenerTodos: () => fetchApi("GET", "/profesores"),
 
-    obtenerPorId: (id) => fetchApi('GET', `/profesores/${id}`),
+  obtenerPorId: (id) => fetchApi("GET", `/profesores/${id}`),
 
-    obtenerPorNombre: (nombre) => fetchApi('GET', `/profesores/buscar/${nombre}`),
+  obtenerPorNombre: (nombre) => fetchApi("GET", `/profesores/buscar/${nombre}`),
 
-    obtenerPorNombreYApellido: (nombre, apellido) => fetchApi('GET', `/profesores/buscar/${nombre}/${apellido}`),
+  obtenerPorNombreYApellido: (nombre, apellido) =>
+    fetchApi("GET", `/profesores/buscar/${nombre}/${apellido}`),
 
-    obtenerPorEmail: (email) => fetchApi('GET', `/profesores/email/${email}`),
+  obtenerPorEmail: (email) => fetchApi("GET", `/profesores/email/${email}`),
 
-    obtenerPorCodigoAula: (codigo) => fetchApi('GET', `/profesores/aula/codigo/${encodeURIComponent(codigo)}`),
+  obtenerPorCodigoAula: (codigo) =>
+    fetchApi("GET", `/profesores/aula/codigo/${encodeURIComponent(codigo)}`),
 
-    obtenerPorEspecialidad: (especialidad) => fetchApi('GET', `/profesores/especialidad/${especialidad}`),
+  obtenerPorEspecialidad: (especialidad) =>
+    fetchApi("GET", `/profesores/especialidad/${especialidad}`),
 
-    crear: (profesor) => fetchApi('POST', `/profesores`, profesor),
+  crear: (profesor) => fetchApi("POST", `/profesores`, profesor),
 
-    actualizar: (id, profesor) => fetchApi('PUT', `/profesores/${id}`, profesor),
+  actualizar: (id, profesor) => fetchApi("PUT", `/profesores/${id}`, profesor),
 
-    eliminar: (id) => fetchApi('DELETE', `/profesores/${id}`)
-}; 
+  eliminar: (id) => fetchApi("DELETE", `/profesores/${id}`),
+};

@@ -90,10 +90,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ============================================================
-  // LISTENER
-  // ============================================================
-
   /** Confirmacion del modal, ejecuta la eliminacion y muestra el mensaje de exito. */
   document
     .getElementById("btnConfirmarSi")

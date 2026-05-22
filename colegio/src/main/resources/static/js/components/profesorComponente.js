@@ -1,5 +1,5 @@
 export function crearTarjetaProfesor(profesor) {
-    return `
+  return `
         <tr>
             <td><strong>${profesor.codigo}</strong></td>
             <td>${profesor.nombre} ${profesor.apellido}</td>

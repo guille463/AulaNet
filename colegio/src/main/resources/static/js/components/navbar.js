@@ -1,5 +1,5 @@
 export function crearBarraNavegacion() {
-    return `
+  return `
         <nav class="navbar">
             <div class="navbar__container">
               <a class="navbar__brand" href="index.html">

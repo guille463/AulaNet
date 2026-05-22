@@ -5,18 +5,21 @@
 /* <div class="containerDetalle"> */
 
 .containerDetalle {
-    max-width: 90%;
-    margin: 0 auto;
-    padding: 2rem 1rem 4rem 1rem;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem 1rem;
 }
 
+.containerDetalle .imprimir {
+  margin-right: 1rem;
+}
 
 /* <div class="containerDetalle"> */
 
-.containerDetalle>div {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+.containerDetalle > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* =============================================
@@ -26,43 +29,43 @@
 /* <div class="card--detalle"> */
 
 .card--detalle {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 /* <div class="card--detalle--body"> */
 
 .card--detalle--body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* <h2> codigo del registro */
 
 .card--detalle--body h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a3a5c;
-    margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a3a5c;
+  margin: 0;
 }
 
 /* <p> datos del registro */
 
 .card--detalle--body p {
-    font-size: 0.875rem;
-    color: #1e293b;
-    margin: 0;
+  font-size: 0.875rem;
+  color: #1e293b;
+  margin: 0;
 }
 
 /* <strong> etiquetas */
 
 .card--detalle--body strong {
-    font-weight: 600;
-    color: #64748b;
+  font-weight: 600;
+  color: #64748b;
 }
 
 /* =============================================
@@ -72,42 +75,42 @@
 /* <button class="btnEditarNota"> */
 
 .btnEditarNota {
-    background-color: #e8eef5;
-    color: #1a3a5c;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+  background-color: #e8eef5;
+  color: #1a3a5c;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .btnEditarNota:hover {
-    background-color: #4a90d9;
-    color: #ffffff;
+  background-color: #4a90d9;
+  color: #ffffff;
 }
 
 /* <button id="btnAsignarTutor"> */
 
 #btnAsignarTutor {
-    background-color: #4a90d9;
-    color: #ffffff;
+  background-color: #4a90d9;
+  color: #ffffff;
 }
 
 #btnAsignarTutor:hover {
-    background-color: #3478c0;
+  background-color: #3478c0;
 }
 
 /* <button id="btnEliminarTutor"> */
 
 #btnEliminarTutor {
-    background-color: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fecaca;
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
 }
 
 #btnEliminarTutor:hover {
-    background-color: #dc2626;
-    color: #ffffff;
+  background-color: #dc2626;
+  color: #ffffff;
 }
 
 /* =============================================
@@ -117,9 +120,9 @@
 /* <input type="number"> nota */
 
 .containerDetalle input[type="number"] {
-    width: 70px;
-    padding: 0.25rem 0.5rem;
-    margin-bottom: 0;
+  width: 70px;
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0;
 }
 
 /* =============================================
@@ -129,14 +132,65 @@
 /* <a class="volver"> */
 
 .volver {
-    display: inline-block;
-    font-size: 0.875rem;
-    color: #64748b;
-    margin-top: 2rem;
+  display: inline-block;
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 2rem;
 }
 
 .volver:hover {
-    color: #1a3a5c;
+  color: #1a3a5c;
+}
+
+/* =============================================
+   CHECKBOXES DE MATRICULAS
+   ============================================= */
+
+/* <div class="card-body"> dentro de gestionar matriculas */
+
+.no-imprimir .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+}
+
+/* <label> de cada checkbox */
+
+.no-imprimir .card-body label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+/* <input type="checkbox"> */
+
+.no-imprimir .card-body input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #4a90d9;
+}
+
+/* <button id="btnGuardarMatriculas"> */
+
+#btnGuardarMatriculas {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+  background-color: #4a90d9;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+#btnGuardarMatriculas:hover {
+  background-color: #3478c0;
 }
 
 /* =============================================
@@ -144,23 +198,23 @@
    ============================================= */
 
 @media print {
+  .imprimir,
+  .cambiarNotas,
+  .navbar,
+  .editarNota,
+  .volver,
+  .no-imprimir {
+    display: none !important;
+  }
 
-    .imprimir,
-    .cambiarNotas,
-    .navbar,
-    .editarNota,
-    .volver {
-        display: none !important;
-    }
+  .containerDetalle {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    zoom: 90%;
+  }
 
-    .containerDetalle {
-        display: block !important;
-        width: 100%;
-        height: 100%;
-        zoom: 90%;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
+  h1 {
+    font-size: 2rem;
+  }
 }

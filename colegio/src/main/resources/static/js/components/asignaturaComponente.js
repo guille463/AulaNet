@@ -1,5 +1,5 @@
 export function crearTarjetaAsignatura(asignatura) {
-    return `
+  return `
         <div class="card">
             <div class="card-body" style="display:flex; gap:20px;">
                 <strong>${asignatura.codigo}</strong>

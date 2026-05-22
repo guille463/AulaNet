@@ -1,7 +1,7 @@
 export function crearTarjetaAlumno(alumno) {
-    const aula = alumno.aula;
+  const aula = alumno.aula;
 
-    return `
+  return `
         <tr>
             <td><strong>${alumno.codigo}</strong></td>
             <td>${alumno.nombre} ${alumno.apellido}</td>

@@ -5,77 +5,76 @@
 /* <nav class="navbar"> */
 
 .navbar {
-    background-color: #1a3a5c;
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  background-color: #1a3a5c;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 /* <div class="navbar__container"> */
 
 .navbar__container {
-    max-width: 100%;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 70%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* <a class="navbar__brand"> */
 
 .navbar__brand {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-decoration: none;
-    margin-right: 2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: 2rem;
 }
 
 .navbar__brand:hover {
-    color: #e2e8f0;
+  color: #e2e8f0;
 }
 
 /* <img class="navbar__logo"> */
 
 .navbar__logo {
-    height: 80px;
-    width: auto;
+  height: 80px;
+  width: auto;
 }
 
 /* <ul class="navbar__menu"> */
 
 .navbar__menu {
-    display: flex;
-    list-style: none;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  list-style: none;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
 }
 
 /* <li class="navbar__item"> */
 
 .navbar__item {
-    position: relative;
+  position: relative;
 }
 
 /* <a class="navbar__link"> */
 
 .navbar__link {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    display: block;
-    transition: background-color 150ms ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  display: block;
+  transition: background-color 150ms ease;
 }
 
 .navbar__link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 /* =============================================
@@ -85,39 +84,39 @@
 /* <ul class="navbar__dropdown"> */
 
 .navbar__dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    padding: 0.5rem 0;
-    min-width: 160px;
-    z-index: 200;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 160px;
+  z-index: 200;
 }
 
 /* muestra el dropdown al hacer hover sobre el item */
 
 .navbar__item:hover .navbar__dropdown {
-    display: block;
+  display: block;
 }
 
 /* <li> <a> dentro del dropdown */
 
 .navbar__dropdown li a {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    color: #1e293b;
-    text-decoration: none;
-    transition: background-color 150ms ease;
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  text-decoration: none;
+  transition: background-color 150ms ease;
 }
 
 .navbar__dropdown li a:hover {
-    background-color: #f4f6f9;
-    color: #1a3a5c;
+  background-color: #f4f6f9;
+  color: #1a3a5c;
 }
 
 /* =============================================
@@ -127,10 +126,10 @@
 /* variante para la pagina de inicio sobre el hero */
 
 .body--inicio .navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.25) !important;
-    box-shadow: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  box-shadow: none;
 }

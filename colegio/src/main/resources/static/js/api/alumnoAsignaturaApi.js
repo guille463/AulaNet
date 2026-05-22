@@ -1,13 +1,15 @@
 import { fetchApi } from "../utils/apiUtils.js";
 
 export const AlumnoAsignaturaAPI = {
-    obtenerPorAlumno: (id) => fetchApi('GET', `/alumno-asignatura/alumno/${id}`),
-    
-    actualizarNota: (id, nota) => fetchApi('PUT', `/alumno-asignatura/${id}`, { nota: nota }),
+  obtenerPorAlumno: (id) => fetchApi("GET", `/alumno-asignatura/alumno/${id}`),
 
-    obtenerPorAsignatura: (id) => fetchApi('GET', `/alumno-asignatura/asignatura/${id}`),
+  actualizarNota: (id, nota) =>
+    fetchApi("PUT", `/alumno-asignatura/${id}`, { nota: nota }),
 
-    crear: (matricula) => fetchApi('POST', '/alumno-asignatura', matricula),
+  obtenerPorAsignatura: (id) =>
+    fetchApi("GET", `/alumno-asignatura/asignatura/${id}`),
 
-    eliminar: (id) => fetchApi('DELETE', `/alumno-asignatura/${id}`)
+  crear: (matricula) => fetchApi("POST", "/alumno-asignatura", matricula),
+
+  eliminar: (id) => fetchApi("DELETE", `/alumno-asignatura/${id}`),
 };
