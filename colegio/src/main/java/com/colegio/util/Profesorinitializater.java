@@ -69,9 +69,9 @@ public class Profesorinitializater {
     /**
      * Crea un profesor si no existe ya un registro con el email indicado.
      *
-     * @param nombre       nombre del profesor
-     * @param apellido     apellido del profesor
-     * @param email        email del profesor
+     * @param nombre nombre del profesor
+     * @param apellido apellido del profesor
+     * @param email email del profesor
      * @param especialidad especialidad del profesor
      */
     private void crearSiNoExiste(String nombre, String apellido, String email,

@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // Se genera un checkbox por cada asignatura del curso del alumno
-   const respuestaAsignaturas = await AsignaturaAPI.obtenerPorCurso(aula.curso);
-console.log("Curso del aula:", aula.curso);
-console.log("Respuesta asignaturas:", respuestaAsignaturas);
-const asignaturas = respuestaAsignaturas.datos;
+    const respuestaAsignaturas = await AsignaturaAPI.obtenerPorCurso(
+      aula.curso,
+    );
+    const asignaturas = respuestaAsignaturas.datos;
     // Conjunto de IDs de asignaturas ya matriculadas para marcar los checkboxes
     const idsMatriculados = new Set();
     if (matriculas && matriculas.length > 0) {
@@ -94,49 +94,61 @@ const asignaturas = respuestaAsignaturas.datos;
     // ============================================================
 
     /** Delegacion de eventos: detecta el boton guardar nota de cada fila y actualiza via API. */
-    document.getElementById("root").addEventListener("click", async function (evento) {
-      if (evento.target.classList.contains("btnEditarNota")) {
-        const matriculaId = evento.target.getAttribute("data-id");
-        const nota = document.getElementById("nota-" + matriculaId).value;
-        const resultado = await AlumnoAsignaturaAPI.actualizarNota(matriculaId, nota);
-        if (resultado.datos) {
-          document.getElementById("notaActual-" + matriculaId).textContent = nota;
-          document.getElementById("mensaje").textContent = "Nota actualizada correctamente";
-          document.getElementById("mensaje").className = "mensaje--exito";
-        } else {
-          document.getElementById("mensaje").textContent = "Error al actualizar la nota";
-          document.getElementById("mensaje").className = "mensaje--error";
-        }
-      }
-    });
-
-    /** Boton guardar matriculas: procesa los checkboxes y crea o elimina matriculas. */
-      document.getElementById("btnGuardarMatriculas").addEventListener("click", async function () {
-      const checkboxes = document.querySelectorAll(".checkAsignatura");
-
-      for (const checkbox of checkboxes) {
-        const asignaturaId = Number(checkbox.getAttribute("data-id"));
-        const estaMarcado = checkbox.checked;
-        const estabaMatriculado = idsMatriculados.has(asignaturaId);
-
-        if (estaMarcado && !estabaMatriculado) {
-          const matricula = {};
-          matricula.alumno = {};
-          matricula.alumno.id = Number(id);
-          matricula.asignatura = {};
-          matricula.asignatura.id = asignaturaId;
-          matricula.nota = 0;
-          await AlumnoAsignaturaAPI.crear(matricula);
-        } else if (!estaMarcado && estabaMatriculado) {
-          const matricula = matriculas.find(matricula => matricula.asignatura.id === asignaturaId);
-          if (matricula) {
-            await AlumnoAsignaturaAPI.eliminar(matricula.id);
+    document
+      .getElementById("root")
+      .addEventListener("click", async function (evento) {
+        if (evento.target.classList.contains("btnEditarNota")) {
+          const matriculaId = evento.target.getAttribute("data-id");
+          const nota = document.getElementById("nota-" + matriculaId).value;
+          const resultado = await AlumnoAsignaturaAPI.actualizarNota(
+            matriculaId,
+            nota,
+          );
+          if (resultado.datos) {
+            document.getElementById("notaActual-" + matriculaId).textContent =
+              nota;
+            document.getElementById("mensaje").textContent =
+              "Nota actualizada correctamente";
+            document.getElementById("mensaje").className = "mensaje--exito";
+          } else {
+            document.getElementById("mensaje").textContent =
+              "Error al actualizar la nota";
+            document.getElementById("mensaje").className = "mensaje--error";
           }
         }
-      }
+      });
 
-      window.location.href = "detalleAlumno.html?id=" + id;
-    });
+    /** Boton guardar matriculas: procesa los checkboxes y crea o elimina matriculas. */
+    document
+      .getElementById("btnGuardarMatriculas")
+      .addEventListener("click", async function () {
+        const checkboxes = document.querySelectorAll(".checkAsignatura");
+
+        for (const checkbox of checkboxes) {
+          const asignaturaId = Number(checkbox.getAttribute("data-id"));
+          const estaMarcado = checkbox.checked;
+          const estabaMatriculado = idsMatriculados.has(asignaturaId);
+
+          if (estaMarcado && !estabaMatriculado) {
+            const matricula = {};
+            matricula.alumno = {};
+            matricula.alumno.id = Number(id);
+            matricula.asignatura = {};
+            matricula.asignatura.id = asignaturaId;
+            matricula.nota = 0;
+            await AlumnoAsignaturaAPI.crear(matricula);
+          } else if (!estaMarcado && estabaMatriculado) {
+            const matricula = matriculas.find(
+              (matricula) => matricula.asignatura.id === asignaturaId,
+            );
+            if (matricula) {
+              await AlumnoAsignaturaAPI.eliminar(matricula.id);
+            }
+          }
+        }
+
+        window.location.href = "detalleAlumno.html?id=" + id;
+      });
 
     /** Boton imprimir: lanza el dialogo de impresion del navegador. */
     document.querySelector(".imprimir").addEventListener("click", function () {
