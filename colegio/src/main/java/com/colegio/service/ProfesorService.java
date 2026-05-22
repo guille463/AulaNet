@@ -82,13 +82,14 @@ public class ProfesorService {
     }
 
     /**
-     * Devuelve los profesores cuyo nombre empieza por la cadena indicada.
+     * Devuelve los profesores cuyo nombre completo empieza por la cadena
+     * indicada.
      *
-     * @param nombre prefijo del nombre a buscar
+     * @param nombre prefijo del nombre completo a buscar
      * @return lista de profesores que coinciden
      */
     public List<Profesor> buscarPorNombre(String nombre) {
-        return profesorRepository.findByNombreStartingWithIgnoreCase(nombre);
+        return profesorRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
     }
 
     public List<Profesor> buscarPorNombreYApellido(String nombre, String apellido) {

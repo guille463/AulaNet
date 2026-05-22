@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.colegio.model.Especialidad;
@@ -53,11 +55,22 @@ public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
      * Devuelve los profesores cuyo nombre y apellido empiezan por las cadenas
      * indicadas, sin distinguir mayusculas.
      *
-     * @param nombre   prefijo del nombre
+     * @param nombre prefijo del nombre
      * @param apellido prefijo del apellido
      * @return lista de profesores que coinciden
      */
     List<Profesor> findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(String nombre, String apellido);
+
+    /**
+     * Devuelve los profesores cuyo nombre completo empieza por la cadena
+     * indicada, sin distinguir mayusculas. Concatena nombre y apellido para la
+     * comparacion.
+     *
+     * @param texto prefijo a buscar sobre el nombre completo
+     * @return lista de profesores que coinciden
+     */
+    @Query("SELECT p FROM Profesor p WHERE LOWER(CONCAT(p.nombre, ' ', p.apellido)) LIKE LOWER(CONCAT(:texto, '%'))")
+    List<Profesor> findByNombreCompletoStartingWithIgnoreCase(@Param("texto") String texto);
 
     /**
      * Comprueba si existe un profesor con el email indicado.
