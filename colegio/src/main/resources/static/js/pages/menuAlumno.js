@@ -222,19 +222,7 @@ async function buscarPorNombre(nombre) {
   } else if (!REGEX.SOLO_LETRAS.test(nombre)) {
     resultado.innerHTML = `<p class="mensaje--error">El nombre solo puede contener letras</p>`;
   } else {
-    const partes = nombre.trim().split(/\s+/);
-    let respuesta;
-
-    if (partes.length >= 2) {
-      // Si hay dos palabras busca por nombre y apellido
-      respuesta = await AlumnoAPI.obtenerPorNombreYApellido(
-        partes[0],
-        partes.slice(1).join(" "),
-      );
-    } else {
-      // Con una sola palabra busca solo por nombre
-      respuesta = await AlumnoAPI.obtenerPorNombre(partes[0]);
-    }
+    const respuesta = await AlumnoAPI.obtenerPorNombre(nombre.trim());
 
     if (respuesta.datos && respuesta.datos.length > 0) {
       let html = "";
