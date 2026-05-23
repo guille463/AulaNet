@@ -79,3 +79,87 @@ Permite inspeccionar las tablas y ejecutar SQL en tiempo real.
 
 ---
 
+## Estructura del proyecto
+
+### Backend — `src/main/java/com/colegio/`
+
+#### `config/`
+Configuracion del proyercto. `InicializadorConfig` expone la propiedad `colegio.inicializacion.numero-alumnos` para controlar cuántos alumnos se generan al arrancar. `ManejoErrores` captura los `RuntimeException` lanzados por los servicios y devuelve respuestas HTTP con el codigo y mensaje adecuados.
+```
+config/
+├── InicializadorConfig.java
+└── ManejoErrores.java
+```
+
+#### `model/`
+Entidades JPA que se mapean a tablas en la base de datos. Cada entidad tiene sus reglas mediante anotaciones (`nullable`, `unique`). Los métodos `@Transient` calculan valores sin persistirlos, como obtener el curso de un alumno a través de su aula.
+
+```
+model/
+├── Alumno.java
+├── Asignatura.java
+├── Aula.java
+├── Profesor.java
+├── AlumnoAsignatura.java      # Relación N:M matricula
+├── ProfesorAsignatura.java    # Relación N:M impartir
+├── Curso.java                 # Enum: PRIMERO-SEXTO
+├── Grupo.java                 # Enum: grupos A, B
+└── Especialidad.java          # Enum: especialidades dee los docentes
+```
+
+#### `repository/`
+Interfaces que extienden `JpaRepository`. Declaran las consultas necesarias mediante nombres de metodo derivados que Spring Data JPA traduce a SQL automáticamente. No contienen logica.
+```
+repository/
+├── AlumnoRepository.java
+├── AsignaturaRepository.java
+├── AulaRepository.java
+├── ProfesorRepository.java
+├── AlumnoAsignaturaRepository.java
+└── ProfesorAsignaturaRepository.java
+```
+
+#### `service/`
+Logica de negocio. Valida los datos de entrada, genera los codigos identificadores (`ALUM-`, `PROF-`, `ASG-`, `MTR-`), aplica las reglas (comopor ejemplo, matricular automáticamente a un alumno en todas las asignaturas de su curso al crearlo) y lanza `RuntimeException` cuando alguna restriccion no se cumple.
+
+```
+service/
+├── AlumnoService.java
+├── AsignaturaService.java
+├── AulaService.java
+├── ProfesorService.java
+├── AlumnoAsignaturaService.java
+└── ProfesorAsignaturaService.java
+```
+
+#### `util/`
+Constantes con los prefijos de los codigos y los inicializadores de datos. `DbInitializater` mantiene el orden de ejecucion de los inicializadores: profesores → aulas → alumnos → asignaturas → relaciones profesor-asignatura → matrículas.
+
+```
+util/
+├── Constantes.java
+├── DbInitializater.java
+├── AlumnoInitializater.java
+├── AulaInitializater.java
+├── Asignaturainitializater.java
+├── Profesorinitializater.java
+├── Alumnoasignaturainitializater.java
+└── Profesorasignaturainitializater.java
+```
+
+#### `controller/`
+Capa REST. Recibe las peticiones HTTP, delega en el servicio correspondiente y devuelve la respuesta. No contiene logica de negocio. Cada controlador mapea un recurso bajo `/api/v1`.
+
+```
+controller/
+├── AlumnoController.java
+├── AsignaturaController.java
+├── AulaController.java
+├── ProfesorController.java
+├── AlumnoAsignaturaController.java
+├── ProfesorAsignaturaController.java
+└── StatusController.java
+```
+
+---
+
