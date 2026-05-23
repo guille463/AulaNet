@@ -70,12 +70,10 @@ mvn test
 
 Con la aplicación en marcha:
 
-- URL: `http://localhost:8080/h2-console`
+- **URL**: `http://localhost:8080/h2-console`
 - **JDBC URL:** `jdbc:h2:mem:testdb`
 - **Usuario:** `sa`
 - **Contraseña:** *(vacia)*
-
-Permite inspeccionar las tablas y ejecutar SQL en tiempo real.
 
 ---
 
@@ -84,7 +82,7 @@ Permite inspeccionar las tablas y ejecutar SQL en tiempo real.
 ### Backend — `src/main/java/com/colegio/`
 
 #### `config/`
-Configuracion del proyercto. `InicializadorConfig` expone la propiedad `colegio.inicializacion.numero-alumnos` para controlar cuántos alumnos se generan al arrancar. `ManejoErrores` captura los `RuntimeException` lanzados por los servicios y devuelve respuestas HTTP con el codigo y mensaje adecuados.
+Configuracion del proyercto.
 ```
 config/
 ├── InicializadorConfig.java
@@ -92,7 +90,7 @@ config/
 ```
 
 #### `model/`
-Entidades JPA que se mapean a tablas en la base de datos. Cada entidad tiene sus reglas mediante anotaciones (`nullable`, `unique`). Los métodos `@Transient` calculan valores sin persistirlos, como obtener el curso de un alumno a través de su aula.
+Entidades JPA que se mapean a tablas en la base de datos. Cada entidad tiene sus reglas mediante anotaciones (`nullable`, `unique`). Los métodos `@Transient` calculan valores sin persistirlos.
 
 ```
 model/
@@ -108,7 +106,7 @@ model/
 ```
 
 #### `repository/`
-Interfaces que extienden `JpaRepository`. Declaran las consultas necesarias mediante nombres de metodo derivados que Spring Data JPA traduce a SQL automáticamente. No contienen logica.
+Interfaces que extienden `JpaRepository`. Declaran las consultas necesarias mediante nombres de metodo derivados que Spring Data JPA traduce a SQL automaticamente. No contienen logica.
 ```
 repository/
 ├── AlumnoRepository.java
@@ -150,6 +148,7 @@ util/
 #### `controller/`
 Capa REST. Recibe las peticiones HTTP, delega en el servicio correspondiente y devuelve la respuesta. No contiene logica de negocio. Cada controlador mapea un recurso bajo `/api/v1`.
 
+```
 controller/
 ├── AlumnoController.java
 ├── AsignaturaController.java
@@ -158,9 +157,10 @@ controller/
 ├── AlumnoAsignaturaController.java
 ├── ProfesorAsignaturaController.java
 └── StatusController.java
+```
 ---
 
-### Frontend — `src/main/resources/static/`
+
 
 #### `js/api/`
 Dispone de una funcion por cada endpoint de la API REST. Encapsulan las llamadas `fetch` con la URL base, el metodo HTTP y el cuerpo. El resto del codigo nunca llama a `fetch` directamente. 
@@ -209,7 +209,7 @@ js/pages/
 ```
 
 #### `js/utils/`
-Funciones auxiliares compartidas por toda la aplicación: manejo de errores HTTP, formateo de fechas y constantes de frontend.
+Funciones auxiliares: manejo de errores HTTP, formateo de fechas y constantes de frontend.
 
 js/utils/
 ├── apiUtils.js
@@ -246,9 +246,9 @@ Tests unitarios de la capa de servicio. Verifican la lógica de negocio de `Alum
 
 ### Relaciones
 
-**N:M con clase de asociación explícita**
+**N:M **
 
-| Entidad | Tabla | Participantes | Atributo extra | Código |
+| Entidad | Tabla | Participantes | Atributo  | Código |
 |---------|-------|--------------|----------------|--------|
 | `AlumnoAsignatura` | `alumno_asignatura` | `Alumno` ↔ `Asignatura` | `nota` (double) | `MTR-{id}` |
 | `ProfesorAsignatura` | `profesor_asignatura` | `Profesor` ↔ `Asignatura` | `horasSemanales` (int) | — |
@@ -267,7 +267,159 @@ Tests unitarios de la capa de servicio. Verifican la lógica de negocio de `Alum
 
 ### Enumeraciones
 
-- **`Curso`**: `PRIMERO` … `SEXTO` — etiquetas `1º` … `6º`
-- **`Grupo`**: grupos dentro de un curso (A, B, C…)
+- **`Curso`**: `PRIMERO` - `SEXTO` — etiquetas `1º` - `6º`
+- **`Grupo`**: grupos dentro de un curso (A, B)
 - **`Especialidad`**: especialidad docente del profesor
 
+---
+
+## Rutas de la API
+
+Base: `http://localhost:8080/api/v1`
+
+### Estado
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/status` | Comprueba que el servidor responde |
+
+---
+
+### Alumnos — `/alumnos`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/alumnos` | Listar todos |
+| `GET` | `/alumnos/{id}` | Obtener por id |
+| `GET` | `/alumnos/fecha/{fecha}` | Filtrar por fecha de nacimiento (`yyyy-MM-dd`) |
+| `GET` | `/alumnos/aula/{aulaId}` | Filtrar por id de aula |
+| `GET` | `/alumnos/aula/codigo/{codigo}` | Filtrar por código de aula (ej. `1ºA`) |
+| `GET` | `/alumnos/curso/{curso}` | Filtrar por curso (ej. `PRIMERO`) |
+| `GET` | `/alumnos/buscar/{nombre}` | Buscar por nombre (contiene) |
+| `GET` | `/alumnos/buscar/{nombre}/{apellido}` | Buscar por nombre y apellido |
+| `POST` | `/alumnos` | Crear alumno |
+| `PUT` | `/alumnos/{id}` | Actualizar alumno |
+| `DELETE` | `/alumnos/{id}` | Eliminar alumno |
+
+---
+
+### Profesores — `/profesores`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/profesores` | Listar todos |
+| `GET` | `/profesores/{id}` | Obtener por id |
+| `GET` | `/profesores/email/{email}` | Obtener por email |
+| `GET` | `/profesores/especialidad/{especialidad}` | Filtrar por especialidad |
+| `GET` | `/profesores/buscar/{nombre}` | Buscar por nombre (contiene) |
+| `GET` | `/profesores/buscar/{nombre}/{apellido}` | Buscar por nombre y apellido |
+| `POST` | `/profesores` | Crear profesor |
+| `PUT` | `/profesores/{id}` | Actualizar profesor |
+| `DELETE` | `/profesores/{id}` | Eliminar profesor |
+
+---
+
+### Asignaturas — `/asignaturas`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/asignaturas` | Listar todas |
+| `GET` | `/asignaturas/{id}` | Obtener por id |
+| `GET` | `/asignaturas/curso/{curso}` | Filtrar por curso (ej. `1º`) |
+| `POST` | `/asignaturas` | Crear asignatura |
+| `PUT` | `/asignaturas/{id}` | Actualizar asignatura |
+| `DELETE` | `/asignaturas/{id}` | Eliminar asignatura |
+
+---
+
+### Aulas — `/aulas`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/aulas` | Listar todas |
+| `GET` | `/aulas/{id}` | Obtener por id |
+| `GET` | `/aulas/codigo/{codigo}` | Obtener por código (ej. `1ºA`) |
+| `GET` | `/aulas/curso/{curso}` | Filtrar por curso |
+| `GET` | `/aulas/disponibles` | Listar aulas con plazas libres |
+| `GET` | `/aulas/{id}/alumnos/count` | Contar alumnos del aula |
+| `POST` | `/aulas` | Crear aula |
+| `PUT` | `/aulas/{id}` | Actualizar aula |
+| `PUT` | `/aulas/{aulaId}/tutor/{profesorId}` | Asignar tutor al aula |
+| `DELETE` | `/aulas/{id}` | Eliminar aula |
+| `DELETE` | `/aulas/{aulaId}/tutor` | Eliminar tutor del aula |
+
+---
+
+### Matrículas (Alumno–Asignatura) — `/alumno-asignatura`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/alumno-asignatura` | Listar todas |
+| `GET` | `/alumno-asignatura/{id}` | Obtener por id |
+| `GET` | `/alumno-asignatura/alumno/{alumnoId}` | Matrículas de un alumno |
+| `GET` | `/alumno-asignatura/asignatura/{asignaturaId}` | Matrículas de una asignatura |
+| `POST` | `/alumno-asignatura` | Crear matrícula |
+| `PUT` | `/alumno-asignatura/{id}` | Actualizar nota |
+| `DELETE` | `/alumno-asignatura/{id}` | Eliminar matrícula |
+
+---
+
+### Relaciones Profesor–Asignatura — `/profesor-asignatura`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/profesor-asignatura` | Listar todas |
+| `GET` | `/profesor-asignatura/{id}` | Obtener por id |
+| `GET` | `/profesor-asignatura/profesor/{profesorId}` | Relaciones de un profesor |
+| `GET` | `/profesor-asignatura/asignatura/{asignaturaId}` | Relaciones de una asignatura |
+| `GET` | `/profesor-asignatura/aula/{aulaId}` | Relaciones del curso del aula |
+| `POST` | `/profesor-asignatura` | Crear relación |
+| `PUT` | `/profesor-asignatura/{id}` | Actualizar relación |
+| `DELETE` | `/profesor-asignatura/{id}` | Eliminar relación |
+
+---
+
+## Frontend
+
+Los archivos estaticos estan en `src/main/resources/static/`.
+
+Acceso: `http://localhost:8080/index.html`
+
+Páginas disponibles:
+
+| Página | Ruta |
+|--------|------|
+| Inicio | `/index.html` |
+| Alumnos | `/menuAlumno.html` |
+| Detalle alumno | `/detalleAlumno.html` |
+| Crear alumno | `/crearAlumno.html` |
+| Editar alumno | `/editarAlumno.html` |
+| Profesores | `/menuProfesor.html` |
+| Detalle profesor | `/detalleProfesor.html` |
+| Crear profesor | `/crearProfesor.html` |
+| Editar profesor | `/editarProfesor.html` |
+| Asignaturas | `/menuAsignatura.html` |
+| Detalle asignatura | `/detalleAsignatura.html` |
+| Aulas | `/menuAula.html` |
+| Detalle aula | `/detalleAula.html` |
+
+
+---
+
+## Datos iniciales
+
+Al arrancar, los inicializadores cargan automáticamente:
+
+- Aulas por curso y grupo
+- Profesores con especialidad asignada
+- Asignaturas por curso
+- Alumnos distribuidos en aulas
+- Matrículas alumno–asignatura
+- Relaciones profesor–asignatura
+
+---
+
+## Autor
+
+Guillermo Rafael Jiménez Muñoz
+1º DAM Stem Granada
