@@ -150,7 +150,6 @@ util/
 #### `controller/`
 Capa REST. Recibe las peticiones HTTP, delega en el servicio correspondiente y devuelve la respuesta. No contiene logica de negocio. Cada controlador mapea un recurso bajo `/api/v1`.
 
-```
 controller/
 ├── AlumnoController.java
 ├── AsignaturaController.java
@@ -159,7 +158,66 @@ controller/
 ├── AlumnoAsignaturaController.java
 ├── ProfesorAsignaturaController.java
 └── StatusController.java
+---
+
+### Frontend — `src/main/resources/static/`
+
+#### `js/api/`
+Dispone de una funcion por cada endpoint de la API REST. Encapsulan las llamadas `fetch` con la URL base, el metodo HTTP y el cuerpo. El resto del codigo nunca llama a `fetch` directamente. 
+
+```
+js/api/
+├── alumnoApi.js
+├── alumnoAsignaturaApi.js
+├── asignaturaApi.js
+├── aulaApi.js
+├── profesorApi.js
+└── profesorAsignaturaApi.js
 ```
 
----
+#### `js/components/`
+Tarjetas de entidades y la barra de navegacion.
+
+```
+js/components/
+├── alumnoComponente.js
+├── asignaturaComponente.js
+├── aulaComponente.js
+├── profesorComponente.js
+└── navbar.js
+```
+
+#### `js/config/`
+Define la URL base de la API (`http://localhost:8080/api/v1`).
+
+```
+js/config/
+└── config.js
+```
+
+#### `js/pages/`
+Logica de cada pagina: carga de datos al entrar, gestion de eventos de formularios y navegacion.
+
+```
+js/pages/
+├── inicio.js
+├── menuAlumno.js        crearAlumno.js        detalleAlumno.js   editarAlumno.js
+├── menuProfesor.js      crearProfesor.js      detalleProfesor.js 
+ editarProfesor.js
+├── menuAsignatura.js    detalleAsignatura.js
+└── menuAula.js          detalleAula.js
+```
+
+#### `js/utils/`
+Funciones auxiliares compartidas por toda la aplicación: manejo de errores HTTP, formateo de fechas y constantes de frontend.
+
+js/utils/
+├── apiUtils.js
+└── constantes.js
+
+## `css/`
+Estilos divididos segun lo que se va amodificar: `hero.css` para la portada, `navbar.css` para la barra de navegacion y `pages.css` para las páginas de listado y detalle.
+
+#### `HTML`
+Cada pagina tiene su propio archivo `.html` que carga los scripts correspondientes de `pages/` y todo lo necesario.
 
