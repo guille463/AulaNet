@@ -221,3 +221,53 @@ Estilos divididos segun lo que se va amodificar: `hero.css` para la portada, `na
 #### `HTML`
 Cada pagina tiene su propio archivo `.html` que carga los scripts correspondientes de `pages/` y todo lo necesario.
 
+
+### Tests — `src/test/java/com/colegio/`
+Tests unitarios de la capa de servicio. Verifican la lógica de negocio de `AlumnoService`, `AsignaturaService` y `ProfesorService` de forma aislada, sin levantar el contexto de Spring ni la base de datos.
+
+```
+├── AlumnoServiceTest.java
+├── AsignaturaServiceTest.java
+└── PorfesorServiceTest.java
+```
+
+---
+
+## Modelo de dominio
+
+### Entidades principales
+
+| Entidad | Tabla | Código generado |
+|---------|-------|-----------------|
+| `Alumno` | `alumnos` | `ALUM-{id}` |
+| `Profesor` | `profesores` | `PROF-{id}` |
+| `Asignatura` | `asignaturas` | `ASG-{id}` |
+| `Aula` | `aulas` | `{curso}{grupo}` (ej. `1ºA`) |
+
+### Relaciones
+
+**N:M con clase de asociación explícita**
+
+| Entidad | Tabla | Participantes | Atributo extra | Código |
+|---------|-------|--------------|----------------|--------|
+| `AlumnoAsignatura` | `alumno_asignatura` | `Alumno` ↔ `Asignatura` | `nota` (double) | `MTR-{id}` |
+| `ProfesorAsignatura` | `profesor_asignatura` | `Profesor` ↔ `Asignatura` | `horasSemanales` (int) | — |
+
+**N:1**
+
+| Entidad hijo | Entidad padre | Columna FK | Obligatoria |
+|-------------|--------------|------------|-------------|
+| `Alumno` | `Aula` | `aula_id` | Sí (`nullable=false`) |
+
+**1:1**
+
+| Entidad | Entidad relacionada | Columna FK | Obligatoria |
+|---------|-------------------|------------|-------------|
+| `Aula` | `Profesor` (tutor) | `tutor_id` | No (`nullable=true`) |
+
+### Enumeraciones
+
+- **`Curso`**: `PRIMERO` … `SEXTO` — etiquetas `1º` … `6º`
+- **`Grupo`**: grupos dentro de un curso (A, B, C…)
+- **`Especialidad`**: especialidad docente del profesor
+
