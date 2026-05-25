@@ -32,7 +32,10 @@ Al iniciar la aplicación se carga una base de datos de prueba completa en el si
 
 Backend en **Spring Boot** con base de datos **H2 en memoria** y frontend en **HTML/CSS/JavaScript puro**, sin frameworks de cliente. La comunicación entre capas es íntegramente mediante una API REST bajo `/api/v1`.
 
----
+### Flujo
+
+**CLIENTE** (Navegador)  -->  **CONTROLLER**    -->     **SERVICE**    -->    **REPOSITORY**    -->     **BASE DE DATOS H2**           
+
 
 ## Requisitos del sistema
 
@@ -76,6 +79,8 @@ Con la aplicación en marcha:
 - **Contraseña:** *(vacia)*
 
 ---
+
+![ConsolaH2](imgsReadme/ImagenH2.png)
 
 ## Estructura del proyecto
 
@@ -131,7 +136,7 @@ service/
 ```
 
 #### `util/`
-Constantes con los prefijos de los codigos y los inicializadores de datos. `DbInitializater` mantiene el orden de ejecucion de los inicializadores: profesores → aulas → alumnos → asignaturas → relaciones profesor-asignatura → matrículas.
+Constantes con los prefijos de los codigos y los inicializadores de datos. `DbInitializater` mantiene el orden de ejecucion de los inicializadores profesores → aulas → alumnos → asignaturas → relaciones profesor-asignatura → matrículas.
 
 ```
 util/
@@ -163,7 +168,7 @@ controller/
 
 
 #### `js/api/`
-Dispone de una funcion por cada endpoint de la API REST. Encapsulan las llamadas `fetch` con la URL base, el metodo HTTP y el cuerpo. El resto del codigo nunca llama a `fetch` directamente. 
+Dispone de una funcion por cada endpoint de la API REST. Encapsulan las llamadas `fetch` con la URL base, el metodo HTTP y el cuerpo
 
 ```
 js/api/
@@ -196,7 +201,7 @@ js/config/
 ```
 
 #### `js/pages/`
-Logica de cada pagina: carga de datos al entrar, gestion de eventos de formularios y navegacion.
+Logica de cada pagina
 
 ```
 js/pages/
@@ -209,7 +214,7 @@ js/pages/
 ```
 
 #### `js/utils/`
-Funciones auxiliares: manejo de errores HTTP, formateo de fechas y constantes de frontend.
+Funciones auxiliares: manejo de errores HTTP, constantes de frontend.
 
 js/utils/
 ├── apiUtils.js
@@ -406,6 +411,19 @@ Páginas disponibles:
 
 ---
 
+### Capturas
+Inicio De Alumnos
+![Inicio](imgsReadme/Inicio.png)
+
+Listado de Alumnos 
+![Listado de alumnos](imgsReadme/ListadoAlumnos.png)
+
+Detalle de Alumno
+![Detalle alumno](imgsReadme/DetalleAlumno.png)
+
+Editar Alumno
+![Editar alumno](imgsReadme/EditarAlumno.png)
+
 ## Datos iniciales
 
 Al arrancar, los inicializadores cargan automáticamente:
@@ -418,6 +436,28 @@ Al arrancar, los inicializadores cargan automáticamente:
 - Relaciones profesor–asignatura
 
 ---
+
+## Mejoras futuras
+
+**Datos ampliados de entidades**
+```
+Las entidades Alumno y Profesor actualmente almacenan los campos mínimos necesarios. Se contemplan campos adicionales como dirección, teléfono de contacto, foto de perfil, fecha de incorporación al centro y datos del tutor legal en el caso del alumno.
+```
+
+**Expediente académico del alumno**
+```
+Historial completo por curso escolar: notas por evaluación, faltas de asistencia, observaciones del tutor y progresión entre cursos. Permitiría generar un boletín de notas exportable en PDF o excel
+```
+
+**Ordenacion y filtrado en los listados**
+```
+Botones en las cabeceras de las tablas del frontend para ordenar los listados de alumnos, profesores y asignaturas por cualquier columna (nombre, curso, nota media, etc.) de forma ascendente y descendente, sin recargar la página.
+```
+
+**Chatbot con IA integrado**
+```
+Asistente conversacional embebido en la interfaz que permita realizar consultas en lenguaje natural sobre los datos del centro: "¿Cuántos alumnos hay en 3ºA?", "¿Qué asignaturas imparte el profesor X?", "Lista los alumnos con nota media inferior a 5". El chatbot consultaría la API REST existente para responder con datos reales.
+```
 
 ## Autor
 
