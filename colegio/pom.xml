@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.14</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>3.3.5</version>
+		<relativePath />
 	</parent>
 	<groupId>com.colegio</groupId>
 	<artifactId>colegio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name />
+	<name>colegio</name>
 	<description />
 	<url />
 	<licenses>
@@ -28,7 +28,10 @@
 		<url />
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<maven.javadoc.skip>false</maven.javadoc.skip>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,7 +42,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -56,15 +58,22 @@
 			<version>1.0.2</version>
 		</dependency>
 	</dependencies>
-
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.11.3</version>
+				<configuration>
+					<release>21</release>
+					<doclint>none</doclint>
+					<detectJavaApiLink>false</detectJavaApiLink>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
