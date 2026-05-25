@@ -99,6 +99,14 @@ public class AlumnoService {
         return alumnoRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
     }
 
+    /**
+     * Devuelve los alumnos cuyo nombre y apellido comienzan por los valores
+     * indicados.
+     *
+     * @param nombre prefijo del nombre a buscar
+     * @param apellido prefijo del apellido a buscar
+     * @return lista de alumnos que coinciden
+     */
     public List<Alumno> buscarPorNombreYApellido(String nombre, String apellido) {
         return alumnoRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
     }

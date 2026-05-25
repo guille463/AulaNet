@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.colegio"},{"l":"com.colegio.config"},{"l":"com.colegio.controller"},{"l":"com.colegio.model"},{"l":"com.colegio.repository"},{"l":"com.colegio.service"},{"l":"com.colegio.util"}];updateSearchResults();

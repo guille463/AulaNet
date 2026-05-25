@@ -92,6 +92,14 @@ public class ProfesorService {
         return profesorRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
     }
 
+    /**
+     * Devuelve los profesores cuyo nombre y apellido comienzan por los valores
+     * indicados.
+     *
+     * @param nombre prefijo del nombre a buscar
+     * @param apellido prefijo del apellido a buscar
+     * @return lista de profesores que coinciden
+     */
     public List<Profesor> buscarPorNombreYApellido(String nombre, String apellido) {
         return profesorRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
     }

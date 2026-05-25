@@ -11,12 +11,29 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * Manejador global de excepciones de la aplicacion.
  *
+ * <p>
+ * Captura las {@link RuntimeException} lanzadas por los servicios y devuelve
+ * una respuesta HTTP con el mensaje de error correspondiente.
+ * </p>
+ *
  * @author Guillermo Rafael Jimenez Munoz
  * @version 1.0
  */
 @RestControllerAdvice
 public class ManejoErrores {
 
+    /**
+     * Constructor vacio.
+     */
+    public ManejoErrores() {
+    }
+
+    /**
+     * Maneja las excepciones de tipo {@link RuntimeException}.
+     *
+     * @param e excepcion capturada
+     * @return respuesta HTTP 400 con el mensaje de error
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException e) {
         Map<String, String> error = new HashMap<>();

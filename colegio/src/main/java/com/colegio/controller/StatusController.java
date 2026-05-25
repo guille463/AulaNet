@@ -14,6 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class StatusController {
 
+    /**
+     * Constructor vacio.
+     */
+    public StatusController() {
+    }
+
+    /**
+     * Verifica que el servidor esta en marcha.
+     *
+     * @return cadena {@code "OK"} si el servidor responde
+     */
     @GetMapping("/status")
     public String status() {
         return "OK";
