@@ -45,6 +45,9 @@ public class AlumnoService {
     @Autowired
     private AsignaturaRepository asignaturaRepository;
 
+    @Autowired
+    private AulaService aulaService;
+
     // ============================================================
     // METODOS CRUD
     // ============================================================
@@ -54,7 +57,11 @@ public class AlumnoService {
      * @return lista de alumnos
      */
     public List<Alumno> listarAlumnos() {
-        return alumnoRepository.findAll();
+        List<Alumno> alumnos = alumnoRepository.findAll();
+        for (Alumno aalumno : alumnos) {
+            rellenarTutorAula(aalumno);
+        }
+        return alumnos;
     }
 
     /**
@@ -65,8 +72,10 @@ public class AlumnoService {
      * @throws RuntimeException si no existe un alumno con ese id
      */
     public Alumno buscarPorId(Long id) {
-        return alumnoRepository.findById(id)
+        Alumno alumno = alumnoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Alumno con id " + id + " no encontrado"));
+        rellenarTutorAula(alumno);
+        return alumno;
     }
 
     /**
@@ -76,7 +85,11 @@ public class AlumnoService {
      * @return lista de alumnos del aula
      */
     public List<Alumno> buscarPorAula(Long aulaId) {
-        return alumnoRepository.findByAulaId(aulaId);
+        List<Alumno> alumnos = alumnoRepository.findByAulaId(aulaId);
+        for (Alumno aalumno : alumnos) {
+            rellenarTutorAula(aalumno);
+        }
+        return alumnos;
     }
 
     /**
@@ -227,6 +240,12 @@ public class AlumnoService {
                 guardada.setCodigo(Constantes.PREFIJO_MATR + guardada.getId());
                 alumnoAsignaturaRepository.save(guardada);
             }
+        }
+    }
+
+    private void rellenarTutorAula(Alumno alumno) {
+        if (alumno.getAula() != null && alumno.getAula().getTutor() != null) {
+            alumno.getAula().getTutor().setCodigoAula(alumno.getAula().getCodigo());
         }
     }
 }

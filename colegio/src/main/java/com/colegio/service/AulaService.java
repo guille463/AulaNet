@@ -42,7 +42,11 @@ public class AulaService {
      * @return lista de aulas
      */
     public List<Aula> listarAulas() {
-        return aulaRepository.findAll();
+        List<Aula> aulas = aulaRepository.findAll();
+        for (Aula aula : aulas) {
+            rellenarCodigoAulaTutor(aula);
+        }
+        return aulas;
     }
 
     /**
@@ -53,8 +57,10 @@ public class AulaService {
      * @throws RuntimeException si no existe un aula con ese id
      */
     public Aula buscarAulaPorId(Long id) {
-        return aulaRepository.findById(id)
+        Aula aula = aulaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Aula con id " + id + " no encontrada"));
+        rellenarCodigoAulaTutor(aula);
+        return aula;
     }
 
     /**
@@ -65,8 +71,10 @@ public class AulaService {
      * @throws RuntimeException si no existe un aula con ese codigo
      */
     public Aula buscarAulaPorCodigo(String codigo) {
-        return aulaRepository.findByCodigo(codigo)
+        Aula aula = aulaRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new RuntimeException("Aula " + codigo + " no encontrada"));
+        rellenarCodigoAulaTutor(aula);
+        return aula;
     }
 
     /**
@@ -111,7 +119,7 @@ public class AulaService {
      * @param aula datos del aula a guardar
      * @return aula guardada
      * @throws RuntimeException si ya existe un aula con ese codigo o si la
-     *                          capacidad no esta entre 15 y 30
+     * capacidad no esta entre 15 y 30
      */
     public Aula guardarAula(Aula aula) {
         validarCapacidad(aula.getCapacidad());
@@ -125,11 +133,11 @@ public class AulaService {
     /**
      * Actualiza los datos de un aula existente.
      *
-     * @param id   id del aula a actualizar
+     * @param id id del aula a actualizar
      * @param aula nuevos datos del aula
      * @return aula actualizada
      * @throws RuntimeException si el aula no existe o si la capacidad no esta
-     *                          entre 15 y 30
+     * entre 15 y 30
      */
     public Aula actualizarAula(Long id, Aula aula) {
         Aula existente = buscarAulaPorId(id);
@@ -162,11 +170,11 @@ public class AulaService {
      * Un profesor solo puede ser tutor de un aula a la vez.
      * </p>
      *
-     * @param aulaId     id del aula
+     * @param aulaId id del aula
      * @param profesorId id del profesor a asignar como tutor
      * @return aula con el tutor asignado
      * @throws RuntimeException si el aula o el profesor no existen, o si el
-     *                          profesor ya es tutor de otra aula
+     * profesor ya es tutor de otra aula
      */
     public Aula asignarTutor(Long aulaId, Long profesorId) {
         Aula aula = buscarAulaPorId(aulaId);
@@ -177,9 +185,10 @@ public class AulaService {
             throw new RuntimeException("El profesor " + profesor.getCodigo()
                     + " ya es tutor de otra aula");
         }
-
         aula.setTutor(profesor);
-        return aulaRepository.save(aula);
+        Aula guardada = aulaRepository.save(aula);
+        rellenarCodigoAulaTutor(guardada);
+        return guardada;
     }
 
     /**
@@ -192,7 +201,9 @@ public class AulaService {
     public Aula eliminarTutor(Long aulaId) {
         Aula aula = buscarAulaPorId(aulaId);
         aula.setTutor(null);
-        return aulaRepository.save(aula);
+        Aula guardada = aulaRepository.save(aula);
+        rellenarCodigoAulaTutor(guardada);
+        return guardada;
     }
 
     // ============================================================
@@ -207,6 +218,17 @@ public class AulaService {
     private void validarCapacidad(int capacidad) {
         if (capacidad < 15 || capacidad > 30) {
             throw new RuntimeException("La capacidad del aula debe estar entre 15 y 30");
+        }
+    }
+
+    /**
+     * Rellena el campo {@code codigoAula} del tutor del aula indicada.
+     *
+     * @param aula aula cuyo tutor se va a rellenar
+     */
+    private void rellenarCodigoAulaTutor(Aula aula) {
+        if (aula.getTutor() != null) {
+            aula.getTutor().setCodigoAula(aula.getCodigo());
         }
     }
 }

@@ -54,7 +54,12 @@ public class ProfesorService {
      * @return lista de profesores
      */
     public List<Profesor> listarProfesores() {
-        return profesorRepository.findAll();
+        List<Profesor> profesores = profesorRepository.findAll();
+        for (Profesor profesor : profesores) {
+            Aula aula = aulaRepository.findByTutor(profesor).orElse(null);
+            profesor.setCodigoAula(aula != null ? aula.getCodigo() : null);
+        }
+        return profesores;
     }
 
     /**
@@ -65,8 +70,11 @@ public class ProfesorService {
      * @throws RuntimeException si no existe un profesor con ese id
      */
     public Profesor buscarProfesorPorId(Long id) {
-        return profesorRepository.findById(id)
+        Profesor profesor = profesorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Profesor con id " + id + " no encontrado"));
+        Aula aula = aulaRepository.findByTutor(profesor).orElse(null);
+        profesor.setCodigoAula(aula != null ? aula.getCodigo() : null);
+        return profesor;
     }
 
     /**
