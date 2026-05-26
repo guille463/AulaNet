@@ -22,7 +22,7 @@ Cada asignatura pertenece a un curso concreto y tiene un número de horas semana
 
 - Un alumno pertenece a un aula y está matriculado en las asignaturas de su curso. Cada matrícula (`MTR-{id}`) almacena la nota del alumno en esa asignatura.
 - Un profesor puede impartir varias asignaturas, y una asignatura puede ser impartida por varios profesores. Cada relación almacena las horas semanales dedicadas.
-- Un aula puede tener un profesor tutor, que se puede asignar y revocar de forma independiente.
+- Un aula puede tener un profesor tutor, que se puede asignar y eliminar de forma independiente.
 
 ### Comportamiento automático al arrancar
 
@@ -30,7 +30,7 @@ Al iniciar la aplicación se carga una base de datos de prueba completa en el si
 
 ### Tecnología
 
-Backend en **Spring Boot** con base de datos **H2 en memoria** y frontend en **HTML/CSS/JavaScript puro**, sin frameworks de cliente. La comunicación entre capas es íntegramente mediante una API REST bajo `/api/v1`.
+Backend en **Spring Boot** con base de datos **H2 en memoria** y frontend en **HTML/CSS/JavaScript**, sin frameworks. 
 
 ### Flujo
 
@@ -44,7 +44,6 @@ Backend en **Spring Boot** con base de datos **H2 en memoria** y frontend en **H
 | Java (JDK)  | 17       |
 | Maven       | 3.8      |
 
-No se necesita ninguna base de datos externa. H2 se levanta automáticamente en memoria al arrancar la aplicación.
 
 ---
 
