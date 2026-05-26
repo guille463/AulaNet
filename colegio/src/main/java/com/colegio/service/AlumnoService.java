@@ -96,7 +96,11 @@ public class AlumnoService {
      * @return lista de alumnos del curso
      */
     public List<Alumno> buscarPorCurso(Curso curso) {
-        return alumnoRepository.findByAulaCurso(curso);
+        List<Alumno> alumnos = alumnoRepository.findByAulaCurso(curso);
+        for (Alumno a : alumnos) {
+            rellenarTutorAula(a);
+        }
+        return alumnos;
     }
 
     /**
@@ -106,7 +110,11 @@ public class AlumnoService {
      * @return lista de alumnos que coinciden
      */
     public List<Alumno> buscarPorNombre(String nombre) {
-        return alumnoRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
+        List<Alumno> alumnos = alumnoRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
+        for (Alumno a : alumnos) {
+            rellenarTutorAula(a);
+        }
+        return alumnos;
     }
 
     /**
@@ -118,7 +126,11 @@ public class AlumnoService {
      * @return lista de alumnos que coinciden
      */
     public List<Alumno> buscarPorNombreYApellido(String nombre, String apellido) {
-        return alumnoRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
+        List<Alumno> alumnos = alumnoRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
+        for (Alumno a : alumnos) {
+            rellenarTutorAula(a);
+        }
+        return alumnos;
     }
 
     /**
@@ -128,7 +140,11 @@ public class AlumnoService {
      * @return lista de alumnos con esa fecha de nacimiento
      */
     public List<Alumno> buscarPorFechaNacimiento(LocalDate fechaNacimiento) {
-        return alumnoRepository.findByFechaNacimiento(fechaNacimiento);
+        List<Alumno> alumnos = alumnoRepository.findByFechaNacimiento(fechaNacimiento);
+        for (Alumno a : alumnos) {
+            rellenarTutorAula(a);
+        }
+        return alumnos;
     }
 
     /**
@@ -172,7 +188,6 @@ public class AlumnoService {
      */
     public Alumno actualizarAlumno(Long id, Alumno alumno) {
         Alumno existente = buscarPorId(id);
-
         existente.setNombre(alumno.getNombre());
         existente.setApellido(alumno.getApellido());
         existente.setFechaNacimiento(alumno.getFechaNacimiento());
@@ -181,7 +196,9 @@ public class AlumnoService {
                     .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
             existente.setAula(aula);
         }
-        return alumnoRepository.save(existente);
+        Alumno guardado = alumnoRepository.save(existente);
+        rellenarTutorAula(guardado);
+        return guardado;
     }
 
     /**
@@ -212,7 +229,11 @@ public class AlumnoService {
      * @return lista de alumnos del aula
      */
     public List<Alumno> buscarPorCodigoAula(String codigo) {
-        return alumnoRepository.findByAulaCodigo(codigo);
+        List<Alumno> alumnos = alumnoRepository.findByAulaCodigo(codigo);
+        for (Alumno a : alumnos) {
+            rellenarTutorAula(a);
+        }
+        return alumnos;
     }
 
     // ============================================================

@@ -84,7 +84,11 @@ public class AulaService {
      * @return lista de aulas del curso
      */
     public List<Aula> buscarAulasPorCurso(Curso curso) {
-        return aulaRepository.findByCurso(curso);
+        List<Aula> aulas = aulaRepository.findByCurso(curso);
+        for (Aula a : aulas) {
+            rellenarCodigoAulaTutor(a);
+        }
+        return aulas;
     }
 
     /**
@@ -93,7 +97,11 @@ public class AulaService {
      * @return lista de aulas con plazas disponibles
      */
     public List<Aula> findAulasConPlazasLibres() {
-        return aulaRepository.findAulasConPlazasLibres();
+        List<Aula> aulas = aulaRepository.findAulasConPlazasLibres();
+        for (Aula a : aulas) {
+            rellenarCodigoAulaTutor(a);
+        }
+        return aulas;
     }
 
     /**
