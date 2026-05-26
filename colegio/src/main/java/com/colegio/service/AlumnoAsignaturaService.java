@@ -38,6 +38,9 @@ public class AlumnoAsignaturaService {
     @Autowired
     private AsignaturaRepository asignaturaRepository;
 
+    @Autowired
+    private AulaService aulaService;
+
     // ============================================================
     // METODOS CRUD
     // ============================================================
@@ -47,7 +50,11 @@ public class AlumnoAsignaturaService {
      * @return lista de matriculas
      */
     public List<AlumnoAsignatura> listar() {
-        return alumnoAsignaturaRepository.findAll();
+        List<AlumnoAsignatura> lista = alumnoAsignaturaRepository.findAll();
+        for (AlumnoAsignatura matricula : lista) {
+            rellenarTutorAula(matricula);
+        }
+        return lista;
     }
 
     /**
@@ -58,8 +65,10 @@ public class AlumnoAsignaturaService {
      * @throws RuntimeException si no existe una matricula con ese id
      */
     public AlumnoAsignatura buscarPorId(Long id) {
-        return alumnoAsignaturaRepository.findById(id)
+        AlumnoAsignatura matricula = alumnoAsignaturaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("AlumnoAsignatura con id: " + id + " no encontrado"));
+        rellenarTutorAula(matricula);
+        return matricula;
     }
 
     /**
@@ -69,7 +78,11 @@ public class AlumnoAsignaturaService {
      * @return lista de matriculas del alumno
      */
     public List<AlumnoAsignatura> buscarPorAlumno(Long alumnoId) {
-        return alumnoAsignaturaRepository.findByAlumnoId(alumnoId);
+        List<AlumnoAsignatura> lista = alumnoAsignaturaRepository.findByAlumnoId(alumnoId);
+        for (AlumnoAsignatura matricula : lista) {
+            rellenarTutorAula(matricula);
+        }
+        return lista;
     }
 
     /**
@@ -79,7 +92,11 @@ public class AlumnoAsignaturaService {
      * @return lista de matriculas de la asignatura
      */
     public List<AlumnoAsignatura> buscarPorAsignatura(Long asignaturaId) {
-        return alumnoAsignaturaRepository.findByAsignaturaId(asignaturaId);
+        List<AlumnoAsignatura> lista = alumnoAsignaturaRepository.findByAsignaturaId(asignaturaId);
+        for (AlumnoAsignatura matricula : lista) {
+            rellenarTutorAula(matricula);
+        }
+        return lista;
     }
 
     /**
@@ -92,9 +109,8 @@ public class AlumnoAsignaturaService {
      * @param alumnoAsignatura datos de la matricula a guardar
      * @return matricula guardada con codigo asignado
      * @throws RuntimeException si el alumno o la asignatura no existen, si el
-     *                          alumno ya esta matriculado, si el curso del alumno
-     *                          no coincide con el de
-     *                          la asignatura, o si la nota no esta entre 0 y 10
+     * alumno ya esta matriculado, si el curso del alumno no coincide con el de
+     * la asignatura, o si la nota no esta entre 0 y 10
      */
     public AlumnoAsignatura guardar(AlumnoAsignatura alumnoAsignatura) {
         Alumno alumno = alumnoRepository.findById(alumnoAsignatura.getAlumno().getId())
@@ -125,7 +141,7 @@ public class AlumnoAsignaturaService {
     /**
      * Actualiza la nota de una matricula existente.
      *
-     * @param id               id de la matricula a actualizar
+     * @param id id de la matricula a actualizar
      * @param alumnoAsignatura nuevos datos de la matricula
      * @return matricula con la nota actualizada
      * @throws RuntimeException si la matricula no existe o la nota no es valida
@@ -160,6 +176,15 @@ public class AlumnoAsignaturaService {
     private void validarNota(double nota) {
         if (nota < 0 || nota > 10) {
             throw new RuntimeException("La nota debe estar entre 0 y 10");
+        }
+    }
+
+    private void rellenarTutorAula(AlumnoAsignatura matricula) {
+        if (matricula.getAlumno() != null
+                && matricula.getAlumno().getAula() != null
+                && matricula.getAlumno().getAula().getTutor() != null) {
+            matricula.getAlumno().getAula().getTutor()
+                    .setCodigoAula(matricula.getAlumno().getAula().getCodigo());
         }
     }
 }

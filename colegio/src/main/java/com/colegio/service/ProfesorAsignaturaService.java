@@ -52,7 +52,11 @@ public class ProfesorAsignaturaService {
      * @return lista de relaciones
      */
     public List<ProfesorAsignatura> listar() {
-        return profesorAsignaturaRepository.findAll();
+        List<ProfesorAsignatura> lista = profesorAsignaturaRepository.findAll();
+        for (ProfesorAsignatura pa : lista) {
+            rellenarCodigoAulaProfesor(pa);
+        }
+        return lista;
     }
 
     /**
@@ -63,8 +67,10 @@ public class ProfesorAsignaturaService {
      * @throws RuntimeException si no existe una relacion con ese id
      */
     public ProfesorAsignatura buscarPorId(Long id) {
-        return profesorAsignaturaRepository.findById(id)
+        ProfesorAsignatura pa = profesorAsignaturaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ProfesorAsignatura con id: " + id + " no encontrado"));
+        rellenarCodigoAulaProfesor(pa);
+        return pa;
     }
 
     /**
@@ -74,7 +80,11 @@ public class ProfesorAsignaturaService {
      * @return lista de relaciones del profesor
      */
     public List<ProfesorAsignatura> buscarPorProfesor(Long profesorId) {
-        return profesorAsignaturaRepository.findByProfesorId(profesorId);
+        List<ProfesorAsignatura> lista = profesorAsignaturaRepository.findByProfesorId(profesorId);
+        for (ProfesorAsignatura pa : lista) {
+            rellenarCodigoAulaProfesor(pa);
+        }
+        return lista;
     }
 
     /**
@@ -84,7 +94,11 @@ public class ProfesorAsignaturaService {
      * @return lista de relaciones de la asignatura
      */
     public List<ProfesorAsignatura> buscarPorAsignatura(Long asignaturaId) {
-        return profesorAsignaturaRepository.findByAsignaturaId(asignaturaId);
+        List<ProfesorAsignatura> lista = profesorAsignaturaRepository.findByAsignaturaId(asignaturaId);
+        for (ProfesorAsignatura pa : lista) {
+            rellenarCodigoAulaProfesor(pa);
+        }
+        return lista;
     }
 
     /**
@@ -98,7 +112,11 @@ public class ProfesorAsignaturaService {
     public List<ProfesorAsignatura> buscarPorCursoAula(Long aulaId) {
         Aula aula = aulaRepository.findById(aulaId)
                 .orElseThrow(() -> new RuntimeException("Aula no encontrada"));
-        return profesorAsignaturaRepository.findByAsignaturaCurso(aula.getCurso());
+        List<ProfesorAsignatura> lista = profesorAsignaturaRepository.findByAsignaturaCurso(aula.getCurso());
+        for (ProfesorAsignatura pa : lista) {
+            rellenarCodigoAulaProfesor(pa);
+        }
+        return lista;
     }
 
     /**
@@ -107,8 +125,7 @@ public class ProfesorAsignaturaService {
      * @param profesorAsignatura datos de la relacion a guardar
      * @return relacion guardada
      * @throws RuntimeException si el profesor o la asignatura no existen, si la
-     *                          relacion ya existe, o si las horas semanales no
-     *                          estan entre 1 y 6
+     * relacion ya existe, o si las horas semanales no estan entre 1 y 6
      */
     public ProfesorAsignatura guardar(ProfesorAsignatura profesorAsignatura) {
         Profesor profesor = profesorRepository.findById(profesorAsignatura.getProfesor().getId())
@@ -137,13 +154,12 @@ public class ProfesorAsignaturaService {
      * no este duplicada.
      * </p>
      *
-     * @param id                 id de la relacion a actualizar
+     * @param id id de la relacion a actualizar
      * @param profesorAsignatura nuevos datos de la relacion
      * @return relacion actualizada
      * @throws RuntimeException si la relacion, el profesor o la asignatura no
-     *                          existen, si la nueva combinacion ya existe, o si las
-     *                          horas semanales no
-     *                          estan entre 1 y 6
+     * existen, si la nueva combinacion ya existe, o si las horas semanales no
+     * estan entre 1 y 6
      */
     public ProfesorAsignatura actualizar(Long id, ProfesorAsignatura profesorAsignatura) {
         ProfesorAsignatura existente = buscarPorId(id);
@@ -207,6 +223,13 @@ public class ProfesorAsignaturaService {
     private void validarHorasSemanales(int horas) {
         if (horas < 1 || horas > 6) {
             throw new RuntimeException("Las horas semanales deben estar entre 1 y 6");
+        }
+    }
+
+    private void rellenarCodigoAulaProfesor(ProfesorAsignatura pa) {
+        if (pa.getProfesor() != null) {
+            Aula aula = aulaRepository.findByTutor(pa.getProfesor()).orElse(null);
+            pa.getProfesor().setCodigoAula(aula != null ? aula.getCodigo() : null);
         }
     }
 }
