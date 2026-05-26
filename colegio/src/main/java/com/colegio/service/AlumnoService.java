@@ -45,9 +45,6 @@ public class AlumnoService {
     @Autowired
     private AsignaturaRepository asignaturaRepository;
 
-    @Autowired
-    private AulaService aulaService;
-
     // ============================================================
     // METODOS CRUD
     // ============================================================
@@ -161,6 +158,7 @@ public class AlumnoService {
         guardado.setCodigo(Constantes.PREFIJO_ALUMNO + guardado.getId());
         guardado = alumnoRepository.save(guardado);
         matricularEnAsignaturas(guardado);
+        rellenarTutorAula(guardado);
         return guardado;
     }
 
