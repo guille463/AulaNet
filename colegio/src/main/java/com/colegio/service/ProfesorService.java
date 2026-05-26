@@ -55,9 +55,8 @@ public class ProfesorService {
      */
     public List<Profesor> listarProfesores() {
         List<Profesor> profesores = profesorRepository.findAll();
-        for (Profesor profesor : profesores) {
-            Aula aula = aulaRepository.findByTutor(profesor).orElse(null);
-            profesor.setCodigoAula(aula != null ? aula.getCodigo() : null);
+        for (Profesor p : profesores) {
+            rellenarCodigoAula(p);
         }
         return profesores;
     }
@@ -72,8 +71,7 @@ public class ProfesorService {
     public Profesor buscarProfesorPorId(Long id) {
         Profesor profesor = profesorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Profesor con id " + id + " no encontrado"));
-        Aula aula = aulaRepository.findByTutor(profesor).orElse(null);
-        profesor.setCodigoAula(aula != null ? aula.getCodigo() : null);
+        rellenarCodigoAula(profesor);
         return profesor;
     }
 
@@ -85,8 +83,10 @@ public class ProfesorService {
      * @throws RuntimeException si no existe un profesor con ese email
      */
     public Profesor buscarProfesorPorEmail(String email) {
-        return profesorRepository.findByEmail(email)
+        Profesor profesor = profesorRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Profesor con email " + email + " no encontrado"));
+        rellenarCodigoAula(profesor);
+        return profesor;
     }
 
     /**
@@ -97,7 +97,11 @@ public class ProfesorService {
      * @return lista de profesores que coinciden
      */
     public List<Profesor> buscarPorNombre(String nombre) {
-        return profesorRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
+        List<Profesor> profesores = profesorRepository.findByNombreCompletoStartingWithIgnoreCase(nombre);
+        for (Profesor p : profesores) {
+            rellenarCodigoAula(p);
+        }
+        return profesores;
     }
 
     /**
@@ -109,7 +113,11 @@ public class ProfesorService {
      * @return lista de profesores que coinciden
      */
     public List<Profesor> buscarPorNombreYApellido(String nombre, String apellido) {
-        return profesorRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
+        List<Profesor> profesores = profesorRepository.findByNombreStartingWithIgnoreCaseAndApellidoStartingWithIgnoreCase(nombre, apellido);
+        for (Profesor p : profesores) {
+            rellenarCodigoAula(p);
+        }
+        return profesores;
     }
 
     /**
@@ -119,7 +127,11 @@ public class ProfesorService {
      * @return lista de profesores con esa especialidad
      */
     public List<Profesor> buscarPorEspecialidad(Especialidad especialidad) {
-        return profesorRepository.findByEspecialidad(especialidad);
+        List<Profesor> profesores = profesorRepository.findByEspecialidad(especialidad);
+        for (Profesor p : profesores) {
+            rellenarCodigoAula(p);
+        }
+        return profesores;
     }
 
     /**
@@ -276,5 +288,15 @@ public class ProfesorService {
                 }
             }
         }
+    }
+
+    /**
+     * Rellena el campo {@code codigoAula} del profesor indicado.
+     *
+     * @param profesor profesor al que rellenar el codigo de aula
+     */
+    private void rellenarCodigoAula(Profesor profesor) {
+        Aula aula = aulaRepository.findByTutor(profesor).orElse(null);
+        profesor.setCodigoAula(aula != null ? aula.getCodigo() : null);
     }
 }
