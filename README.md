@@ -24,6 +24,11 @@ Cada asignatura pertenece a un curso concreto y tiene un número de horas semana
 - Un profesor puede impartir varias asignaturas, y una asignatura puede ser impartida por varios profesores. Cada relación almacena las horas semanales dedicadas.
 - Un aula puede tener un profesor tutor, que se puede asignar y eliminar de forma independiente.
 
+UML
+![IMagen UML](imgsReadme/UML.png)
+
+
+
 ### Comportamiento automático al arrancar
 
 Al iniciar la aplicación se carga una base de datos de prueba completa en el siguiente orden: profesores → aulas → alumnos → asignaturas → relaciones profesor-asignatura → matrículas alumno-asignatura.
@@ -462,3 +467,7 @@ Asistente conversacional embebido en la interfaz que permita realizar consultas 
 
 Guillermo Rafael Jiménez Muñoz
 1º DAM Stem Granada
+
+## ENLACE VIDEO YT
+
+https://youtu.be/w4H2_pV0m4s
