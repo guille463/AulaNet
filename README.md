@@ -445,7 +445,7 @@ Al arrancar, los inicializadores cargan automáticamente:
 
 **Datos ampliados de entidades**
 ```
-Las entidades Alumno y Profesor actualmente almacenan los campos mínimos necesarios. Se contemplan campos adicionales como dirección, teléfono de contacto, foto de perfil, fecha de incorporación al centro y datos del tutor legal en el caso del alumno.
+Las entidades Alumno y Profesor actualmente almacenan los campos mínimos necesarios. Se pondran campos adicionales como dirección, teléfono de contacto, foto de perfil, fecha de incorporación al centro y datos del tutor legal en el caso del alumno.
 ```
 
 **Expediente académico del alumno**
@@ -470,4 +470,4 @@ Guillermo Rafael Jiménez Muñoz
 
 ## ENLACE VIDEO YT
 
-https://youtu.be/w4H2_pV0m4s
+https://youtu.be/9UG7At4h4cs
